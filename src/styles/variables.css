@@ -1,0 +1,17 @@
+:root {
+  --font-primary: "Manrope", sans-serif;
+  --font-secondary: "Merienda", cursive;
+  --font-weight-regular: 400;
+  --font-weight-bold: 700;
+  --font-weight-extrabold: 800;
+
+  --black: #070721;
+  --white: #f7fffb;
+  --red: #ad6a6c;
+  --purple: #7678ed;
+  --green: #649179;
+  --green-light: #d1e0d8;
+  --green-darker: #374f42;
+  --gray: #595d62;
+  --gray-light: #9f9f9f;
+}
