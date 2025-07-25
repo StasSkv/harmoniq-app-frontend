@@ -9,7 +9,7 @@ import { CreateArticlePage } from "../../pages/CreateArticlePage/CreateArticlePa
 import { LoginPage } from "../../pages/LoginPage/LoginPage.jsx";
 import { RegisterPage } from "../../pages/RegisterPage/RegisterPage.jsx";
 import { useSelector } from 'react-redux';
-import Loader from '../../components/Loader/Loader'; // виправлений шлях
+import Loader from '../../components/Loader/Loader'; 
 import { selectIsLoading } from '../../redux/global/globalSelectors';
 
 export const App = () => {
