@@ -7,4 +7,5 @@
   font-size: 40px;
   font-weight: var(--font-weight-bold);
   color: var(--black);
+  margin-bottom: 16px;
 }
