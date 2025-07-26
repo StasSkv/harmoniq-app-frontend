@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import s from './Creators.module.css';
 import AuthorItem from '../AuthorItem/AuthorItem.jsx';
+import sprite from '../../assets/icons/sprite.svg';
 
 const Creators = () => {
   const [creators, setCreators] = useState([]);
@@ -10,13 +11,13 @@ const Creators = () => {
   useEffect(() => {
     //     const fetchCreators = async () => {
     //       try {
-    //         const response = await fetch(`${import.meta.env.VITE_API_URL}/top-creators`);
+    //         const response = await fetch(`${import.meta.env.VITE_API_URL}/users`);
     //         const data = await response.json();
     //         setCreators(data);
     //       } catch (error) {
     //         console.error('Ошибка при загрузке топ авторов:', error);
     //       } finally {
-    //         setLoading(false);
+    //         // setLoading(false);
     //       }
     //     };
 
@@ -57,7 +58,7 @@ const Creators = () => {
     ];
 
     setCreators(mockData);
-    // setLoading(false);
+    //   setLoading(false);
   }, []);
   console.log('creators:', creators);
   return (
@@ -66,6 +67,9 @@ const Creators = () => {
         <h2 className={s.title}>Top Creators</h2>
         <Link to="/CreatorsPage" className={s.link}>
           Go to all Creators
+          <svg className={s.icon}>
+            <use xlinkHref={`${sprite}#icon-arrow-right`} />
+          </svg>
         </Link>
       </div>
 
@@ -74,7 +78,12 @@ const Creators = () => {
       ) : ( */}
       <ul className={s.creatorsList}>
         {creators.slice(0, 6).map((creator) => (
-          <AuthorItem key={creator.id} name={creator.name} imageUrl={creator.imageUrl} />
+          <AuthorItem
+            key={creator.id}
+            id={creator.id}
+            name={creator.name}
+            imageUrl={creator.avatar}
+          />
         ))}
       </ul>
       {/* )} */}

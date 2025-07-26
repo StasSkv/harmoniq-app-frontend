@@ -1,6 +1,7 @@
 .creators {
   padding: 0px 16px;
   background-color: #fff;
+  margin-bottom: 36px;
 }
 
 .header {
@@ -10,7 +11,7 @@
 .title {
   font-size: 32px;
   font-weight: 700;
-  width: 199px;
+  /* max-width: 199px; */
   color: #000;
   margin-bottom: 16px;
 }
@@ -21,6 +22,13 @@
   width: 170px;
   color: #374f42;
   text-decoration: none;
+}
+
+.icon {
+  width: 16px;
+  height: 16px;
+  stroke: #374f42;
+  transform: rotate(-45deg);
 }
 
 .creatorsList {
@@ -64,8 +72,14 @@
     display: inline-block;
   }
 
+  .icon {
+    width: 17px;
+    height: 17px;
+    fill: #374f42;
+  }
+
   .title {
     font-size: 40px;
-    width: 249px;
+    /* max-width: 249px; */
   }
 }
