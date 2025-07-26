@@ -3,6 +3,5 @@ import articlesReducer from "./articlesSlice/articlesSlice";
 export const store = configureStore({
   reducer: {
     articles: articlesReducer,
-    auth: authReducer,
   },
 });
