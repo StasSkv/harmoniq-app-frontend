@@ -17,8 +17,8 @@ import friendsMobile2x from '../../assets/images/about/friends2-mob.webp';
 
 const About = () => {
   return (
-    <Container>
-      <section className={s.wrapper}>
+    <section>
+      <Container className={s.wrapper}>
         <div className={s.aboutContent}>
           <h2 className={s.aboutTitle}>About us</h2>
           <p className={s.aboutDescription}>
@@ -62,8 +62,8 @@ const About = () => {
           />
           <img src={nirvanaDesktop1x} alt="Nirvana" />
         </picture>
-      </section>
-    </Container>
+      </Container>
+    </section>
   );
 };
 export default About;
