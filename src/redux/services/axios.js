@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const instance = axios.create({
-  baseURL: 'https://harmoniq-app-backend.onrender.com/', // заміни на справжній бекенд
+  baseURL: 'https://harmoniq-app-backend.onrender.com/', 
 });
 
 export const setAuthToken = token => {
