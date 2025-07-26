@@ -2,9 +2,11 @@ import s from './AddArticleForm.module.css';
 import { FiCamera } from 'react-icons/fi';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { useState } from 'react';
+import article from './article.json';
+import { TextArea } from './TextArea';
 
 export const AddArticleForm = () => {
-  const [preview, setPreview] = useState(null);
+  const [preview, setPreview] = useState(article.img || null);
 
   const handleSubmit = (values) => {
     console.log(values);
@@ -12,7 +14,7 @@ export const AddArticleForm = () => {
 
   return (
     <Formik
-      initialValues={{ title: '', desc: '', content: '', photo: null }}
+      initialValues={{ title: article.title, article: article.article, photo: article.img }}
       onSubmit={handleSubmit}
     >
       {({ setFieldValue }) => {
@@ -22,7 +24,7 @@ export const AddArticleForm = () => {
           if (file) {
             setPreview(URL.createObjectURL(file));
           } else {
-            setPreview(null);
+            setPreview(article.img || null);
           }
         };
         return (
@@ -69,7 +71,7 @@ export const AddArticleForm = () => {
 
                 <div className={s.inputBox}>
                   <label htmlFor="title" className={s.title}>
-                    Title
+                    Article title
                   </label>
                   <Field
                     className={s.inputText}
@@ -81,12 +83,7 @@ export const AddArticleForm = () => {
               </div>
               <ErrorMessage name="title" component="div" className={s.error} />
 
-              <Field
-                className={s.inputTextArea}
-                name="content"
-                as="textarea"
-                placeholder="Enter a text"
-              />
+              <TextArea name="article" />
               <button type="submit" className={s.btn}>
                 Publish
               </button>
