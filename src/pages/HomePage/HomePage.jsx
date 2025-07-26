@@ -1,3 +1,15 @@
+// import Hero from "../../components/Hero/Hero";
+import About from "../../components/About/About";
+// import PopularArticles from "../../components/PopularArticles/PopularArticles";
+// import Creators from "../../components/Creators/Creators";
+
 export const HomePage = () => {
-  return <p>HomePage</p>;
-};
+  return (
+    <>
+        {/* <Hero /> */}
+        <About />
+        {/* <PopularArticles /> */}
+        {/* <Creators /> */}
+    </>
+  );
+}; 

@@ -18,13 +18,11 @@ export const App = () => {
         <Route path="articlesPage" element={<ArticlesPage />} />
         <Route path="authorProfilePage" element={<AuthorProfilePage />} />
         <Route path="authorsPage" element={<AuthorsPage />} />
-        <Route path="createArticlePage" element={<CreateArticlePage />} />
-        <Route path="/loginPage" element={<LoginPage />} />
-        <Route path="/registerPage" element={<RegisterPage />} />
+        <Route path="create" element={<CreateArticlePage />} />
+        <Route path="loginPage" element={<LoginPage />} />
+        <Route path="registerPage" element={<RegisterPage />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Route>
     </Routes>
-  );
-};
-
-export default App;
+  )
+}

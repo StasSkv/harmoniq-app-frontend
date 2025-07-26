@@ -1,7 +1,7 @@
 import { Field, Form, Formik, ErrorMessage } from 'formik';
 import { Link } from 'react-router-dom';
 import * as Yup from 'yup';
-import toast from 'react-hot-toast';
+import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
 import { useState } from 'react';
 import { registerThunk } from '../../redux/auth/operations';
