@@ -4,6 +4,7 @@ import PopularArticles from "../../components/PopularArticles/PopularArticles";
 import Creators from "../../components/Creators/Creators";
 
 export const HomePage = () => {
+<<<<<<< HEAD
   return (
     <>
       <main>
@@ -15,3 +16,7 @@ export const HomePage = () => {
     </>
   );
 };
+=======
+  return <p>HomePage</p>;
+};
+>>>>>>> origin/main
