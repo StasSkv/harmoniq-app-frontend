@@ -15,7 +15,7 @@ const removeAuthNav = () => {
 
 export const registerThunk = createAsyncThunk('auth/register', async (body, thunkAPI) => {
   try {
-    const response = await hapmoniqApi.post('/users/signup', body);
+    const response = await hapmoniqApi.post('/auth/register', body);
     setAuthNav(response.data.token);
     return response.data;
   } catch (error) {
@@ -29,7 +29,7 @@ export const registerThunk = createAsyncThunk('auth/register', async (body, thun
 
 export const loginThunk = createAsyncThunk('auth/login', async (body, thunkAPI) => {
   try {
-    const response = await hapmoniqApi.post('users/login', body);
+    const response = await hapmoniqApi.post('auth/login', body);
     setAuthNav(response.data.token);
     return response.data;
   } catch (error) {
@@ -43,7 +43,7 @@ export const loginThunk = createAsyncThunk('auth/login', async (body, thunkAPI) 
 
 export const logoutThunk = createAsyncThunk('auth/logout', async (_, thunkAPI) => {
   try {
-    await hapmoniqApi.post('users/logout');
+    await hapmoniqApi.post('auth/logout');
     removeAuthNav();
   } catch (error) {
     let message = 'Unknown error';
@@ -62,7 +62,7 @@ export const refreshThunk = createAsyncThunk('auth/refresh', async (_, thunkAPI)
     }
     setAuthNav(persistedToken);
 
-    const response = await hapmoniqApi.get('users/current');
+    const response = await hapmoniqApi.get('auth/current');
     return response.data;
   } catch (error) {
     let message = 'Unknown error';

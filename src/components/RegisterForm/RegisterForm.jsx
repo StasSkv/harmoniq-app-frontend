@@ -1,16 +1,17 @@
 import { Field, Form, Formik, ErrorMessage } from 'formik';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
-import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
 import { useState } from 'react';
-import { registerThunk } from '../../redux/auth/operations';
-import s from './RegisterForm.module.css';
+import { setStepOneData } from '../../redux/auth/registrationSlice';
+import { ToggleBtn } from '../ToggleBtn/ToggleBtn';
+import css from './RegisterForm.module.css'; // стилі схожі на loginForm.module.css
+import { Container } from '../Container/Container';
 
-const FeedbackSchema = Yup.object().shape({
-  name: Yup.string().min(2, 'Too Short!').max(32, 'Too Long!').required('Required'),
-  email: Yup.string().email('Invalid email address').max(64, 'Too Long!').required('Required'),
-  password: Yup.string().min(8, 'Too Short!').max(64, 'Too Long!').required('Required'),
+const validationSchema = Yup.object().shape({
+  name: Yup.string().min(2, 'Too short!').max(32, 'Too long!').required('Required'),
+  email: Yup.string().email('Invalid email address').max(64, 'Too long!').required('Required'),
+  password: Yup.string().min(8, 'Too short!').max(64, 'Too long!').required('Required'),
   confirmPassword: Yup.string()
     .oneOf([Yup.ref('password')], 'Passwords must match')
     .required('Please confirm your password'),
@@ -18,6 +19,7 @@ const FeedbackSchema = Yup.object().shape({
 
 export const RegisterForm = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
 
@@ -28,109 +30,120 @@ export const RegisterForm = () => {
     confirmPassword: '',
   };
 
-  const handleSubmit = async (values, actions) => {
-    try {
-      await dispatch(registerThunk(values).unwrap());
-      actions.resetForm();
-    } catch (error) {
-      console.log(error);
-      toast.error('A user with this email is already registered. Please, try again.');
-    }
+  const handleSubmit = (values) => {
+    dispatch(setStepOneData(values));
+    navigate('/uploadPhotoPage');
   };
 
   return (
-    <div>
-      <div>
-        <h3>Register</h3>
-        <p>Join our community of mindfulness and wellbeing!</p>
-      </div>
-      <div className={s.cardBody}>
+    <Container>
+      <div className={css.loginWrapper}>
+        <h2 className={css.loginTitle}>Register</h2>
+        <p className={css.registerText}>Join our community of mindfulness and wellbeing!</p>
+
         <Formik
           initialValues={initialValues}
+          validationSchema={validationSchema}
           onSubmit={handleSubmit}
-          validationSchema={FeedbackSchema}
         >
           <Form>
-            <fieldset className={s.fieldset}>
-              <label>Enter you name</label>
-              <Field type="name" name="name" className={s.input} placeholder="Max" />
-              <ErrorMessage name="name" component="span" className={s.errorMessage} />
-              <label>Enter you email address</label>
-              <Field type="email" name="email" className={s.input} placeholder="email@gmail.com" />
-              <ErrorMessage name="email" component="span" className={s.errorMessage} />
-              <label>Create a strong password</label>
-              <Field name="password">
-                {({ field }) => (
-                  <div className={s.passwordField}>
+            <fieldset className={css.fieldset}>
+              <Field name="name">
+                {({ field, meta }) => (
+                  <div className={css.emailField}>
+                    <label className={css.loginLabel}>Enter your name</label>
                     <input
                       {...field}
-                      type={showPassword ? 'text' : 'password'}
-                      className={s.input}
-                      placeholder="Password"
+                      type="text"
+                      placeholder="Name"
+                      className={`${css.input} ${meta.touched && meta.error ? css.inputError : ''}`}
                     />
-                    <button
-                      type="button"
-                      onClick={() => setShowPassword((prev) => !prev)}
-                      className={s.toggleBtn}
-                    >
-                      {showPassword ? (
-                        <svg width="24" height="24">
-                          <use href="../../assets/icons/sprite.svg#icon-eye-crossed" />
-                        </svg>
-                      ) : (
-                        <svg width="24" height="24">
-                          <use href="../../assets/icons/sprite.svg#icon-eye" />
-                        </svg>
-                      )}
-                    </button>
+                    <ErrorMessage name="name" component="span" className={css.errorMessage} />
                   </div>
                 )}
               </Field>
-              <ErrorMessage name="password" component="span" className={s.errorMessage} />
 
-              <label>Repeat your password</label>
-              <Field name="confirmPassword">
-                {({ field }) => (
-                  <div className={s.passwordField}>
+              <Field name="email">
+                {({ field, meta }) => (
+                  <div className={css.emailField}>
+                    <label className={css.loginLabel}>Enter your email address</label>
                     <input
                       {...field}
-                      type={showConfirm ? 'text' : 'password'}
-                      className={s.input}
-                      placeholder="Repeat Password"
+                      type="email"
+                      placeholder="email@example.com"
+                      className={`${css.input} ${meta.touched && meta.error ? css.inputError : ''}`}
                     />
-                    <button
-                      type="button"
-                      onClick={() => setShowConfirm((prev) => !prev)}
-                      className={s.toggleBtn}
-                    >
-                      {showConfirm ? (
-                        <svg width="24" height="24">
-                          <use href="../../assets/icons/sprite.svg#icon-eye-crossed" />
-                        </svg>
-                      ) : (
-                        <svg width="24" height="24">
-                          <use href="../../assets/icons/sprite.svg#icon-eye" />
-                        </svg>
-                      )}
-                    </button>
+                    <ErrorMessage name="email" component="span" className={css.errorMessage} />
                   </div>
                 )}
               </Field>
-              <ErrorMessage name="confirmPassword" component="span" className={s.errorMessage} />
 
-              <button type="submit" className={s.btn}>
+              <div className={css.passwordField}>
+                <label className={css.loginLabel}>Create a strong password</label>
+                <Field name="password">
+                  {({ field, meta }) => (
+                    <div style={{ position: 'relative' }}>
+                      <input
+                        {...field}
+                        type={showPassword ? 'text' : 'password'}
+                        className={`${css.input} ${
+                          meta.touched && meta.error ? css.inputError : ''
+                        }`}
+                        placeholder="Password"
+                        autoComplete="new-password"
+                      />
+                      <ToggleBtn
+                        isShown={showPassword}
+                        onClick={() => setShowPassword((prev) => !prev)}
+                      />
+                    </div>
+                  )}
+                </Field>
+                <ErrorMessage name="password" component="span" className={css.errorMessage} />
+              </div>
+
+              <div className={css.passwordField}>
+                <label className={css.loginLabel}>Repeat your password</label>
+                <Field name="confirmPassword">
+                  {({ field, meta }) => (
+                    <div style={{ position: 'relative' }}>
+                      <input
+                        {...field}
+                        type={showConfirm ? 'text' : 'password'}
+                        className={`${css.input} ${
+                          meta.touched && meta.error ? css.inputError : ''
+                        }`}
+                        placeholder="Repeat Password"
+                        autoComplete="new-password"
+                      />
+                      <ToggleBtn
+                        isShown={showConfirm}
+                        onClick={() => setShowConfirm((prev) => !prev)}
+                      />
+                    </div>
+                  )}
+                </Field>
+                <ErrorMessage
+                  name="confirmPassword"
+                  component="span"
+                  className={css.errorMessage}
+                />
+              </div>
+
+              <button type="submit" className={css.btn}>
                 Create account
               </button>
-              <div>
-                <p>Already have an account?</p>
-                <Link to="/loginPage" className={s.link}>
+
+              <p className={css.link}>
+                Already have an account?{' '}
+                <Link to="/loginPage" className={css.span}>
                   Log in!
                 </Link>
-              </div>
+              </p>
             </fieldset>
           </Form>
         </Formik>
       </div>
-    </div>
+    </Container>
   );
 };
