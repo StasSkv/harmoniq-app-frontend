@@ -17,7 +17,7 @@ import friendsMobile2x from '../../assets/images/about/friends2-mob.webp';
 
 const About = () => {
   return (
-    <section>
+    <section className={s.aboutSection}>
       <Container className={s.wrapper}>
         <div className={s.aboutContent}>
           <h2 className={s.aboutTitle}>About us</h2>

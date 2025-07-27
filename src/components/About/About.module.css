@@ -1,9 +1,15 @@
+.aboutSection {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 72px 0;
+}
+
 .wrapper {
     display: flex;
     flex-wrap: wrap;
     gap: 24px;
     justify-content: center;
-    margin: 72px 0;
 }
 
 .aboutContent {
