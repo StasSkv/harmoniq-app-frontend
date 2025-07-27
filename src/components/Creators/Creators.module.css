@@ -1,7 +1,10 @@
 .creators {
   padding: 0px 16px;
+  width: 100%;
   background-color: #fff;
   margin-bottom: 36px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .header {
@@ -11,7 +14,6 @@
 .title {
   font-size: 32px;
   font-weight: 700;
-  /* max-width: 199px; */
   color: #000;
   margin-bottom: 16px;
 }
@@ -32,7 +34,8 @@
 }
 
 .creatorsList {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
   flex-wrap: wrap;
   justify-content: center;
   gap: 16px;
@@ -42,6 +45,11 @@
 }
 
 @media (min-width: 768px) {
+  .creators {
+    width: 704px;
+    padding: 0;
+  }
+
   .title {
     margin-bottom: 0px;
   }
@@ -51,8 +59,7 @@
   }
 
   .creatorsList {
-    display: flex;
-    flex-wrap: wrap;
+    grid-template-columns: repeat(3, 1fr);
     gap: 24px;
     list-style: none;
     padding: 0;
@@ -61,6 +68,11 @@
 }
 
 @media (min-width: 1440px) {
+  .creators {
+    width: 1225px;
+    padding: 0;
+  }
+
   .header {
     display: flex;
     justify-content: space-between;
@@ -80,6 +92,9 @@
 
   .title {
     font-size: 40px;
-    /* max-width: 249px; */
+  }
+
+  .creatorsList {
+    grid-template-columns: repeat(6, 1fr);
   }
 }
