@@ -8,10 +8,7 @@ import { AuthorsPage } from '../../pages/AuthorsPage/AuthorsPage.jsx';
 import { CreateArticlePage } from '../../pages/CreateArticlePage/CreateArticlePage.jsx';
 import { LoginPage } from '../../pages/LoginPage/LoginPage.jsx';
 import { RegisterPage } from '../../pages/RegisterPage/RegisterPage.jsx';
-<<<<<<< HEAD
 import { CreatorsPage } from '../../pages/CreatorsPage/CreatorsPage.jsx';
-=======
->>>>>>> 95b073c9ae82c554e137dc07562b99e7c84aab13
 
 export const App = () => {
   return (
@@ -29,5 +26,5 @@ export const App = () => {
         <Route path="*" element={<Navigate to="/" replace />} />
       </Route>
     </Routes>
-  )
-}
+  );
+};
