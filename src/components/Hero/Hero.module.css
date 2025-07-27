@@ -1,64 +1,66 @@
-.hero-section {
-  display: flex;
-  flex-direction: column;
-  padding: 0;
+.heroSection {
+  padding-top: 15px;
+  margin-bottom: 36px;
 }
 
-.hero-image {
-  background-image: url('../../assets/images/hero/hero-mob.webp');
-  /* background-size: cover; */
-  background-repeat: no-repeat;
-  background-position: center;
+/* Контейнер включает текст и изображение */
+.heroContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Изображение – в mobile вверху */
+.heroImage {
   width: 100%;
   height: 333px;
-  order: 1;
+  background-image: url('../../assets/images/hero/hero-mob.webp');
+  background-repeat: no-repeat;
+  background-position: center;
+  order: 0;
 }
 
 @media (min-resolution: 2dppx), (min-device-pixel-ratio: 2) {
-  .hero-image {
+  .heroImage {
     background-image: url('../../assets/images/hero/hero-mob2x.webp');
   }
 }
 
-.hero-content {
+/* Контент с заголовком и кнопками */
+.heroContent {
+  order: 1;
   backdrop-filter: blur(4px);
+  background: rgba(255, 255, 255, 0.2);
   border-radius: 20px;
-  width: 100%;
   box-sizing: border-box;
   text-align: left;
-  order: 2;
 }
 
-.hero-title {
+/* Заголовок */
+.heroTitle {
   font-family: var(--font-family);
-  font-weight: 600;
-  font-size: 32px;
+  font-size: 39px;
   color: #374f42;
   margin-bottom: 30px;
 }
 
+/* Выделенное слово */
 .italicBold {
-  font-style: italic;
-  font-weight: 700;
+  font-family: 'Merienda', sans-serif;
 }
 
-.hero-buttons {
+/* Кнопки – мобильная вертикальная колонка */
+.heroButtons {
   display: flex;
   flex-direction: column;
   gap: 24px;
-  align-items: center;
 }
 
+/* Универсальные стили для кнопки */
 .btn {
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-direction: row;
-  gap: 16px;
-  font-family: var(--font-family);
-  font-weight: 700;
   font-size: 18px;
-  padding: 16px;
   width: 100%;
   max-width: 361px;
   height: 57px;
@@ -68,114 +70,108 @@
   box-sizing: border-box;
 }
 
-.btn-primary {
+/* Примари кнопка */
+.btnPrimary {
   background: #649179;
   color: var(--white);
   border: none;
 }
-
-.btn-primary:hover {
+.btnPrimary:hover {
   background: #4f7460;
 }
 
-.btn-secondary {
+/* Секондари кнопка */
+.btnSecondary {
   border: 1px solid #374f42;
   color: #374f42;
   background: transparent;
 }
-
-.btn-secondary:hover {
+.btnSecondary:hover {
   background-color: #e8f1ec;
 }
 
+/* Планшетная версия */
 @media (min-width: 768px) {
-  .hero-section {
-    flex-direction: row;
-    align-items: stretch;
-    justify-content: space-between;
-    padding: 64px 32px;
+  .heroSection {
+    padding-top: 22px;
   }
 
-  .hero-image {
-    width: 430px;
+  .heroContainer {
+    flex-direction: row;
+
+    justify-content: space-between;
+  }
+
+  .heroImage {
     height: 385px;
-    aspect-ratio: 1 / 1;
-    background-size: contain;
-    background-position: right;
-    background-repeat: no-repeat;
-    order: 2;
     background-image: url('../../assets/images/hero/hero-tab.webp');
+    background-position: right;
+    background-size: contain;
+    order: 1;
   }
 
   @media (min-resolution: 2dppx), (min-device-pixel-ratio: 2) {
-    .hero-image {
+    .heroImage {
       background-image: url('../../assets/images/hero/hero-tab2x.webp');
     }
   }
 
-  .hero-content {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+  .heroContent {
     width: calc(100% - 430px);
-    box-sizing: border-box;
-    text-align: left;
-    order: 1;
+    order: 0;
   }
 
-  .hero-title {
-    font-size: 36px;
-    margin-bottom: auto;
+  .heroTitle {
+    /* font-size: 36px; */
+    margin-bottom: 40px;
     min-width: 372px;
   }
 
   .btn {
     max-width: 249px;
   }
+
+  .heroButtons {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+  }
 }
 
+/* Десктоп версия */
 @media (min-width: 1440px) {
-  .hero-section {
-    padding: 64px 107.5px;
-    position: relative;
-    background: #f6fbf8;
+  .heroSection {
+    padding-top: 48px;
   }
 
-  .hero-image {
-    width: 806px;
+  .heroImage {
     height: 562px;
+    background-image: url('../../assets/images/hero/hero-des.webp');
     background-size: contain;
     background-position: right;
     background-repeat: no-repeat;
-    background-image: url('../../assets/images/hero/hero-des.webp');
-    z-index: 1;
-    position: relative;
-    order: 2;
   }
 
-  .hero-content {
-    padding: 40px 0 40px 0;
-    position: relative;
-    z-index: 2;
+  .heroContent {
+    width: calc(100% - 806px);
     background: none;
     border-radius: 0;
-    margin-right: 0;
-    width: 50%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
   }
 
-  .hero-title {
+  .heroTitle {
     font-weight: 800;
     font-size: 92px;
-    margin-bottom: 40px;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    min-width: 600px;
   }
 
-  .hero-buttons {
+  .heroButtons {
     flex-direction: row;
-    gap: 24px;
     align-items: flex-start;
+    position: static;
+    margin-top: 56px;
   }
 
   .btn {
