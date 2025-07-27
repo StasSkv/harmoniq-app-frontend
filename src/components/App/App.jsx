@@ -1,13 +1,13 @@
-import { Routes, Route, Navigate } from "react-router-dom";
-import { Layout } from "../Loyout/Loyout.jsx";
-import { HomePage } from "../../pages/HomePage/HomePage.jsx";
-import { ArticlePage } from "../../pages/ArticlePage/ArticlePage.jsx";
-import { ArticlesPage } from "../../pages/ArticlesPage/ArticlesPage.jsx";
-import { AuthorProfilePage } from "../../pages/AuthorProfilePage/AuthorProfilePage.jsx";
-import { AuthorsPage } from "../../pages/AuthorsPage/AuthorsPage.jsx";
-import { CreateArticlePage } from "../../pages/CreateArticlePage/CreateArticlePage.jsx";
-import { LoginPage } from "../../pages/LoginPage/LoginPage.jsx";
-import { RegisterPage } from "../../pages/RegisterPage/RegisterPage.jsx";
+import { Routes, Route, Navigate } from 'react-router-dom';
+import { Layout } from '../Loyout/Loyout.jsx';
+import { HomePage } from '../../pages/HomePage/HomePage.jsx';
+import { ArticlePage } from '../../pages/ArticlePage/ArticlePage.jsx';
+import { ArticlesPage } from '../../pages/ArticlesPage/ArticlesPage.jsx';
+import { AuthorProfilePage } from '../../pages/AuthorProfilePage/AuthorProfilePage.jsx';
+import { AuthorsPage } from '../../pages/AuthorsPage/AuthorsPage.jsx';
+import { CreateArticlePage } from '../../pages/CreateArticlePage/CreateArticlePage.jsx';
+import { LoginPage } from '../../pages/LoginPage/LoginPage.jsx';
+import { RegisterPage } from '../../pages/RegisterPage/RegisterPage.jsx';
 
 export const App = () => {
   return (
@@ -15,12 +15,12 @@ export const App = () => {
       <Route path="/" element={<Layout />}>
         <Route index element={<HomePage />} />
         <Route path="articlePage" element={<ArticlePage />} />
-        <Route path="articlesPage" element={<ArticlesPage />} />
+        <Route path="/articles" element={<ArticlesPage />} />
         <Route path="authorProfilePage" element={<AuthorProfilePage />} />
-        <Route path="authorsPage" element={<AuthorsPage />} />
+        <Route path="/authors" element={<AuthorsPage />} />
         <Route path="create" element={<CreateArticlePage />} />
-        <Route path="loginPage" element={<LoginPage />} />
-        <Route path="registerPage" element={<RegisterPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Route>
     </Routes>

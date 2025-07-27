@@ -1,3 +1,7 @@
-export const Header = () => {
-  return <p>Header</p>;
+import HeaderUnauth from '../HeaderUnauth/HeaderUnauth';
+import { Container } from '../Container/Container';
+const Header = () => {
+  return <HeaderUnauth />;
 };
+
+export default Header;
