@@ -8,6 +8,7 @@ import { AuthorsPage } from '../../pages/AuthorsPage/AuthorsPage.jsx';
 import { CreateArticlePage } from '../../pages/CreateArticlePage/CreateArticlePage.jsx';
 import { LoginPage } from '../../pages/LoginPage/LoginPage.jsx';
 import { RegisterPage } from '../../pages/RegisterPage/RegisterPage.jsx';
+import { CreatorsPage } from '../../pages/CreatorsPage/CreatorsPage.jsx';
 
 export const App = () => {
   return (
@@ -21,8 +22,9 @@ export const App = () => {
         <Route path="create" element={<CreateArticlePage />} />
         <Route path="loginPage" element={<LoginPage />} />
         <Route path="registerPage" element={<RegisterPage />} />
+        <Route path="creatorsPage" element={<CreatorsPage />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Route>
     </Routes>
-  )
-}
+  );
+};
