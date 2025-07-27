@@ -9,7 +9,7 @@ export const HomePage = () => {
       {/* <Hero /> */}
       <About />
       {/* <PopularArticles /> */}
-      <Creators />
+      {/* <Creators /> */}
     </>
   );
 };
