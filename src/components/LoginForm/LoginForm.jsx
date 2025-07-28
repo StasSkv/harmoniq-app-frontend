@@ -5,7 +5,10 @@ import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
 import { useState } from 'react';
 import { loginThunk } from '../../redux/auth/operations';
+import { useNavigate } from 'react-router-dom';
+import { Container } from '../Container/Container';
 import s from './LoginForm.module.css';
+import { ToggleBtn } from '../ToggleBtn/ToggleBtn';
 
 const FeedbackSchema = Yup.object().shape({
   email: Yup.string().email('Invalid email address').max(64, 'Too Long!').required('Required'),
@@ -14,6 +17,7 @@ const FeedbackSchema = Yup.object().shape({
 
 export const LoginForm = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
 
   const initialValues = {
@@ -23,7 +27,8 @@ export const LoginForm = () => {
 
   const handleSubmit = async (values, actions) => {
     try {
-      await dispatch(loginThunk(values).unwrup());
+      await dispatch(loginThunk(values)).unwrap();
+      navigate('/');
       actions.resetForm();
     } catch (error) {
       console.log(error);
@@ -32,64 +37,61 @@ export const LoginForm = () => {
   };
 
   return (
-    <div>
-      <div>
-        <h3>Login</h3>
-      </div>
-      <div className={s.cardBody}>
-        <Formik
-          initialValues={initialValues}
-          onSubmit={handleSubmit}
-          validationSchema={FeedbackSchema}
-        >
-          <Form>
-            <fieldset className={s.fieldset}>
-              <label>Enter you email address</label>
-              <Field type="email" name="email" className={s.input} placeholder="email@gmail.com" />
-              <ErrorMessage name="email" component="span" className={s.errorMessage} />
-              <label>Enter a password</label>
-              <Field name="password">
-                {({ field }) => (
-                  <div className={s.passwordField}>
-                    <input
-                      {...field}
-                      type={showPassword ? 'text' : 'password'}
-                      className={s.input}
-                      placeholder="Password"
-                    />
-                    <button
-                      type="button"
-                      onClick={() => setShowPassword((prev) => !prev)}
-                      className={s.toggleBtn}
-                    >
-                      {showPassword ? (
-                        <svg width="24" height="24">
-                          <use href="../../assets/icons/sprite.svg#icon-eye-crossed" />
-                        </svg>
-                      ) : (
-                        <svg width="24" height="24">
-                          <use href="../../assets/icons/sprite.svg#icon-eye" />
-                        </svg>
-                      )}
-                    </button>
-                  </div>
-                )}
-              </Field>
-              <ErrorMessage name="password" component="span" className={s.errorMessage} />
+    <Container className={s.container}>
+      <div className={s.loginWrapper}>
+        <h2 className={s.loginTitle}>Login</h2>
+        <div className={s.loginBody}>
+          <Formik
+            initialValues={initialValues}
+            onSubmit={handleSubmit}
+            validationSchema={FeedbackSchema}
+          >
+            <Form className={s.form}>
+              <fieldset className={s.fieldset}>
+                <label className={s.loginLabel}>Enter you email address</label>
+                <Field name="email">
+                  {({ field, meta }) => (
+                    <div className={s.emailField}>
+                      <input
+                        {...field}
+                        type="email"
+                        placeholder="email@gmail.com"
+                        className={`${s.input} ${meta.touched && meta.error ? s.inputError : ''}`}
+                      />
+                      <ErrorMessage name="email" component="span" className={s.errorMessage} />
+                    </div>
+                  )}
+                </Field>
+                <label className={s.loginLabel}>Enter a password</label>
+                <Field name="password">
+                  {({ field, meta }) => (
+                    <div className={s.passwordField}>
+                      <input
+                        {...field}
+                        type={showPassword ? 'text' : 'password'}
+                        className={`${s.input} ${meta.touched && meta.error ? s.inputError : ''}`}
+                        placeholder="Password"
+                      />
+                      <ToggleBtn
+                        isShown={showPassword}
+                        onClick={() => setShowPassword((p) => !p)}
+                      />
+                      <ErrorMessage name="password" component="span" className={s.errorMessage} />
+                    </div>
+                  )}
+                </Field>
 
-              <button type="submit" className={s.btn}>
-                Login
-              </button>
-              <div>
-                <p>Don't have an account? </p>
+                <button type="submit" className={s.btn}>
+                  Login
+                </button>
                 <Link to="/registerPage" className={s.link}>
-                  Register!
+                  Don't have an account? <span className={s.span}>Register!</span>
                 </Link>
-              </div>
-            </fieldset>
-          </Form>
-        </Formik>
+              </fieldset>
+            </Form>
+          </Formik>
+        </div>
       </div>
-    </div>
+    </Container>
   );
 };
