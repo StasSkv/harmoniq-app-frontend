@@ -1,9 +1,5 @@
-import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-
-const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL,
-});
+import { api } from '../api.js';
 
 export const fetchAllArticles = createAsyncThunk('articles/fetchAllArticles', async () => {
   const response = await api.get('/articles');
