@@ -1,6 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit';
 import articlesReducer from './articlesSlice/articlesSlice';
-import { authReducer } from './auth/slice';
+import globalReducer from './global/globalSlice';
+import { authReducer } from './auth/authSlice.js';
+import registrationReducer from './auth/registrationSlice';
 import storage from 'redux-persist/lib/storage';
 import {
   persistStore,
@@ -12,27 +14,39 @@ import {
   PURGE,
   REGISTER,
 } from 'redux-persist';
+import { api } from './api.js';
 
 const persistConfig = {
   key: 'root-auth',
   version: 1,
   storage,
-  whitelist: ['token'],
 };
 
 const persistedReducer = persistReducer(persistConfig, authReducer);
+
+const tokenMiddleware = () => (next) => (action) => {
+  if (action.type === REHYDRATE) {
+    const accessToken = action.payload?.accessToken;
+    if (accessToken) {
+      api.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
+    }
+  }
+  return next(action);
+};
 
 export const store = configureStore({
   reducer: {
     articles: articlesReducer,
     auth: persistedReducer,
+    registration: registrationReducer,
+    global: globalReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }),
+    }).concat(tokenMiddleware),
 });
 
 export const persistor = persistStore(store);

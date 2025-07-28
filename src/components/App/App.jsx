@@ -9,9 +9,19 @@ import { CreateArticlePage } from '../../pages/CreateArticlePage/CreateArticlePa
 import { LoginPage } from '../../pages/LoginPage/LoginPage.jsx';
 import { RegisterPage } from '../../pages/RegisterPage/RegisterPage.jsx';
 import { CreatorsPage } from '../../pages/CreatorsPage/CreatorsPage.jsx';
+import { UploadPhotoPage } from '../../pages/UploadPhotoPage/UploadPhotoPage.jsx';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useSelector } from 'react-redux';
+import { selectIsLoading } from '../../redux/global/globalSelectors';
+import Loader from '../../components/Loader/Loader';
+
 
 export const App = () => {
+  const isLoading = useSelector(selectIsLoading);
   return (
+    <> 
+    {isLoading && <Loader />}
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route index element={<HomePage />} />
@@ -23,8 +33,11 @@ export const App = () => {
         <Route path="loginPage" element={<LoginPage />} />
         <Route path="registerPage" element={<RegisterPage />} />
         <Route path="creatorsPage" element={<CreatorsPage />} />
+        <Route path="uploadPhotoPage" element={<UploadPhotoPage />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Route>
-    </Routes>
+      </Routes>
+      <ToastContainer position="top-right" autoClose={3000} />
+    </>
   );
 };
