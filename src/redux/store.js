@@ -1,5 +1,6 @@
-import { configureStore } from '@reduxjs/toolkit';
-import articlesReducer from './articlesSlice/articlesSlice';
+import { configureStore } from "@reduxjs/toolkit";
+import articlesReducer from "./articlesSlice/articlesSlice";
+import globalReducer from './global/globalSlice';
 import { authReducer } from './auth/slice';
 import registrationReducer from './auth/registrationSlice';
 import storage from 'redux-persist/lib/storage';
@@ -23,11 +24,13 @@ const persistConfig = {
 
 const persistedReducer = persistReducer(persistConfig, authReducer);
 
+
 export const store = configureStore({
   reducer: {
     articles: articlesReducer,
     auth: persistedReducer,
     registration: registrationReducer,
+    global: globalReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

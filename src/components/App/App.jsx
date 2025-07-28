@@ -12,24 +12,30 @@ import { CreatorsPage } from '../../pages/CreatorsPage/CreatorsPage.jsx';
 import { UploadPhotoPage } from '../../pages/UploadPhotoPage/UploadPhotoPage.jsx';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useSelector } from 'react-redux';
+import { selectIsLoading } from '../../redux/global/globalSelectors';
+import Loader from '../../components/Loader/Loader';
+
 
 export const App = () => {
+  const isLoading = useSelector(selectIsLoading);
   return (
-    <>
-      <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<HomePage />} />
-          <Route path="articlePage" element={<ArticlePage />} />
-          <Route path="articlesPage" element={<ArticlesPage />} />
-          <Route path="authorProfilePage" element={<AuthorProfilePage />} />
-          <Route path="authorsPage" element={<AuthorsPage />} />
-          <Route path="create" element={<CreateArticlePage />} />
-          <Route path="loginPage" element={<LoginPage />} />
-          <Route path="registerPage" element={<RegisterPage />} />
-          <Route path="creatorsPage" element={<CreatorsPage />} />
-          <Route path="uploadPhotoPage" element={<UploadPhotoPage />} />
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Route>
+    <> 
+    {isLoading && <Loader />}
+    <Routes>
+      <Route path="/" element={<Layout />}>
+        <Route index element={<HomePage />} />
+        <Route path="articlePage" element={<ArticlePage />} />
+        <Route path="articlesPage" element={<ArticlesPage />} />
+        <Route path="authorProfilePage" element={<AuthorProfilePage />} />
+        <Route path="authorsPage" element={<AuthorsPage />} />
+        <Route path="create" element={<CreateArticlePage />} />
+        <Route path="loginPage" element={<LoginPage />} />
+        <Route path="registerPage" element={<RegisterPage />} />
+        <Route path="creatorsPage" element={<CreatorsPage />} />
+        <Route path="uploadPhotoPage" element={<UploadPhotoPage />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Route>
       </Routes>
       <ToastContainer position="top-right" autoClose={3000} />
     </>
