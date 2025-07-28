@@ -2,25 +2,41 @@ import s from './AddArticleForm.module.css';
 import { FiCamera } from 'react-icons/fi';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { useState } from 'react';
-import article from './article.json';
 import { TextArea } from './TextArea';
+import { useDispatch, useSelector } from 'react-redux';
+import { createArticle } from '../../redux/articlesSlice/articlesOperation';
+import { validationSchema } from './validetionSchema';
+import { useNavigate } from 'react-router-dom';
 
 export const AddArticleForm = () => {
-  const [preview, setPreview] = useState(article.img || null);
+  const dispatch = useDispatch();
+  const article = useSelector((state) => state.articles.newArticle);
+  const [preview, setPreview] = useState(article?.img || '');
+  const navigate = useNavigate();
 
-  const handleSubmit = (values) => {
-    console.log(values);
+  const handleSubmit = async (values) => {
+    const formData = new FormData();
+    formData.append('title', values.title);
+    formData.append('article', values.article);
+    formData.append('img', values.img);
+    await dispatch(createArticle(formData));
+    navigate('/');
   };
 
   return (
     <Formik
-      initialValues={{ title: article.title, article: article.article, photo: article.img }}
+      initialValues={{
+        title: article?.title || '',
+        article: article?.article || '',
+        img: article?.img || '',
+      }}
       onSubmit={handleSubmit}
+      validationSchema={validationSchema}
     >
       {({ setFieldValue }) => {
         const handleFileChange = (e) => {
           const file = e.currentTarget.files[0];
-          setFieldValue('photo', file);
+          setFieldValue('img', file);
           if (file) {
             setPreview(URL.createObjectURL(file));
           } else {
@@ -34,11 +50,11 @@ export const AddArticleForm = () => {
                 <img src={preview} alt="Preview" className={s.previewImage} />
               </div>
             ) : (
-              <label htmlFor="photo" className={s.uploadBoxDesktop}>
+              <label htmlFor="img" className={s.uploadBoxDesktop}>
                 <FiCamera strokeWidth={0.4} color="#070707" size={99} className={s.icon} />
                 <input
-                  id="photo"
-                  name="photo"
+                  id="img"
+                  name="img"
                   type="file"
                   accept="image/*"
                   onChange={handleFileChange}
@@ -46,7 +62,7 @@ export const AddArticleForm = () => {
                 />
               </label>
             )}
-            <ErrorMessage name="photo" component="div" className={s.errorDesktop} />
+            <ErrorMessage name="img" component="div" className={s.errorDesktop} />
 
             <div className={s.uploadInputContainer}>
               <div className={s.uploadContainer}>
@@ -55,11 +71,11 @@ export const AddArticleForm = () => {
                     <img src={preview} alt="Preview" className={s.previewImage} />
                   </div>
                 ) : (
-                  <label htmlFor="photo" className={s.uploadBox}>
+                  <label htmlFor="img" className={s.uploadBox}>
                     <FiCamera strokeWidth={0.4} color="#070707" size={99} className={s.icon} />
                     <input
-                      id="photo"
-                      name="photo"
+                      id="img"
+                      name="img"
                       type="file"
                       accept="image/*"
                       onChange={handleFileChange}
@@ -67,7 +83,7 @@ export const AddArticleForm = () => {
                     />
                   </label>
                 )}
-                <ErrorMessage name="photo" component="div" className={s.errorMobile} />
+                <ErrorMessage name="img" component="div" className={s.errorMobile} />
 
                 <div className={s.inputBox}>
                   <label htmlFor="title" className={s.title}>
