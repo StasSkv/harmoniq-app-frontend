@@ -3,29 +3,23 @@
   margin-bottom: 36px;
 }
 
-/* Контейнер включает текст и изображение */
 .heroContainer {
   display: flex;
   flex-direction: column;
 }
 
-/* Изображение – в mobile вверху */
 .heroImage {
   width: 100%;
   height: 333px;
-  background-image: url('../../assets/images/hero/hero-mob.webp');
+  background-image: image-set(
+    url('../../assets/images/hero/hero-mob.webp') 1x,
+    url('../../assets/images/hero/hero-mob2x.webp') 2x
+  );
   background-repeat: no-repeat;
   background-position: center;
   order: 0;
 }
 
-@media (min-resolution: 2dppx), (min-device-pixel-ratio: 2) {
-  .heroImage {
-    background-image: url('../../assets/images/hero/hero-mob2x.webp');
-  }
-}
-
-/* Контент с заголовком и кнопками */
 .heroContent {
   order: 1;
   backdrop-filter: blur(4px);
@@ -35,27 +29,23 @@
   text-align: left;
 }
 
-/* Заголовок */
 .heroTitle {
   font-family: var(--font-family);
   font-size: 39px;
-  color: #374f42;
+  color: var(--green-darker);
   margin-bottom: 30px;
 }
 
-/* Выделенное слово */
 .italicBold {
-  font-family: 'Merienda', sans-serif;
+  font-family: var(--font-secondary);
 }
 
-/* Кнопки – мобильная вертикальная колонка */
 .heroButtons {
   display: flex;
   flex-direction: column;
   gap: 24px;
 }
 
-/* Универсальные стили для кнопки */
 .btn {
   display: flex;
   align-items: center;
@@ -70,27 +60,24 @@
   box-sizing: border-box;
 }
 
-/* Примари кнопка */
 .btnPrimary {
-  background: #649179;
+  background: var(--green);
   color: var(--white);
   border: none;
 }
 .btnPrimary:hover {
-  background: #4f7460;
+  background: var(--green-darker);
 }
 
-/* Секондари кнопка */
 .btnSecondary {
-  border: 1px solid #374f42;
-  color: #374f42;
+  border: 1px solid var(--green-darker);
+  color: var(--green-darker);
   background: transparent;
 }
 .btnSecondary:hover {
-  background-color: #e8f1ec;
+  background-color: var(--white);
 }
 
-/* Планшетная версия */
 @media (min-width: 768px) {
   .heroSection {
     padding-top: 22px;
@@ -98,22 +85,18 @@
 
   .heroContainer {
     flex-direction: row;
-
     justify-content: space-between;
   }
 
   .heroImage {
     height: 385px;
-    background-image: url('../../assets/images/hero/hero-tab.webp');
+    background-image: image-set(
+      url('../../assets/images/hero/hero-tab.webp') 1x,
+      url('../../assets/images/hero/hero-tab2x.webp') 2x
+    );
     background-position: right;
     background-size: contain;
     order: 1;
-  }
-
-  @media (min-resolution: 2dppx), (min-device-pixel-ratio: 2) {
-    .heroImage {
-      background-image: url('../../assets/images/hero/hero-tab2x.webp');
-    }
   }
 
   .heroContent {
@@ -122,8 +105,7 @@
   }
 
   .heroTitle {
-    /* font-size: 36px; */
-    margin-bottom: 40px;
+    margin-bottom: 0;
     min-width: 372px;
   }
 
@@ -139,7 +121,6 @@
   }
 }
 
-/* Десктоп версия */
 @media (min-width: 1440px) {
   .heroSection {
     padding-top: 48px;
@@ -147,7 +128,10 @@
 
   .heroImage {
     height: 562px;
-    background-image: url('../../assets/images/hero/hero-des.webp');
+    background-image: image-set(
+      url('../../assets/images/hero/hero-des.webp') 1x,
+      url('../../assets/images/hero/hero-des2x.webp') 2x
+    );
     background-size: contain;
     background-position: right;
     background-repeat: no-repeat;
