@@ -24,7 +24,6 @@ const UploadPhotoForm = () => {
 
   const [preview, setPreview] = useState(null);
 
-  console.log(name);
   const formik = useFormik({
     initialValues: {
       photo: null,
@@ -40,12 +39,11 @@ const UploadPhotoForm = () => {
       formData.append('avatar', values.photo);
 
       try {
-        console.log(formData);
         await dispatch(registerThunk(formData)).unwrap();
         dispatch(clearRegistrationData());
         navigate('/');
       } catch (error) {
-        toast.error('Refistration failed: ' + error.message);
+        toast.error(`Registration failed: ${error === undefined ? 'Unknown error' : error}`);
       }
     },
   });

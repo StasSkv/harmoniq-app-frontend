@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import { useState } from 'react';
 import { setStepOneData } from '../../redux/auth/registrationSlice';
 import { ToggleBtn } from '../ToggleBtn/ToggleBtn';
-import css from './RegisterForm.module.css'; // стилі схожі на loginForm.module.css
+import css from './RegisterForm.module.css';
 import { Container } from '../Container/Container';
 
 const validationSchema = Yup.object().shape({
