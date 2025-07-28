@@ -1,9 +1,8 @@
-import { NavLink } from 'react-router-dom';
+import HeaderUnauth from '../HeaderUnauth/HeaderUnauth';
+import { Container } from '../Container/Container';
 
-export const Header = () => {
-  return (
-    <div>
-      <p>Header</p>
-    </div>
-  );
+const Header = () => {
+  return <HeaderUnauth />;
 };
+
+export default Header;
