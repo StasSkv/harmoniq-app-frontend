@@ -63,10 +63,20 @@ const UploadPhotoForm = () => {
     }
   };
 
+  const handleClose = () => {
+    dispatch(clearRegistrationData());
+    navigate('/');
+  };
+
   return (
     <Container className={s.container}>
       <form onSubmit={formik.handleSubmit} className={s.form}>
         <h3 className={s.title}>Upload your photo</h3>
+        <button type="button" className={s.closeButton} onClick={handleClose}>
+          <svg className={s.buttonIcon} width="24" height="24">
+            <use href={`${sprite}#icon-close`} />
+          </svg>
+        </button>
 
         <div className={s.avatarWrapper}>
           <label htmlFor="photo" className={s.avatarLabel}>
