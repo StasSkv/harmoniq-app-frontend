@@ -5,11 +5,10 @@ const Loader = () => {
   return (
     <div className={styles.backdrop}>
       <ClipLoader
-        strokeColor="#4e54c8"
-        strokeWidth="4"
-        animationDuration="0.75"
-        width="80"
-        visible={true}
+        color="#000000"      
+        loading={true}      
+        size={80}            
+        speedMultiplier={1}  
       />
     </div>
   );
