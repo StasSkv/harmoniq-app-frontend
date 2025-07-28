@@ -31,8 +31,7 @@ export const LoginForm = () => {
       navigate('/');
       actions.resetForm();
     } catch (error) {
-      console.log(error);
-      toast.error('Invalid email or password. Please, try again.');
+      toast.error(`Login failed: ${error === undefined ? 'Unknown error' : error.message}`);
     }
   };
 

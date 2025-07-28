@@ -19,11 +19,7 @@ export const registerThunk = createAsyncThunk('auth/register', async (body, thun
     setAuthNav(response.data.token);
     return response.data;
   } catch (error) {
-    let message = 'Unknown error';
-    if (error && typeof error === 'object' && 'message' in error) {
-      message = error.message;
-    }
-    return thunkAPI.rejectWithValue(message);
+    return thunkAPI.rejectWithValue(handleError(error));
   }
 });
 
@@ -33,11 +29,7 @@ export const loginThunk = createAsyncThunk('auth/login', async (body, thunkAPI) 
     setAuthNav(response.data.token);
     return response.data;
   } catch (error) {
-    let message = 'Unknown error';
-    if (error && typeof error === 'object' && 'message' in error) {
-      message = error.message;
-    }
-    return thunkAPI.rejectWithValue(message);
+    return thunkAPI.rejectWithValue(handleError(error));
   }
 });
 
@@ -46,11 +38,7 @@ export const logoutThunk = createAsyncThunk('auth/logout', async (_, thunkAPI) =
     await hapmoniqApi.post('auth/logout');
     removeAuthNav();
   } catch (error) {
-    let message = 'Unknown error';
-    if (error && typeof error === 'object' && 'message' in error) {
-      message = error.message;
-    }
-    return thunkAPI.rejectWithValue(message);
+    return thunkAPI.rejectWithValue(handleError(error));
   }
 });
 
@@ -65,10 +53,14 @@ export const refreshThunk = createAsyncThunk('auth/refresh', async (_, thunkAPI)
     const response = await hapmoniqApi.get('auth/current');
     return response.data;
   } catch (error) {
-    let message = 'Unknown error';
-    if (error && typeof error === 'object' && 'message' in error) {
-      message = error.message;
-    }
-    return thunkAPI.rejectWithValue(message);
+    return thunkAPI.rejectWithValue(handleError(error));
   }
 });
+
+function handleError(error) {
+  let message = 'Unknown error';
+  if (error && typeof error === 'object' && 'message' in error) {
+    message = error.response.data.data;
+  }
+  return message;
+}
