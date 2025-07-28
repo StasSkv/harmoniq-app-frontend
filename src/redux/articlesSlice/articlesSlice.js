@@ -25,7 +25,7 @@ const articlesSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(fetchAllArticles.fulfilled, (state, action) => {
-        state.articles = action.payload;
+        state.articles = action.payload.data;
         state.isLoading = false;
       })
       .addCase(fetchAllArticles.rejected, (state, action) => {
