@@ -9,11 +9,19 @@ import { toast } from 'react-toastify';
 import { useState } from 'react';
 import s from './UploadForm.module.css';
 import { Container } from '../Container/Container';
+import {
+  selectRegistrationEmail,
+  selectRegistrationName,
+  selectRegistrationPassword,
+} from '../../redux/auth/selectors';
 
 const UploadPhotoForm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { name, email, password } = useSelector((state) => state.registration);
+  const name = useSelector(selectRegistrationName);
+  const email = useSelector(selectRegistrationEmail);
+  const password = useSelector(selectRegistrationPassword);
+
   const [preview, setPreview] = useState(null);
 
   console.log(name);
@@ -37,7 +45,7 @@ const UploadPhotoForm = () => {
         dispatch(clearRegistrationData());
         navigate('/');
       } catch (error) {
-        toast.error('Помилка реєстрації: ' + error.message);
+        toast.error('Refistration failed: ' + error.message);
       }
     },
   });
@@ -56,7 +64,7 @@ const UploadPhotoForm = () => {
   };
 
   return (
-    <Container>
+    <Container className={s.container}>
       <form onSubmit={formik.handleSubmit} className={s.form}>
         <h3 className={s.title}>Upload your photo</h3>
 
@@ -65,8 +73,8 @@ const UploadPhotoForm = () => {
             {preview ? (
               <img src={preview} alt="Preview" className={s.avatarImage} />
             ) : (
-              <svg className={s.cameraIcon} width="60" height="60">
-                <use href={`${sprite}#icon-user`} />
+              <svg className={s.cameraIcon} width="116" height="97">
+                <use href={`${sprite}#icon-camera`} />
               </svg>
             )}
           </label>
