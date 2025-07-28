@@ -1,0 +1,164 @@
+.container {
+  padding: 85px 31.5px;
+}
+
+.loginWrapper {
+  background-color: #d1e0d8;
+  border-radius: 32px;
+  padding: 48px 32px;
+}
+
+.loginTitle {
+  font-weight: 700;
+  line-height: 44px;
+  font-size: 32px;
+  text-align: center;
+  color: #070721;
+  margin-bottom: 20px;
+}
+
+.registerText {
+  width: 278px;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.55;
+  text-align: center;
+  color: #070721;
+  margin: 0 auto 20px;
+}
+
+.fieldset {
+  border: none;
+  outline: none;
+  margin: 0;
+  padding: 0;
+}
+
+.loginLabel {
+  font-weight: 400;
+  display: block;
+  font-size: 12px;
+  color: #070721;
+  margin-bottom: 4px;
+}
+
+.input {
+  width: 100%;
+  border: 1px solid #9f9f9f;
+  border-radius: 8px;
+  padding: 8px;
+  height: 41px;
+  transition: border-color 0.3s ease;
+}
+
+.emailField {
+  display: block;
+  margin-bottom: 20px;
+}
+
+.passwordField {
+  display: block;
+  margin-bottom: 27px;
+}
+
+.input::placeholder {
+  font-size: 16px;
+  line-height: 1.55;
+  color: #595d62;
+  transition: color 0.3s ease;
+}
+
+.input:hover,
+.input:focus {
+  outline: none;
+}
+
+input:hover::placeholder,
+input:focus::placeholder {
+  color: #070721;
+}
+
+.errorMessage {
+  font-size: 12px;
+  color: #ad6a6c !important;
+  margin-top: 4px;
+  font-weight: 400;
+}
+
+.inputError {
+  border-color: #ad6a6c !important;
+}
+
+.inputError::placeholder {
+  color: #ad6a6c !important;
+}
+
+.emailField {
+  margin-bottom: 16px;
+}
+
+.passwordField {
+  position: relative;
+}
+
+.btn {
+  display: block;
+  width: 100%;
+  height: 38px;
+  text-align: center;
+  margin: 0 auto;
+  background: #649179;
+  border-radius: 64px;
+  padding: 8px;
+  font-size: 16px;
+  font-weight: 700;
+  color: #f7fffb;
+  outline: none;
+  border: none;
+}
+
+.btn:hover {
+  background-color: #374f42;
+}
+
+.btn:focus {
+  box-shadow: 0 0 0 6px rgba(78, 70, 180, 0.12), 0 0 0 2px #fff;
+  background-color: #649179;
+}
+
+.link {
+  display: block;
+  text-align: center;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.55;
+  margin-top: 20px;
+}
+
+.span {
+  font-weight: 700;
+  text-decoration: underline;
+}
+
+@media (min-width: 768px) {
+  .container {
+    padding-top: 232px;
+    padding-bottom: 232px;
+  }
+
+  .loginWrapper {
+    max-width: 522px;
+    align-items: center;
+    margin: 0 auto;
+  }
+}
+
+@media (min-width: 1440px) {
+  .container {
+    padding-top: 50px;
+  }
+
+  .loginWrapper {
+    max-width: 392px;
+  }
+}

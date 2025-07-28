@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import articlesReducer from './articlesSlice/articlesSlice';
 import { authReducer } from './auth/slice';
+import registrationReducer from './auth/registrationSlice';
 import storage from 'redux-persist/lib/storage';
 import {
   persistStore,
@@ -26,6 +27,7 @@ export const store = configureStore({
   reducer: {
     articles: articlesReducer,
     auth: persistedReducer,
+    registration: registrationReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
