@@ -9,9 +9,15 @@ import { CreateArticlePage } from '../../pages/CreateArticlePage/CreateArticlePa
 import { LoginPage } from '../../pages/LoginPage/LoginPage.jsx';
 import { RegisterPage } from '../../pages/RegisterPage/RegisterPage.jsx';
 import { CreatorsPage } from '../../pages/CreatorsPage/CreatorsPage.jsx';
+import { useSelector } from 'react-redux';
+import { selectIsLoading } from '../../redux/global/globalSelectors';
+import Loader from '../../components/Loader/Loader';
 
 export const App = () => {
+  const isLoading = useSelector(selectIsLoading);
   return (
+  <>
+    {isLoading && <Loader />}
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route index element={<HomePage />} />
@@ -25,6 +31,7 @@ export const App = () => {
         <Route path="creatorsPage" element={<CreatorsPage />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Route>
-    </Routes>
+      </Routes>
+    </>
   );
 };
