@@ -2,7 +2,7 @@ import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 export const hapmoniqApi = axios.create({
-  baseURL: 'https://harmoniq-app-backend.onrender.com',
+  baseURL: import.meta.env.VITE_API_URL,
 });
 
 const setAuthNav = (token) => {

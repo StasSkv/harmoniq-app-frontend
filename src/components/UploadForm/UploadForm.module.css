@@ -3,6 +3,7 @@
 }
 
 .form {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -19,6 +20,33 @@
   text-align: center;
   color: #070721;
   margin-bottom: 20px;
+}
+
+.closeButton {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  border-radius: 50%;
+  background-color: #d1e0d8;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  padding: 0;
+}
+
+.buttonIcon {
+  stroke: #070721;
+  stroke-width: 3;
+  fill: none;
+}
+
+.closeButton:hover,
+.closeButton:focus {
+  transform: scale(1.15);
+  outline: none;
 }
 
 .avatarWrapper {
