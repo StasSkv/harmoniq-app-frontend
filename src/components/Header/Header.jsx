@@ -1,8 +1,5 @@
 import HeaderUnauth from '../HeaderUnauth/HeaderUnauth';
-import { Container } from '../Container/Container';
 
-const Header = () => {
+export const Header = () => {
   return <HeaderUnauth />;
 };
-
-export default Header;
