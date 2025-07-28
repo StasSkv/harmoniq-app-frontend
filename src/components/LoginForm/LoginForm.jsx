@@ -4,7 +4,7 @@ import * as Yup from 'yup';
 import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
 import { useState } from 'react';
-import { loginThunk } from '../../redux/auth/operations';
+import { loginThunk } from '../../redux/auth/authOperations';
 import { useNavigate } from 'react-router-dom';
 import { Container } from '../Container/Container';
 import s from './LoginForm.module.css';
