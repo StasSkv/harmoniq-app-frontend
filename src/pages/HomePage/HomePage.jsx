@@ -8,7 +8,7 @@ export const HomePage = () => {
     <>
       {/* <Hero /> */}
       <About />
-      {/* <PopularArticles /> */}
+      <PopularArticles />
       {/* <Creators /> */}
     </>
   );
