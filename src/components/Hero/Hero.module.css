@@ -56,7 +56,7 @@
   max-width: 361px;
   height: 57px;
   border-radius: 64px;
-  transition: all 0.3s ease;
+  transition: all 0.3s ease-in-out;
   text-decoration: none;
   box-sizing: border-box;
   cursor: pointer;
@@ -67,17 +67,20 @@
   color: var(--white);
   border: none;
 }
-.btnPrimary:hover {
+.btnPrimary:hover,
+.btnPrimary:focus {
   background: var(--green-darker);
 }
 
 .btnSecondary {
   border: 1px solid var(--green-darker);
   color: var(--green-darker);
-  background: transparent;
+  background-color: transparent;
 }
-.btnSecondary:hover {
-  background-color: var(--white);
+.btnSecondary:hover,
+.btnSecondary:focus {
+  color: var(--white);
+  background-color: var(--green);
 }
 
 @media (min-width: 768px) {
