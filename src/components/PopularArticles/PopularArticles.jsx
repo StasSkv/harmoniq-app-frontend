@@ -9,6 +9,7 @@ import {
   selectIsLoading,
 } from '../../redux/articlesSlice/articlesSelectors.js';
 import Loader from '../Loader/Loader.jsx';
+import { Link } from 'react-router-dom';
 
 const PopularArticles = () => {
   const articles = useSelector(selectArticles);
@@ -33,12 +34,12 @@ const PopularArticles = () => {
         <div className={s.header}>
           <h2 className={s.title}>Popular Articles</h2>
           <div className={s.allArticlesLinkContainer}>
-            <a href="/articles" className={s.allArticlesLink}>
+            <Link to="/articles" className={s.allArticlesLink}>
               <span>Go to all Articles</span>
               <svg className={s.arrorIcon}>
                 <use href="/src/assets/icons/sprite.svg#icon-arrow-right"></use>
               </svg>
-            </a>
+            </Link>
           </div>
         </div>
         {loading && (
