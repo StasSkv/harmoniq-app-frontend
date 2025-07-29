@@ -1,7 +1,7 @@
 import { Container } from '../../components/Container/Container';
-// import { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-// import { fetchAllUsers } from '../../redux/users/usersOperations';
+import { fetchAllUsers } from '../../redux/users/usersOperations';
 import {
   selectVisibleUsers,
   selectUsersLoading,
@@ -11,7 +11,7 @@ import {
 import { showMoreUsers } from '../../redux/users/usersSlice';
 
 import AuthorsList from '../../components/AuthorList/AuthorList';
-import { users } from './users';
+// import { users } from './users';
 import s from './AuthorsPAge.module.css';
 
 export const AuthorsPage = () => {
@@ -23,9 +23,10 @@ export const AuthorsPage = () => {
 
   console.log('AUTHORS from Redux:', authors);
 
-  // useEffect(() => { //
-  // dispatch(fetchAllUsers()); //
-  // }, [dispatch]);
+  useEffect(() => {
+    //
+    dispatch(fetchAllUsers()); //
+  }, [dispatch]);
 
   const handleLoadMore = () => {
     dispatch(showMoreUsers());
@@ -38,7 +39,7 @@ export const AuthorsPage = () => {
           <h2 className={s.authorsPageTitle}>Authors</h2>
           {isLoading && <p>Loading authors...</p>}
           {error && <p>Error: {error}</p>}
-          <AuthorsList authors={users} />
+          <AuthorsList authors={authors} />
           {hasMore && !isLoading && (
             <button className={s.authorsPageLoadMoreBtn} onClick={handleLoadMore}>
               Load More

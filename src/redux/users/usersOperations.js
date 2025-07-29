@@ -1,9 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
-
-const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL,
-});
+import { api } from '../api.js';
 
 export const fetchAllUsers = createAsyncThunk('users/fetchAll', async (_, thunkAPI) => {
   try {
