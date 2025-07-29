@@ -5,7 +5,6 @@
 .title {
   text-align: left;
   font-size: 32px;
-  margin-bottom: 16px;
   color: #000;
   font: var(--font-primary);
 }
@@ -15,6 +14,7 @@
   flex-direction: column;
   align-items: flex-start;
   margin-bottom: 16px;
+  gap: 16px;
 }
 
 .allArticlesLink {
@@ -41,6 +41,11 @@
   gap: 24px;
 }
 
+.loader {
+  display: flex;
+  justify-content: center;
+}
+
 @media only screen and (min-width: 768px) {
   .allArticlesLinkContainer {
     display: none;
@@ -51,10 +56,12 @@
   }
 }
 
-@media only screen and (min-width: 768px) {
+@media only screen and (min-width: 1440px) {
   .title {
     font-size: 40px;
+    margin-bottom: 0;
   }
+
   .allArticlesLinkContainer {
     display: block;
   }

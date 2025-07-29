@@ -4,6 +4,7 @@ import globalReducer from './global/globalSlice';
 import { authReducer } from './auth/authSlice.js';
 import registrationReducer from './auth/registrationSlice';
 import storage from 'redux-persist/lib/storage';
+import usersReducer from './users/usersSlice.js';
 import {
   persistStore,
   persistReducer,
@@ -40,6 +41,7 @@ export const store = configureStore({
     auth: persistedReducer,
     registration: registrationReducer,
     global: globalReducer,
+    users: usersReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

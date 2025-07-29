@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { loginThunk, logoutThunk, refreshThunk, registerThunk } from './authOperations';
 
 const initialState = {
-  user: null,
+  user: {},
   refreshToken: null,
   accessToken: null,
   isLoggedIn: false,
@@ -22,7 +22,7 @@ const slice = createSlice({
         state.isError = false;
       })
       .addCase(registerThunk.fulfilled, (state, action) => {
-        state.user = action.payload.user;
+        state.user = action.payload;
         state.refreshToken = action.payload.refreshToken;
         state.accessToken = action.payload.accessToken;
         state.isLoggedIn = true;
@@ -38,7 +38,7 @@ const slice = createSlice({
         state.isError = false;
       })
       .addCase(loginThunk.fulfilled, (state, action) => {
-        state.user = action.payload.user;
+        state.user = action.payload;
         state.refreshToken = action.payload.refreshToken;
         state.accessToken = action.payload.accessToken;
         state.isLoggedIn = true;
