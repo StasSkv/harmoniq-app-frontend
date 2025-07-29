@@ -14,24 +14,10 @@ export const registerThunk = createAsyncThunk('auth/register', async (body, thun
 
     const loginResponse = await api.post('/auth/login', { email, password });
 
-    const {
-      accessToken,
-      refreshToken,
-      _id,
-      name,
-      email: userEmail,
-      avatar,
-    } = loginResponse.data.data;
-
-    const user = {
-      id: _id,
-      name,
-      email: userEmail,
-      avatar,
-    };
+    const { accessToken } = loginResponse.data.data;
 
     setAuthNav(accessToken);
-    return { accessToken, refreshToken, user };
+    return loginResponse.data.data;
   } catch (error) {
     return thunkAPI.rejectWithValue(handleError(error));
   }
@@ -43,17 +29,11 @@ export const loginThunk = createAsyncThunk('auth/login', async (body, thunkAPI) 
       email: body.email,
       password: body.password,
     });
-    const { accessToken, refreshToken, _id, name, email: userEmail, avatar } = response.data.data;
 
-    const user = {
-      id: _id,
-      name,
-      email: userEmail,
-      avatar,
-    };
+    const { accessToken } = response.data.data;
 
     setAuthNav(accessToken);
-    return { accessToken, refreshToken, user };
+    return response.data.data;
   } catch (error) {
     return thunkAPI.rejectWithValue(handleError(error));
   }
