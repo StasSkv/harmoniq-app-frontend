@@ -8,6 +8,7 @@ import {
   selectError,
   selectIsLoading,
 } from '../../redux/articlesSlice/articlesSelectors.js';
+import Loader from '../Loader/Loader.jsx';
 
 const PopularArticles = () => {
   const articles = useSelector(selectArticles);
@@ -40,15 +41,18 @@ const PopularArticles = () => {
             </a>
           </div>
         </div>
+        {loading && (
+          <div className={s.loader}>
+            <Loader />
+          </div>
+        )}
         <ul className={s.articlesList}>
-          {loading && <span>Loading articles ...</span>}
-
           {error ? (
             <span>Server error. Please check later</span>
           ) : (
-            articles.slice(0, visibleCount).map(({ _id, img, title, article }) => (
+            articles.slice(0, visibleCount).map(({ _id, img, title, article, ownerName }) => (
               <li key={_id}>
-                <ArticleItem img={img} title={title} article={article} />
+                <ArticleItem img={img} title={title} article={article} ownerName={ownerName} />
               </li>
             ))
           )}
