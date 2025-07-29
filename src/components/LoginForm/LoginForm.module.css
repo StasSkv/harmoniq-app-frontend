@@ -38,7 +38,7 @@
   border-radius: 8px;
   padding: 8px;
   height: 41px;
-  transition: border-color 0.3s ease;
+  transition: border-color ease-in-out 0.3s;
 }
 
 .emailField {
@@ -55,7 +55,7 @@
   font-size: 16px;
   line-height: 1.55;
   color: #595d62;
-  transition: color 0.3s ease;
+  transition: color ease-in-out 0.3s;
 }
 
 .input:hover,
@@ -105,6 +105,7 @@ input:focus::placeholder {
   color: #f7fffb;
   outline: none;
   border: none;
+  transition: background-color ease-in-out 0.3s, box-shadow ease-in-out 0.3s;
 }
 
 .btn:hover {
