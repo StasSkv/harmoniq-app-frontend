@@ -31,7 +31,7 @@
     color: var(--black);
     cursor: pointer;
     padding: 2px;
-    transition: color 0.3s ease;
+    transition: color ease-in-out 0.3s;
 }
 
 .modalClose:hover,
@@ -81,7 +81,7 @@
     font-size: 16px;
     cursor: pointer;
     color: var(--black);
-    transition: all 0.3s ease;
+    transition: all ease-in-out 0.3s;
 }
 
 .modalLink:hover,
