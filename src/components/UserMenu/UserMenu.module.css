@@ -39,6 +39,12 @@
   align-items: center;
   gap: 16px;
 }
+
+@media (min-width: 1440px) {
+  .wrapper {
+    flex-direction: row;
+  }
+}
 .wrp {
   display: flex;
   gap: 16px;
@@ -50,9 +56,9 @@
 }
 
 .avatar {
+  border-radius: 256px;
   width: 32px;
   height: 32px;
-  border-radius: 50%;
   object-fit: cover;
 }
 .divider {

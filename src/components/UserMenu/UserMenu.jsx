@@ -4,12 +4,13 @@ import Modal from 'react-modal';
 import sprite from '../../assets/icons/sprite.svg'; // путь к спрайту
 import { AddArticleForm } from '../AddArticleForm/AddArticleForm';
 import styles from './UserMenu.module.css';
+import { LogoutModal } from '../LogoutModal/LogoutModal';
 
 export default function UserMenu({ showCreate = true, showName = true, showExit = true }) {
   const { user } = useSelector((state) => state.auth);
 
   const [addOpen, setAddOpen] = useState(false);
-  //   const [logoutOpen, setLogoutOpen] = useState(false);
+  const [logoutOpen, setLogoutOpen] = useState(false);
 
   return (
     <>
@@ -35,7 +36,7 @@ export default function UserMenu({ showCreate = true, showName = true, showExit 
           {showExit && (
             <button
               className={`${styles.btn} ${styles.exit}`}
-              // onClick={() => setLogoutOpen(true)}
+              onClick={() => setLogoutOpen(true)}
               aria-label="Log out"
             >
               <svg width="24" height="24">
@@ -48,8 +49,8 @@ export default function UserMenu({ showCreate = true, showName = true, showExit 
 
       {/* модалки */}
       {addOpen && <AddArticleForm onClose={() => setAddOpen(false)} />}
-      {/* 
-      <LogoutModal isOpen={logoutOpen} onRequestClose={() => setLogoutOpen(false)} /> */}
+
+      <LogoutModal isOpen={logoutOpen} onRequestClose={() => setLogoutOpen(false)} />
     </>
   );
 }
