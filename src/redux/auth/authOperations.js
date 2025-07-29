@@ -8,10 +8,28 @@ const setAuthNav = (token) => {
 export const registerThunk = createAsyncThunk('auth/register', async (body, thunkAPI) => {
   try {
     await api.post('/auth/register', body);
+
     const email = body.get('email');
     const password = body.get('password');
+
     const loginResponse = await api.post('/auth/login', { email, password });
-    const { accessToken, refreshToken, user } = loginResponse.data.data;
+
+    const {
+      accessToken,
+      refreshToken,
+      _id,
+      name,
+      email: userEmail,
+      avatar,
+    } = loginResponse.data.data;
+
+    const user = {
+      id: _id,
+      name,
+      email: userEmail,
+      avatar,
+    };
+
     setAuthNav(accessToken);
     return { accessToken, refreshToken, user };
   } catch (error) {

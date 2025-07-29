@@ -11,9 +11,10 @@ const registrationSlice = createSlice({
   initialState,
   reducers: {
     setStepOneData: (state, action) => {
-      state.name = action.payload.name;
-      state.email = action.payload.email;
-      state.password = action.payload.password;
+      const { name, email, password } = action.payload;
+      state.name = name;
+      state.email = email;
+      state.password = password;
     },
     clearRegistrationData: (state) => {
       state.name = '';
