@@ -7,12 +7,11 @@ import { useDispatch } from 'react-redux';
 import { fetchAllArticles } from '../../redux/articlesSlice/articlesOperation';
 
 export const HomePage = () => {
-  
   const dispatch = useDispatch();
-    useEffect(() => {
-      dispatch(fetchAllArticles());
-    }, [dispatch]);
-  
+  useEffect(() => {
+    dispatch(fetchAllArticles());
+  }, [dispatch]);
+
   return (
     <>
       <Hero />
