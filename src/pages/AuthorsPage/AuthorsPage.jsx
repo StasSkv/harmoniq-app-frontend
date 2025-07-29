@@ -12,7 +12,7 @@ import { showMoreUsers } from '../../redux/users/usersSlice';
 
 import AuthorsList from '../../components/AuthorList/AuthorList';
 // import { users } from './users';
-import s from './AuthorsPAge.module.css';
+import s from './AuthorsPage.module.css';
 
 export const AuthorsPage = () => {
   const dispatch = useDispatch();
