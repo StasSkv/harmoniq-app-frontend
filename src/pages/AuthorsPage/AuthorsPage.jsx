@@ -11,7 +11,9 @@ import {
 } from '../../redux/usersSlice/usersSelectors.js';
 import { showMoreUsers } from '../../redux/usersSlice/usersSlice.js';
 
-import { AuthorsList } from '../../components/AuthorList/AuthorList';
+import AuthorsList from '../../components/AuthorList/AuthorList';
+// import { users } from './users';
+import s from './AuthorsPage.module.css';
 
 const AuthorsPage = () => {
   const dispatch = useDispatch();
