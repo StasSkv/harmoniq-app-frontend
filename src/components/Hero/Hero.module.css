@@ -66,7 +66,8 @@
   color: var(--white);
   border: none;
 }
-.btnPrimary:hover {
+.btnPrimary:hover,
+.btnPrimary:focus {
   background: var(--green-darker);
 }
 
@@ -75,7 +76,8 @@
   color: var(--green-darker);
   background-color: transparent;
 }
-.btnSecondary:hover {
+.btnSecondary:hover,
+.btnSecondary:focus {
   color: var(--white);
   background-color: var(--green);
 }
