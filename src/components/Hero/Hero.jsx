@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link as ScrollLink } from 'react-scroll';
 import { Link } from 'react-router-dom';
 import { Container } from '../../components/Container/Container';
 import s from './Hero.module.css';
@@ -13,10 +14,15 @@ export default function Hero() {
             Find your <span className={s.italicBold}>harmony</span> in community
           </h1>
           <div className={s.heroButtons}>
-            <a href="#popular-articles" className={`${s.btn} ${s.btnPrimary}`}>
+            <ScrollLink
+              to="popular-articles"
+              smooth={true}
+              duration={200}
+              className={`${s.btn} ${s.btnPrimary}`}
+            >
               Go to Articles
-            </a>
-            <Link to="/registerPage" className={`${s.btn} ${s.btnSecondary}`}>
+            </ScrollLink>
+            <Link to="/register" className={`${s.btn} ${s.btnSecondary}`}>
               Register
             </Link>
           </div>

@@ -1,25 +1,19 @@
-// import s from './PopularArticles.module.css';
-// import { Container } from '../Container/Container';
-// import ArticleItem from '../ArticleItem/ArticleItem.jsx';
-// import { useDispatch, useSelector } from 'react-redux';
-// import { useEffect, useState } from 'react';
-// import {
-//   selectArticles,
-//   selectError,
-//   selectIsLoading,
-// } from '../../redux/articlesSlice/articlesSelectors.js';
-// import { fetchAllArticles } from '../../redux/articlesSlice/articlesOperation.js';
+import s from './PopularArticles.module.css';
+import { Container } from '../Container/Container';
+import ArticleItem from '../ArticleItem/ArticleItem.jsx';
+import { useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
+import {
+  selectArticles,
+  selectError,
+  selectIsLoading,
+} from '../../redux/articlesSlice/articlesSelectors.js';
 
-// const PopularArticles = () => {
-//   const articles = useSelector(selectArticles);
-//   const loading = useSelector(selectIsLoading);
-//   const error = useSelector(selectError);
-//   const dispatch = useDispatch();
-//   const [visibleCount, setVisibleCount] = useState(4);
-
-//   useEffect(() => {
-//     dispatch(fetchAllArticles());
-//   }, [dispatch]);
+const PopularArticles = () => {
+  const articles = useSelector(selectArticles);
+  const loading = useSelector(selectIsLoading);
+  const error = useSelector(selectError);
+  const [visibleCount, setVisibleCount] = useState(4);
 
 //   useEffect(() => {
 //     const handleResize = () => {
@@ -32,22 +26,22 @@
 //     return () => window.removeEventListener('resize', handleResize);
 //   }, []);
 
-//   return (
-//     <section className={s.section}>
-//       <Container>
-//         <div className={s.header}>
-//           <h2 className={s.title}>Popular Articles</h2>
-//           <div className={s.allArticlesLinkContainer}>
-//             <a href="" className={s.allArticlesLink}>
-//               <span>Go to all Articles</span>
-//               <svg className={s.arrorIcon}>
-//                 <use href="/src/assets/icons/sprite.svg#icon-arrow-right"></use>
-//               </svg>
-//             </a>
-//           </div>
-//         </div>
-//         <ul className={s.articlesList}>
-//           {loading && <span>Loading articles ...</span>}
+  return (
+    <section className={s.section} id="popular-articles">
+      <Container>
+        <div className={s.header}>
+          <h2 className={s.title}>Popular Articles</h2>
+          <div className={s.allArticlesLinkContainer}>
+            <a href="/articles" className={s.allArticlesLink}>
+              <span>Go to all Articles</span>
+              <svg className={s.arrorIcon}>
+                <use href="/src/assets/icons/sprite.svg#icon-arrow-right"></use>
+              </svg>
+            </a>
+          </div>
+        </div>
+        <ul className={s.articlesList}>
+          {loading && <span>Loading articles ...</span>}
 
 //           {error ? (
 //             <span>Server error. Please check later</span>
