@@ -1,0 +1,49 @@
+.wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  justify-content: center;
+}
+
+.authorsPageContent {
+  width: 100%;
+  height: auto;
+}
+
+.authorsPageTitle {
+  text-align: left;
+  margin-bottom: 16px;
+  color: #000;
+  font-weight: 700;
+  font-size: 40px;
+}
+
+.loadMoreBtn {
+  margin-top: 16px;
+  padding: 16px;
+  font-size: 18px;
+  font-weight: 700;
+  color: #fff;
+  border: none;
+  border-radius: 64px;
+  cursor: pointer;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: var(--green);
+  width: 340px;
+  height: 57px;
+}
+
+.loadMoreBtn:hover {
+  background-color: var(--green-darker);
+}
+
+@media (min-width: 768px) {
+}
+
+@media (min-width: 1440px) {
+  .loadMoreBtn {
+    width: 390px;
+  }
+}
