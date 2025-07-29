@@ -1,25 +1,19 @@
 import s from './PopularArticles.module.css';
 import { Container } from '../Container/Container';
 import ArticleItem from '../ArticleItem/ArticleItem.jsx';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import {
   selectArticles,
   selectError,
   selectIsLoading,
 } from '../../redux/articlesSlice/articlesSelectors.js';
-import { fetchAllArticles } from '../../redux/articlesSlice/articlesOperation.js';
 
 const PopularArticles = () => {
   const articles = useSelector(selectArticles);
   const loading = useSelector(selectIsLoading);
   const error = useSelector(selectError);
-  const dispatch = useDispatch();
   const [visibleCount, setVisibleCount] = useState(4);
-
-  useEffect(() => {
-    dispatch(fetchAllArticles());
-  }, [dispatch]);
 
   useEffect(() => {
     const handleResize = () => {
