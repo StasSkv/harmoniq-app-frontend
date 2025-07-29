@@ -1,7 +1,7 @@
 import { NavLink } from 'react-router-dom';
 import s from './Navigation.module.css';
 
-export const NavigationUnauth = () => {
+export const NavigationAuth = () => {
   const getLinkClassName = ({ isActive }) => (isActive ? `${s.link} ${s.active}` : s.link);
 
   return (

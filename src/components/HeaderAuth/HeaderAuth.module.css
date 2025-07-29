@@ -1,0 +1,143 @@
+.logo {
+  fill: var(--green);
+}
+.header {
+  background-color: var(--green-light);
+  padding: 14px 0;
+  height: 74px;
+  position: relative;
+}
+
+.container {
+  display: flex;
+  gap: 32px;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 16px;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+@media (min-width: 1440px) {
+  .container {
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 0 108px;
+    margin-left: 0;
+    margin-right: 0;
+  }
+}
+
+.desktopNav {
+  display: none;
+}
+
+@media (min-width: 1440px) {
+  .desktopNav {
+    display: flex;
+    gap: 16px;
+  }
+  .tabletArea,
+  .mobileBurger {
+    display: none;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1439px) {
+  .tabletArea {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    justify-content: center;
+  }
+  .mobileBurger {
+    display: none;
+  }
+  .tabletMenuCreate {
+    display: none;
+  }
+}
+
+@media (max-width: 767px) {
+  .tabletArea {
+    display: none;
+  }
+  .mobileBurger {
+    display: block;
+  }
+  .tabletMenuCreate {
+    display: none;
+  }
+}
+.menuNav {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+.burger {
+  position: relative;
+  z-index: 1101;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.burger svg {
+  width: 32px;
+  height: 32px;
+  stroke: var(--black);
+  stroke-width: 1.33px;
+}
+
+.menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  height: calc(100vh - 100%);
+  background-color: var(--green-light);
+  padding: 24px 146.5px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  z-index: 999;
+  align-items: center;
+}
+
+.close {
+  align-self: flex-end;
+  font-size: 28px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.menuNav {
+  margin-top: 32px;
+}
+
+.menuButtons {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+@media (min-width: 768px) {
+  .menuButtons > *:first-child {
+    display: none;
+  }
+  .tabletMenuCreate {
+    display: block;
+  }
+}
+.tabletArea,
+.mobileBurger {
+  position: relative;
+  z-index: 1100;
+}

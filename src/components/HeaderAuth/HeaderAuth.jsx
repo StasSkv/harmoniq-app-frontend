@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
-// import NavigationUnauth from '../Navigation/NavigationUnauth';
-import HeaderAuthButtons from '../HeaderAuthButtons/HeaderAuthButtons';
-import styles from './HeaderUnauth.module.css';
+import { useState, useEffect } from 'react';
+import { NavigationAuth } from '../Navigation/NavigationAuth';
+
+import styles from './HeaderAuth.module.css';
 import sprite from '../../assets/icons/sprite.svg';
 import { Container } from '../Container/Container';
-import { Navigation } from '../Navigation/Navigation';
+import UserMenu from '../UserMenu/UserMenu';
 
-export default function HeaderUnauth() {
+export default function HeaderAuth() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   const toggleMenu = () => setMenuOpen((prev) => !prev);
@@ -33,14 +33,14 @@ export default function HeaderUnauth() {
 
         {/* Десктоп */}
         <div className={styles.desktopNav}>
-          <Navigation />
-          <HeaderAuthButtons />
+          <NavigationAuth />
+          <UserMenu />
         </div>
 
         {/* Планшет: кнопка Join + бургер*/}
         <div className={styles.tabletArea}>
           <div className={styles.tabletJoin}>
-            <HeaderAuthButtons showLogin={false} />
+            <UserMenu showName={false} showExit={false} />
           </div>
           <button
             className={styles.burger}
@@ -69,11 +69,11 @@ export default function HeaderUnauth() {
 
       {menuOpen && (
         <div className={styles.menu}>
-          <Navigation className={styles.menuNav} />
+          <NavigationAuth className={styles.menuNav} />
           <div className={styles.menuButtons}>
-            <HeaderAuthButtons />
-            <div className={styles.tabletMenuLogin}>
-              <HeaderAuthButtons showJoin={false} />
+            <UserMenu />
+            <div className={styles.tabletMenuCreate}>
+              <UserMenu showCreate={false} />
             </div>
           </div>
         </div>
