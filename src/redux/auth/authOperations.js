@@ -43,7 +43,15 @@ export const loginThunk = createAsyncThunk('auth/login', async (body, thunkAPI) 
       email: body.email,
       password: body.password,
     });
-    const { accessToken, refreshToken, user } = response.data.data;
+    const { accessToken, refreshToken, _id, name, email: userEmail, avatar } = response.data.data;
+
+    const user = {
+      id: _id,
+      name,
+      email: userEmail,
+      avatar,
+    };
+
     setAuthNav(accessToken);
     return { accessToken, refreshToken, user };
   } catch (error) {
