@@ -58,6 +58,7 @@
   transition: all 0.3s ease;
   text-decoration: none;
   box-sizing: border-box;
+  cursor: pointer;
 }
 
 .btnPrimary {
