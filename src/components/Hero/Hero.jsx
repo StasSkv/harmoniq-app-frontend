@@ -17,8 +17,7 @@ export default function Hero() {
             <ScrollLink
               to="popular-articles"
               smooth={true}
-              duration={1000}
-              offset={-60}
+              duration={200}
               className={`${s.btn} ${s.btnPrimary}`}
             >
               Go to Articles

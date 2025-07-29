@@ -33,12 +33,12 @@ const PopularArticles = () => {
   }, []);
 
   return (
-    <section className={s.section}>
+    <section className={s.section} id="popular-articles">
       <Container>
         <div className={s.header}>
           <h2 className={s.title}>Popular Articles</h2>
           <div className={s.allArticlesLinkContainer}>
-            <a href="" className={s.allArticlesLink}>
+            <a href="/articles" className={s.allArticlesLink}>
               <span>Go to all Articles</span>
               <svg className={s.arrorIcon}>
                 <use href="/src/assets/icons/sprite.svg#icon-arrow-right"></use>

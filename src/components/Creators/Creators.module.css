@@ -1,7 +1,6 @@
 .creators {
   width: 100%;
-  background-color: #fff;
-  margin-bottom: 36px;
+  background-color: var(--white);
   margin-left: auto;
   margin-right: auto;
   margin-top: 36px;
@@ -13,9 +12,10 @@
 }
 
 .title {
+  font-family: var(--font-primary); 
   font-size: 32px;
   font-weight: 700;
-  color: #000;
+  color: var(--black);
   margin-bottom: 16px;
 }
 
@@ -23,14 +23,14 @@
   font-size: 16px;
   font-weight: 700;
   width: 170px;
-  color: #374f42;
+  color: var(--green-darker);
   text-decoration: none;
 }
 
 .icon {
   width: 16px;
   height: 16px;
-  stroke: #374f42;
+  stroke: var(--green-darker);
   transform: rotate(-45deg);
 }
 
@@ -78,7 +78,7 @@
   .icon {
     width: 17px;
     height: 17px;
-    fill: #374f42;
+    fill: var(--green-darker);
   }
 
   .title {
