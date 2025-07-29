@@ -53,7 +53,13 @@ const PopularArticles = () => {
           ) : (
             articles.slice(0, visibleCount).map(({ _id, img, title, article, ownerName }) => (
               <li key={_id}>
-                <ArticleItem img={img} title={title} article={article} ownerName={ownerName} />
+                <ArticleItem
+                  articleId={_id}
+                  img={img}
+                  title={title}
+                  article={article}
+                  ownerName={ownerName}
+                />
               </li>
             ))
           )}
