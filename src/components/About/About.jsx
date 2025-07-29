@@ -17,7 +17,7 @@ import friendsMobile2x from '../../assets/images/about/friends2-mob.webp';
 
 const About = () => {
   return (
-    <section>
+    <section className={s.aboutSection}>
       <Container className={s.wrapper}>
         <div className={s.aboutContent}>
           <h2 className={s.aboutTitle}>About us</h2>
@@ -36,7 +36,7 @@ const About = () => {
           />
           <source srcSet={`${lotusTablet1x} 1x, ${lotusTablet2x} 2x`} media="(min-width: 768px)" />
           <source srcSet={`${lotusMobile1x} 1x, ${lotusMobile2x} 2x`} media="(max-width: 767px)" />
-          <img src={lotusMobile1x} alt="Lotus" />
+          <img src={lotusMobile1x} alt="Lotus" loading="lazy" />
         </picture>
 
         <picture>
@@ -52,7 +52,7 @@ const About = () => {
             srcSet={`${friendsMobile1x} 1x, ${friendsMobile2x} 2x`}
             media="(max-width: 767px)"
           />
-          <img src={friendsMobile1x} alt="Friends " />
+          <img src={friendsMobile1x} alt="Friends" loading="lazy" />
         </picture>
 
         <picture className={s.nirvanaImg}>
@@ -60,7 +60,7 @@ const About = () => {
             srcSet={`${nirvanaDesktop1x} 1x, ${nirvanaDesktop2x} 2x`}
             media="(min-width: 1440px)"
           />
-          <img src={nirvanaDesktop1x} alt="Nirvana" />
+          <img src={nirvanaDesktop1x} alt="Nirvana" loading="lazy" />
         </picture>
       </Container>
     </section>

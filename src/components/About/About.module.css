@@ -1,3 +1,10 @@
+.aboutSection {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 72px 0;
+}
+
 .wrapper {
     display: flex;
     flex-wrap: wrap;
@@ -8,7 +15,7 @@
 .aboutContent {
     width: 100%;
     height: auto;
-    background-color: #D1E0D8;
+    background-color: var(--green-light);
     border-radius: 32px;
     padding: 32px;
     font-family: var(--font-primary);
@@ -16,15 +23,15 @@
 
 .aboutTitle {
     margin-bottom: 32px;
-    font-weight: 700;
-    font-size: 40px;
+    font-weight: var(--font-weight-bold);
+    font-size: 32px;
 }
 
 .aboutDescription {
     margin-bottom: 32px;
     font-size: 16px;
     line-height: 1.55;
-    font-weight: 400;
+    font-weight: var(--font-weight-regular);
 }
 
 .nirvanaImg {
@@ -56,6 +63,10 @@
 
     .aboutDescription {
         margin-bottom: 57px;
+    }
+
+    .aboutTitle {
+        font-size: 40px;
     }
 
     .nirvanaImg {
