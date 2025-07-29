@@ -32,7 +32,7 @@ export const RegisterForm = () => {
 
   const handleSubmit = (values) => {
     dispatch(setStepOneData(values));
-    navigate('/uploadPhotoPage');
+    navigate('/upload-photo');
   };
 
   return (
