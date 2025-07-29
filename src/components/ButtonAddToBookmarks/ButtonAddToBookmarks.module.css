@@ -1,0 +1,27 @@
+.addBtn {
+  background: none;
+
+  border: 1px solid var(--green-darker);
+  border-radius: 64px;
+  padding: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.2s ease-out, border-color 0.2s ease-out;
+}
+
+.addBtn:hover {
+  background-color: var(--green);
+  border-color: var(--green);
+}
+
+.addIcon {
+  stroke: var(--green-darker);
+  fill: transparent;
+  transition: stroke 0.2s ease-out, fill 0.2s ease-out;
+}
+
+.addBtn:hover .addIcon {
+  stroke: var(--white);
+  fill: var(--green);
+}
