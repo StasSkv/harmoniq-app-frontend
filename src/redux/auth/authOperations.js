@@ -8,12 +8,16 @@ const setAuthNav = (token) => {
 export const registerThunk = createAsyncThunk('auth/register', async (body, thunkAPI) => {
   try {
     await api.post('/auth/register', body);
+
     const email = body.get('email');
     const password = body.get('password');
+
     const loginResponse = await api.post('/auth/login', { email, password });
-    const { accessToken, refreshToken, user } = loginResponse.data.data;
+
+    const { accessToken } = loginResponse.data.data;
+
     setAuthNav(accessToken);
-    return { accessToken, refreshToken, user };
+    return loginResponse.data.data;
   } catch (error) {
     return thunkAPI.rejectWithValue(handleError(error));
   }
@@ -25,9 +29,11 @@ export const loginThunk = createAsyncThunk('auth/login', async (body, thunkAPI) 
       email: body.email,
       password: body.password,
     });
-    const { accessToken, refreshToken, user } = response.data.data;
+
+    const { accessToken } = response.data.data;
+
     setAuthNav(accessToken);
-    return { accessToken, refreshToken, user };
+    return response.data.data;
   } catch (error) {
     return thunkAPI.rejectWithValue(handleError(error));
   }
