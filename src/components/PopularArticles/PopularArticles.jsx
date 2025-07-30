@@ -1,6 +1,6 @@
 import s from './PopularArticles.module.css';
 import { Container } from '../Container/Container';
-import ArticleItem from '../ArticleItem/ArticleItem.jsx';
+import { ArticleItem } from '../ArticleItem/ArticleItem.jsx';
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import {
@@ -8,9 +8,11 @@ import {
   selectError,
   selectIsLoading,
 } from '../../redux/articlesSlice/articlesSelectors.js';
+import { Loader } from '../Loader/Loader.jsx';
+import { Link } from 'react-router-dom';
 
-const PopularArticles = () => {
-  const articlesPromslise = useSelector(selectArticles);
+export const PopularArticles = () => {
+  const articles = useSelector(selectArticles);
   const loading = useSelector(selectIsLoading);
   const error = useSelector(selectError);
   const [visibleCount, setVisibleCount] = useState(4);
@@ -33,23 +35,32 @@ const PopularArticles = () => {
         <div className={s.header}>
           <h2 className={s.title}>Popular Articles</h2>
           <div className={s.allArticlesLinkContainer}>
-            <a href="/articles" className={s.allArticlesLink}>
+            <Link to="/articles" className={s.allArticlesLink}>
               <span>Go to all Articles</span>
               <svg className={s.arrorIcon}>
                 <use href="/src/assets/icons/sprite.svg#icon-arrow-right"></use>
               </svg>
-            </a>
+            </Link>
           </div>
         </div>
+        {loading && (
+          <div className={s.loader}>
+            <Loader />
+          </div>
+        )}
         <ul className={s.articlesList}>
-          {loading && <span>Loading articles ...</span>}
-          //{' '}
           {error ? (
             <span>Server error. Please check later</span>
           ) : (
-            articles.slice(0, visibleCount).map(({ _id, img, title, article }) => (
+            articles.slice(0, visibleCount).map(({ _id, img, title, article, ownerName }) => (
               <li key={_id}>
-                <ArticleItem img={img} title={title} article={article} />
+                <ArticleItem
+                  articleId={_id}
+                  img={img}
+                  title={title}
+                  article={article}
+                  ownerName={ownerName}
+                />
               </li>
             ))
           )}
@@ -58,4 +69,3 @@ const PopularArticles = () => {
     </section>
   );
 };
-export default PopularArticles;

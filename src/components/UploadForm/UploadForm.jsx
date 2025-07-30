@@ -29,7 +29,19 @@ const UploadPhotoForm = () => {
       photo: null,
     },
     validationSchema: Yup.object({
-      photo: Yup.mixed().required('Photo is required'),
+      photo: Yup.mixed()
+        .required('Photo is required')
+        .test(
+          'fileSize',
+          'File is too large (max 1MB)',
+          (value) => !value || value.size <= 1024 * 1024
+        )
+        .test(
+          'fileType',
+          'Unsupported file format',
+          (value) =>
+            !value || ['image/jpeg', 'image/png', 'image/gif', 'image/webp'].includes(value.type)
+        ),
     }),
     onSubmit: async (values) => {
       const formData = new FormData();

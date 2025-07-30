@@ -83,7 +83,7 @@ export const LoginForm = () => {
                 <button type="submit" className={s.btn}>
                   Login
                 </button>
-                <Link to="/registerPage" className={s.link}>
+                <Link to="/register" className={s.link}>
                   Don't have an account? <span className={s.span}>Register!</span>
                 </Link>
               </fieldset>

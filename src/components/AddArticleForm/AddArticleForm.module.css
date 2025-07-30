@@ -82,9 +82,11 @@
 }
 
 .icon {
-  stroke-width: 0.2;
-  color: var(--black);
-  size: 99;
+  stroke-width: 1px;
+  stroke: var(--black);
+  fill: none;
+  width: 162px;
+  height: 136px;
 }
 
 .inputBox {
@@ -140,7 +142,6 @@
   font-size: 18px;
   outline: none;
 }
-
 
 .inputTextArea::placeholder {
   font-size: 18px;

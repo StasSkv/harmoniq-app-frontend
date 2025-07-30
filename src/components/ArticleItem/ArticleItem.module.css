@@ -5,7 +5,7 @@
   justify-content: space-between;
   padding: 12px;
   background-color: var(--green-light);
-  width: 361px;
+  max-width: 361px;
   height: 492px;
   border-radius: 32px;
   gap: 12px;
@@ -46,6 +46,7 @@
   justify-content: space-between;
   width: 100%;
   gap: 8px;
+  height: 42px;
 }
 
 .learnLink {
@@ -69,42 +70,14 @@
   border-color: var(--green);
 }
 
-.addBtn {
-  background: none;
-
-  border: 1px solid var(--green-darker);
-  border-radius: 64px;
-  padding: 8px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: background-color 0.2s ease-out, border-color 0.2s ease-out;
-}
-
-.addBtn:hover {
-  background-color: var(--green);
-  border-color: var(--green);
-}
-
-.addIcon {
-  stroke: var(--green-darker);
-  fill: transparent;
-  transition: stroke 0.2s ease-out, fill 0.2s ease-out;
-}
-
-.addBtn:hover .addIcon {
-  stroke: var(--white);
-  fill: var(--green);
-}
-
 @media only screen and (min-width: 768px) {
   .article {
-    width: 340px;
+    max-width: 340px;
   }
 }
 
 @media only screen and (min-width: 1440px) {
   .article {
-    width: 392px;
+    max-width: 392px;
   }
 }

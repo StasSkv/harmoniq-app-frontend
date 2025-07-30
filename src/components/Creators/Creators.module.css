@@ -12,7 +12,7 @@
 }
 
 .title {
-  font-family: var(--font-primary); 
+  font-family: var(--font-primary);
   font-size: 32px;
   font-weight: 700;
   color: var(--black);
@@ -22,10 +22,15 @@
 .link {
   font-size: 16px;
   font-weight: 700;
-  width: 170px;
   color: var(--green-darker);
   text-decoration: none;
 }
+
+.item {
+  padding: 12px;
+  width: calc((100% - 16px) / 2);
+}
+
 
 .icon {
   width: 16px;
@@ -35,31 +40,32 @@
 }
 
 .creatorsList {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 16px;
+  gap: clamp(8px, 100%, 16px);
   list-style: none;
-  padding: 0;
-  margin: 0;
 }
 
 @media (min-width: 768px) {
-  .title {
-    margin-bottom: 0px;
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
 
-  .link {
-    display: none;
+  .item {
+    width: calc((100% - 48px) / 3);
+  }
+
+  .title {
+    margin-bottom: 0px;
   }
 
   .creatorsList {
     grid-template-columns: repeat(3, 1fr);
     gap: 24px;
     list-style: none;
-    padding: 0;
-    margin: 0;
   }
 }
 
@@ -69,6 +75,10 @@
     justify-content: space-between;
     align-items: center;
     justify-content: space-between;
+  }
+
+  .item {
+    width: calc((100% - 120px) / 6);
   }
 
   .link {

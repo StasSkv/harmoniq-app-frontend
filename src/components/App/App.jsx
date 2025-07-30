@@ -1,41 +1,79 @@
-import { Routes, Route, Navigate } from 'react-router-dom';
-import { Layout } from '../Loyout/Loyout.jsx';
-import { HomePage } from '../../pages/HomePage/HomePage.jsx';
-import { ArticlePage } from '../../pages/ArticlePage/ArticlePage.jsx';
-import { ArticlesPage } from '../../pages/ArticlesPage/ArticlesPage.jsx';
-import { AuthorProfilePage } from '../../pages/AuthorProfilePage/AuthorProfilePage.jsx';
-import { AuthorsPage } from '../../pages/AuthorsPage/AuthorsPage.jsx';
-import { CreateArticlePage } from '../../pages/CreateArticlePage/CreateArticlePage.jsx';
-import { LoginPage } from '../../pages/LoginPage/LoginPage.jsx';
-import { RegisterPage } from '../../pages/RegisterPage/RegisterPage.jsx';
-import { CreatorsPage } from '../../pages/CreatorsPage/CreatorsPage.jsx';
-import { UploadPhotoPage } from '../../pages/UploadPhotoPage/UploadPhotoPage.jsx';
-import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useSelector } from 'react-redux';
+import { useEffect, lazy, Suspense } from 'react';
+import { Routes, Route, Navigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+
+import { PrivateRoute } from './PrivateRoute.jsx';
+import { RestrictedRoute } from './RestrictedRoute.jsx';
+
+import { Layout } from '../Loyout/Loyout.jsx';
+import { Loader } from '../Loader/Loader.jsx';
+import { ToastContainer } from 'react-toastify';
+import { HomePage } from '../../pages/HomePage/HomePage.jsx';
+import { ScrollToTop } from '../ScrollToTop/ScrollToTop.jsx';
+
+const RegisterPage = lazy(() => import('../../pages/RegisterPage/RegisterPage'));
+const LoginPage = lazy(() => import('../../pages/LoginPage/LoginPage'));
+const UploadPhotoPage = lazy(() => import('../../pages/UploadPhotoPage/UploadPhotoPage'));
+const ArticlesPage = lazy(() => import('../../pages/ArticlesPage/ArticlesPage'));
+const ArticlePage = lazy(() => import('../../pages/ArticlePage/ArticlePage'));
+const AuthorsPage = lazy(() => import('../../pages/AuthorsPage/AuthorsPage.jsx'));
+const AuthorProfilePage = lazy(() => import('../../pages/AuthorProfilePage/AuthorProfilePage.jsx'));
+const CreateArticlePage = lazy(() => import('../../pages/CreateArticlePage/CreateArticlePage.jsx'));
+
+import { fetchAllUsers } from '../../redux/users/usersOperations';
 import { selectIsLoading } from '../../redux/global/globalSelectors';
 import Loader from '../../components/Loader/Loader';
 
 export const App = () => {
   const isLoading = useSelector(selectIsLoading);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchAllUsers());
+  }, [dispatch]);
+
   return (
     <>
       {isLoading && <Loader />}
-      <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<HomePage />} />
-          <Route path="article" element={<ArticlePage />} />
-          <Route path="/articles" element={<ArticlesPage />} />
-          <Route path="/profile" element={<AuthorProfilePage />} />
-          <Route path="/authors" element={<AuthorsPage />} />
-          <Route path="/create" element={<CreateArticlePage />} />
-          <Route path="login" element={<LoginPage />} />
-          <Route path="register" element={<RegisterPage />} />
-          <Route path="creators" element={<CreatorsPage />} />
-          <Route path="upload-photo" element={<UploadPhotoPage />} />
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Route>
-      </Routes>
+      <Suspense fallback={<Loader />}>
+        <ScrollToTop />
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route index element={<HomePage />} />
+
+            <Route
+              path="register"
+              element={<RestrictedRoute redirectTo="/" component={<RegisterPage />} />}
+            />
+            <Route
+              path="upload-photo"
+              element={<RestrictedRoute redirectTo="/" component={<UploadPhotoPage />} />}
+            />
+            <Route
+              path="login"
+              element={<RestrictedRoute redirectTo="/" component={<LoginPage />} />}
+            />
+
+            <Route path="articles" element={<ArticlesPage />} />
+            <Route path="articles/:articleId" element={<ArticlePage />} />
+
+            <Route path="authors" element={<AuthorsPage />} />
+            <Route path="authors/:authorId" element={<AuthorProfilePage />} />
+
+            <Route
+              path="create"
+              element={<PrivateRoute redirectTo="/register" component={<CreateArticlePage />} />}
+            />
+            <Route
+              path="create/:articleId"
+              element={<PrivateRoute redirectTo="/register" component={<CreateArticlePage />} />}
+            />
+
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Route>
+        </Routes>
+      </Suspense>
       <ToastContainer position="top-right" autoClose={3000} />
     </>
   );
