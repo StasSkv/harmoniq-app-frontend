@@ -1,30 +1,48 @@
 import s from './AddArticleForm.module.css';
-import { FiCamera } from 'react-icons/fi';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { TextArea } from './TextArea';
-import { useDispatch, useSelector } from 'react-redux';
-import { createArticle } from '../../redux/articlesSlice/articlesOperation';
+import { useDispatch } from 'react-redux';
+import { createArticle, updateArticle } from '../../redux/articlesSlice/articlesOperation';
 import { validationSchema } from './validetionSchema';
 import { useNavigate } from 'react-router-dom';
+import sprite from '../../assets/icons/sprite.svg';
 
-export const AddArticleForm = () => {
+export const AddArticleForm = ({ article }) => {
   const dispatch = useDispatch();
-  const article = useSelector((state) => state.articles.newArticle);
   const [preview, setPreview] = useState(article?.img || '');
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (article?.img) {
+      setPreview(article.img);
+    }
+  }, [article?.img]);
 
   const handleSubmit = async (values) => {
     const formData = new FormData();
     formData.append('title', values.title);
     formData.append('article', values.article);
-    formData.append('img', values.img);
-    await dispatch(createArticle(formData));
-    navigate('/');
+    if (values.img instanceof File) {
+      formData.append('img', values.img);
+    }
+    let result;
+    if (article) {
+      result = await dispatch(updateArticle({ articleId: article._id, data: formData }));
+      if (updateArticle.fulfilled.match(result)) {
+        navigate(`/articles/${result.payload.data._id}`);
+      }
+    } else {
+      result = await dispatch(createArticle(formData));
+      if (createArticle.fulfilled.match(result)) {
+        navigate(`/articles/${result.payload.data._id}`);
+      }
+    }
   };
 
   return (
     <Formik
+      enableReinitialize={true}
       initialValues={{
         title: article?.title || '',
         article: article?.article || '',
@@ -51,7 +69,9 @@ export const AddArticleForm = () => {
               </div>
             ) : (
               <label htmlFor="img" className={s.uploadBoxDesktop}>
-                <FiCamera strokeWidth={0.4} color="#070707" size={99} className={s.icon} />
+                <svg className={s.icon} width="99" height="99">
+                  <use href={`${sprite}#icon-camera`} />
+                </svg>
                 <input
                   id="img"
                   name="img"
@@ -72,7 +92,9 @@ export const AddArticleForm = () => {
                   </div>
                 ) : (
                   <label htmlFor="img" className={s.uploadBox}>
-                    <FiCamera strokeWidth={0.4} color="#070707" size={99} className={s.icon} />
+                    <svg className={s.icon} width="99" height="99">
+                      <use href={`${sprite}#icon-camera`} />
+                    </svg>
                     <input
                       id="img"
                       name="img"

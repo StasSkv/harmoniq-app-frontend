@@ -1,8 +1,7 @@
-import React from 'react';
-import AuthorItem from '../AuthorItem/AuthorItem';
+import { AuthorItem } from '../AuthorItem/AuthorItem';
 import s from './AuthorList.module.css';
 
-const AuthorsList = ({ authors }) => {
+export const AuthorsList = ({ authors }) => {
   if (!authors.length) {
     return <p className={s.placeholder}>No authors available.</p>;
   }
@@ -15,5 +14,3 @@ const AuthorsList = ({ authors }) => {
     </ul>
   );
 };
-
-export default AuthorsList;

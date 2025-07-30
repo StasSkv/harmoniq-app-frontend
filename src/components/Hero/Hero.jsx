@@ -1,10 +1,9 @@
-import React from 'react';
 import { Link as ScrollLink } from 'react-scroll';
 import { Link } from 'react-router-dom';
 import { Container } from '../../components/Container/Container';
 import s from './Hero.module.css';
 
-export default function Hero() {
+export const Hero = () => {
   return (
     <section id="hero" className={s.heroSection}>
       <Container className={s.heroContainer}>
@@ -30,4 +29,4 @@ export default function Hero() {
       </Container>
     </section>
   );
-}
+};

@@ -1,9 +1,9 @@
+import s from './ArticlePage.module.css';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchArticleById } from '../../redux/articlesSlice/articlesOperation';
-import s from './ArticlePage.module.css';
-import Loader from '../../components/Loader/Loader';
+import { Loader } from '../../components/Loader/Loader';
 import { Container } from '../../components/Container/Container';
 
 export const ArticlePage = () => {

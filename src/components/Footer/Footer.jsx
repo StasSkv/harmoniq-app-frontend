@@ -1,8 +1,13 @@
 import s from './Footer.module.css';
 import { Container } from '../Container/Container.jsx';
 import sprite from '../../assets/icons/sprite.svg';
+import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { selectUser } from '../../redux/auth/authSelectors';
 
 export const Footer = () => {
+  const user = useSelector(selectUser);
+
   return (
     <footer className={s.footer}>
       <Container className={s.container}>
@@ -16,14 +21,14 @@ export const Footer = () => {
         </p>
         <ul className={s.linksList}>
           <li className={s.linksItem}>
-            <a href="#articles" className={s.link}>
+            <Link to="/articles" className={s.link}>
               Articles
-            </a>
+            </Link>
           </li>
           <li className={s.linksItem}>
-            <a href="#account" className={s.link}>
+            <Link to={`/authors/${user._id}`} className={s.link}>
               Account
-            </a>
+            </Link>
           </li>
         </ul>
       </Container>
