@@ -10,6 +10,7 @@ import { Layout } from '../Loyout/Loyout.jsx';
 import { Loader } from '../Loader/Loader.jsx';
 import { ToastContainer } from 'react-toastify';
 import { HomePage } from '../../pages/HomePage/HomePage.jsx';
+import { ScrollToTop } from '../ScrollToTop/ScrollToTop.jsx';
 
 const RegisterPage = lazy(() => import('../../pages/RegisterPage/RegisterPage'));
 const LoginPage = lazy(() => import('../../pages/LoginPage/LoginPage'));
@@ -35,6 +36,7 @@ export const App = () => {
     <>
       {isLoading && <Loader />}
       <Suspense fallback={<Loader />}>
+        <ScrollToTop />
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<HomePage />} />
