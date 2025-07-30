@@ -23,7 +23,6 @@ const CreateArticlePage = lazy(() => import('../../pages/CreateArticlePage/Creat
 
 import { fetchAllUsers } from '../../redux/users/usersOperations';
 import { selectIsLoading } from '../../redux/global/globalSelectors';
-import Loader from '../../components/Loader/Loader';
 
 export const App = () => {
   const isLoading = useSelector(selectIsLoading);

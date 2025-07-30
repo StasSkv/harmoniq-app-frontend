@@ -16,7 +16,7 @@ export const PopularArticles = () => {
   const loading = useSelector(selectIsLoading);
   const error = useSelector(selectError);
   const [visibleCount, setVisibleCount] = useState(4);
-  const articles = articlesPromslise || [];
+  // const articles = articlesPromslise || [];
 
   useEffect(() => {
     const handleResize = () => {

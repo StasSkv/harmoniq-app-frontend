@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import sprite from '../../assets/icons/sprite.svg';
 import s from './UserMenu.module.css';
 import { LogoutModal } from '../LogoutModal/LogoutModal';
-import defaultAvatar from '../../assets/images/avatar/Image1х-min.webp';
+import defaultAvatar from '../../assets/images/avatar/image1х.webp';
 
 export default function UserMenu({
   showCreate = true,
