@@ -1,6 +1,10 @@
 .container {
   width: 100%;
-  padding: 85px 31.5px;
+  padding-left: 31.5px;
+  padding-right: 31.5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .loginWrapper {
@@ -36,6 +40,7 @@
 
 .input {
   display: block;
+  background-color: var(--white);
   width: 100%;
   border: 1px solid var(--gray-light);
   border-radius: 8px;
@@ -45,7 +50,7 @@
 }
 
 .emailField {
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
 
 .passwordField {
@@ -85,10 +90,6 @@ input:focus::placeholder {
   color: var(--red) !important;
 }
 
-.emailField {
-  margin-bottom: 16px;
-}
-
 .passwordField {
   position: relative;
 }
@@ -107,6 +108,7 @@ input:focus::placeholder {
   color: var(--white);
   outline: none;
   border: none;
+  margin-bottom: 20px;
   transition: background-color ease-in-out 0.3s, box-shadow ease-in-out 0.3s;
 }
 
@@ -125,7 +127,6 @@ input:focus::placeholder {
   font-weight: var(--font-weight-regular);
   font-size: 16px;
   line-height: 1.55;
-  margin-top: 20px;
 }
 
 .span {
@@ -134,11 +135,6 @@ input:focus::placeholder {
 }
 
 @media (min-width: 768px) {
-  .container {
-    padding-top: 232px;
-    padding-bottom: 232px;
-  }
-
   .loginWrapper {
     max-width: 522px;
     margin: 0 auto;
@@ -146,11 +142,6 @@ input:focus::placeholder {
 }
 
 @media (min-width: 1440px) {
-  .container {
-    padding-top: 172px;
-    padding-bottom: 152px;
-  }
-
   .loginWrapper {
     max-width: 392px;
   }

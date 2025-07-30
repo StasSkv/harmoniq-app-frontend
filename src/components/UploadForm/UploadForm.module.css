@@ -1,10 +1,12 @@
 .container {
   width: 100%;
-  padding-top: 128px;
-  padding-bottom: 128px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .form {
+  width: 100%;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -128,11 +130,6 @@
 }
 
 @media (min-width: 768px) {
-  .container {
-    padding-top: 136px;
-    padding-bottom: 136px;
-  }
-
   .form {
     max-width: 522px;
     margin: 0 auto;
@@ -141,11 +138,6 @@
 }
 
 @media (min-width: 1440px) {
-  .container {
-    padding-top: 189px;
-    padding-bottom: 189px;
-  }
-
   .form {
     max-width: 392px;
   }
