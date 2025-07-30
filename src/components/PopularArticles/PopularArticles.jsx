@@ -1,6 +1,6 @@
 import s from './PopularArticles.module.css';
 import { Container } from '../Container/Container';
-import ArticleItem from '../ArticleItem/ArticleItem.jsx';
+import { ArticleItem } from '../ArticleItem/ArticleItem.jsx';
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import {
@@ -8,10 +8,10 @@ import {
   selectError,
   selectIsLoading,
 } from '../../redux/articlesSlice/articlesSelectors.js';
-import Loader from '../Loader/Loader.jsx';
+import { Loader } from '../Loader/Loader.jsx';
 import { Link } from 'react-router-dom';
 
-const PopularArticles = () => {
+export const PopularArticles = () => {
   const articles = useSelector(selectArticles);
   const loading = useSelector(selectIsLoading);
   const error = useSelector(selectError);
@@ -68,4 +68,3 @@ const PopularArticles = () => {
     </section>
   );
 };
-export default PopularArticles;

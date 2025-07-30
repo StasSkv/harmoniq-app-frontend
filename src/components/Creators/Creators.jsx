@@ -1,38 +1,21 @@
-import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import s from './Creators.module.css';
-import AuthorItem from '../AuthorItem/AuthorItem.jsx';
+import { AuthorItem } from '../AuthorItem/AuthorItem.jsx';
 import sprite from '../../assets/icons/sprite.svg';
 import { Container } from '../Container/Container';
+import { useSelector } from 'react-redux';
+import { selectAllUsers } from '../../redux/users/usersSelectors';
 
-const Creators = () => {
-  const [creators, setCreators] = useState([]);
-  //   const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchCreators = async () => {
-      try {
-        const response = await fetch(`${import.meta.env.VITE_API_URL}/users`);
-        const data = await response.json();
-        console.log('Ответ от сервера:', data);
-        setCreators(data.data);
-      } catch (error) {
-        console.error('Ошибка при загрузке топ авторов:', error);
-      } finally {
-        // setLoading(false);
-      }
-    };
-
-    fetchCreators();
-  }, []);
+export const Creators = () => {
+  const creators = useSelector(selectAllUsers);
 
   return (
     <section className={s.creators}>
       <Container className={s.container}>
         <div className={s.header}>
-          <h2 className={s.title}>Top Creators</h2>
-          <Link to="/CreatorsPage" className={s.link}>
-            Go to all Creators
+          <h2 className={s.title}>Top Authors</h2>
+          <Link to="/authors" className={s.link}>
+            Go to all Authors
             <svg className={s.icon}>
               <use xlinkHref={`${sprite}#icon-arrow-right`} />
             </svg>
@@ -44,7 +27,7 @@ const Creators = () => {
       ) : ( */}
         <ul className={s.creatorsList}>
           {creators.slice(0, 6).map((creator) => (
-            <li key={creator.id}>
+            <li key={creator.id} className={s.item}>
               <AuthorItem
                 key={creator.id}
                 id={creator.id}
@@ -59,5 +42,3 @@ const Creators = () => {
     </section>
   );
 };
-
-export default Creators;

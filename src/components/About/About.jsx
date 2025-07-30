@@ -1,5 +1,5 @@
-import { Container } from '../Container/Container';
 import s from './About.module.css';
+import { Container } from '../Container/Container';
 import lotusDesktop1x from '../../assets/images/about/lotus1-desc.webp';
 import friendsDesktop1x from '../../assets/images/about/friends1-desc.webp';
 import nirvanaDesktop1x from '../../assets/images/about/nirvana1.webp';
@@ -15,7 +15,7 @@ import friendsMobile1x from '../../assets/images/about/friends1-mob.webp';
 import lotusMobile2x from '../../assets/images/about/lotus2-mob.webp';
 import friendsMobile2x from '../../assets/images/about/friends2-mob.webp';
 
-const About = () => {
+export const About = () => {
   return (
     <section className={s.aboutSection}>
       <Container className={s.wrapper}>
@@ -66,4 +66,3 @@ const About = () => {
     </section>
   );
 };
-export default About;

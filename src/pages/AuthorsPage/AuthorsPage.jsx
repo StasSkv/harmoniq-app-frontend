@@ -1,3 +1,4 @@
+import s from './AuthorsPage.module.css';
 import { Container } from '../../components/Container/Container';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,9 +11,7 @@ import {
 } from '../../redux/users/usersSelectors';
 import { showMoreUsers } from '../../redux/users/usersSlice';
 
-import AuthorsList from '../../components/AuthorList/AuthorList';
-// import { users } from './users';
-import s from './AuthorsPage.module.css';
+import { AuthorsList } from '../../components/AuthorList/AuthorList';
 
 export const AuthorsPage = () => {
   const dispatch = useDispatch();

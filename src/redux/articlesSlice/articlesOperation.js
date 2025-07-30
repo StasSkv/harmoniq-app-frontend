@@ -16,10 +16,13 @@ export const createArticle = createAsyncThunk('articles/createArticle', async (d
   return response.data;
 });
 
-export const updateArticle = createAsyncThunk('articles/updateArticle', async (articleId, data) => {
-  const response = await api.patch(`/articles/${articleId}`, data);
-  return response.data;
-});
+export const updateArticle = createAsyncThunk(
+  'articles/updateArticle',
+  async ({ articleId, data }) => {
+    const response = await api.patch(`/articles/${articleId}`, data);
+    return response.data;
+  }
+);
 
 export const deleteArticle = createAsyncThunk('articles/deleteArticle', async (articleId) => {
   const response = await api.delete(`/articles/${articleId}`);
