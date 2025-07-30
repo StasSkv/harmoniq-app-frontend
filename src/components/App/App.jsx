@@ -1,22 +1,25 @@
 import 'react-toastify/dist/ReactToastify.css';
+import { useEffect, lazy, Suspense } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+
+import { PrivateRoute } from './PrivateRoute.jsx';
+import { RestrictedRoute } from './RestrictedRoute.jsx';
 
 import { Layout } from '../Loyout/Loyout.jsx';
-import { RegisterPage } from '../../pages/RegisterPage/RegisterPage.jsx';
-import { LoginPage } from '../../pages/LoginPage/LoginPage.jsx';
-import { UploadPhotoPage } from '../../pages/UploadPhotoPage/UploadPhotoPage.jsx';
-
-import { HomePage } from '../../pages/HomePage/HomePage.jsx';
-import { ArticlesPage } from '../../pages/ArticlesPage/ArticlesPage.jsx';
-import { ArticlePage } from '../../pages/ArticlePage/ArticlePage.jsx';
-import { AuthorsPage } from '../../pages/AuthorsPage/AuthorsPage.jsx';
-import { AuthorProfilePage } from '../../pages/AuthorProfilePage/AuthorProfilePage.jsx';
-import { CreateArticlePage } from '../../pages/CreateArticlePage/CreateArticlePage.jsx';
+import { Loader } from '../Loader/Loader.jsx';
 import { ToastContainer } from 'react-toastify';
-import  {Loader}  from '../Loader/Loader.jsx';
+import { HomePage } from '../../pages/HomePage/HomePage.jsx';
 
-import { useSelector, useDispatch } from 'react-redux';
-import { useEffect } from 'react';
+const RegisterPage = lazy(() => import('../../pages/RegisterPage/RegisterPage'));
+const LoginPage = lazy(() => import('../../pages/LoginPage/LoginPage'));
+const UploadPhotoPage = lazy(() => import('../../pages/UploadPhotoPage/UploadPhotoPage'));
+const ArticlesPage = lazy(() => import('../../pages/ArticlesPage/ArticlesPage'));
+const ArticlePage = lazy(() => import('../../pages/ArticlePage/ArticlePage'));
+const AuthorsPage = lazy(() => import('../../pages/AuthorsPage/AuthorsPage'));
+const AuthorProfilePage = lazy(() => import('../../pages/AuthorProfilePage/AuthorProfilePage'));
+const CreateArticlePage = lazy(() => import('../../pages/CreateArticlePage/CreateArticlePage'));
+
 import { fetchAllUsers } from '../../redux/users/usersOperations';
 import { selectIsLoading } from '../../redux/global/globalSelectors';
 
@@ -31,25 +34,43 @@ export const App = () => {
   return (
     <>
       {isLoading && <Loader />}
-      <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<HomePage />} />
-          <Route path="register" element={<RegisterPage />} />
-          <Route path="upload-photo" element={<UploadPhotoPage />} />
-          <Route path="login" element={<LoginPage />} />
+      <Suspense fallback={<Loader />}>
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route index element={<HomePage />} />
 
-          <Route path="articles" element={<ArticlesPage />} />
-          <Route path="articles/:articleId" element={<ArticlePage />} />
+            <Route
+              path="register"
+              element={<RestrictedRoute redirectTo="/articles" component={<RegisterPage />} />}
+            />
+            <Route
+              path="upload-photo"
+              element={<RestrictedRoute redirectTo="/articles" component={<UploadPhotoPage />} />}
+            />
+            <Route
+              path="login"
+              element={<RestrictedRoute redirectTo="/articles" component={<LoginPage />} />}
+            />
 
-          <Route path="authors" element={<AuthorsPage />} />
-          <Route path="authors/:authorId" element={<AuthorProfilePage />} />
+            <Route path="articles" element={<ArticlesPage />} />
+            <Route path="articles/:articleId" element={<ArticlePage />} />
 
-          <Route path="create" element={<CreateArticlePage />} />
-          <Route path="create/:articleId" element={<CreateArticlePage />} />
+            <Route path="authors" element={<AuthorsPage />} />
+            <Route path="authors/:authorId" element={<AuthorProfilePage />} />
 
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Route>
-      </Routes>
+            <Route
+              path="create"
+              element={<PrivateRoute redirectTo="/register" component={<CreateArticlePage />} />}
+            />
+            <Route
+              path="create/:articleId"
+              element={<PrivateRoute redirectTo="/register" component={<CreateArticlePage />} />}
+            />
+
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Route>
+        </Routes>
+      </Suspense>
       <ToastContainer position="top-right" autoClose={3000} />
     </>
   );
