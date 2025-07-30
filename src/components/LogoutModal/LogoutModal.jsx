@@ -6,6 +6,8 @@ import { logoutThunk } from '../../redux/auth/authOperations';
 import s from './LogoutModal.module.css';
 import sprite from '../../assets/icons/sprite.svg';
 
+Modal.setAppElement('#root');
+
 export const LogoutModal = ({ isOpen, onClose }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -18,12 +20,11 @@ export const LogoutModal = ({ isOpen, onClose }) => {
     } finally {
       localStorage.removeItem('accessToken');
       localStorage.removeItem('refreshToken');
-
       onClose();
       navigate('/login', { replace: true });
+      dispatch({ type: 'auth/logoutSuccess' });
     }
   };
-
   return (
     <Modal
       isOpen={isOpen}

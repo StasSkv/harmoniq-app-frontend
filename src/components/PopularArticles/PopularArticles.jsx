@@ -10,21 +10,22 @@ import {
 } from '../../redux/articlesSlice/articlesSelectors.js';
 
 const PopularArticles = () => {
-  const articles = useSelector(selectArticles);
+  const articlesPromslise = useSelector(selectArticles);
   const loading = useSelector(selectIsLoading);
   const error = useSelector(selectError);
   const [visibleCount, setVisibleCount] = useState(4);
+  const articles = articlesPromslise || [];
 
-//   useEffect(() => {
-//     const handleResize = () => {
-//       const width = window.innerWidth;
-//       setVisibleCount(width >= 1440 ? 3 : 4);
-//     };
+  useEffect(() => {
+    const handleResize = () => {
+      const width = window.innerWidth;
+      setVisibleCount(width >= 1440 ? 3 : 4);
+    };
 
-//     handleResize();
-//     window.addEventListener('resize', handleResize);
-//     return () => window.removeEventListener('resize', handleResize);
-//   }, []);
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   return (
     <section className={s.section} id="popular-articles">
@@ -42,19 +43,19 @@ const PopularArticles = () => {
         </div>
         <ul className={s.articlesList}>
           {loading && <span>Loading articles ...</span>}
-
-//           {error ? (
-//             <span>Server error. Please check later</span>
-//           ) : (
-//             articles.slice(0, visibleCount).map(({ _id, img, title, article }) => (
-//               <li key={_id}>
-//                 <ArticleItem img={img} title={title} article={article} />
-//               </li>
-//             ))
-//           )}
-//         </ul>
-//       </Container>
-//     </section>
-//   );
-// };
-// export default PopularArticles;
+          //{' '}
+          {error ? (
+            <span>Server error. Please check later</span>
+          ) : (
+            articles.slice(0, visibleCount).map(({ _id, img, title, article }) => (
+              <li key={_id}>
+                <ArticleItem img={img} title={title} article={article} />
+              </li>
+            ))
+          )}
+        </ul>
+      </Container>
+    </section>
+  );
+};
+export default PopularArticles;

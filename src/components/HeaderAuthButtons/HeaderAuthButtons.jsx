@@ -1,16 +1,16 @@
 import { Link } from 'react-router-dom';
-import styles from './HeaderAuthButtons.module.css';
+import s from './HeaderAuthButtons.module.css';
 
-export default function HeaderAuthButtons({ showJoin = true, showLogin = true }) {
+export default function HeaderAuthButtons({ showJoin = true, showLogin = true, onLinkClick }) {
   return (
-    <div className={styles.wrapper}>
+    <div className={s.wrapper}>
       {showLogin && (
-        <Link to="/login" className={`${styles.btn} ${styles.login}`}>
+        <Link to="/login" className={`${s.btn} ${s.login}`} onClick={onLinkClick}>
           Log in
         </Link>
       )}
       {showJoin && (
-        <Link to="/register" className={`${styles.btn} ${styles.join}`}>
+        <Link to="/register" className={`${s.btn} ${s.join}`} onClick={onLinkClick}>
           Join now
         </Link>
       )}

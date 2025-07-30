@@ -1,41 +1,54 @@
-import { useState } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
-import Modal from 'react-modal';
-import sprite from '../../assets/icons/sprite.svg'; // путь к спрайту
-import { AddArticleForm } from '../AddArticleForm/AddArticleForm';
-import styles from './UserMenu.module.css';
+import { Link } from 'react-router-dom';
+import sprite from '../../assets/icons/sprite.svg';
+import s from './UserMenu.module.css';
 import { LogoutModal } from '../LogoutModal/LogoutModal';
+import defaultAvatar from '../../assets/images/avatar/Image1х-min.webp';
 
-export default function UserMenu({ showCreate = true, showName = true, showExit = true }) {
+export default function UserMenu({
+  showCreate = true,
+  showName = true,
+  showExit = true,
+  onLinkClick,
+  onCloseMenu,
+}) {
   const { user } = useSelector((state) => state.auth);
+  const [logoutOpen, setLogoutOpen] = React.useState(false);
 
-  const [addOpen, setAddOpen] = useState(false);
-  const [logoutOpen, setLogoutOpen] = useState(false);
+  const handleCreateClick = () => {
+    if (onLinkClick) {
+      onLinkClick();
+    }
+    if (onCloseMenu) {
+      onCloseMenu();
+    }
+  };
 
   return (
     <>
-      <div className={styles.wrapper}>
+      <div className={s.wrapper}>
         {showCreate && (
-          <button className={`${styles.btn} ${styles.create}`} onClick={() => setAddOpen(true)}>
+          <Link to="/create" className={`${s.btn} ${s.create}`} onClick={handleCreateClick}>
             Create an article
-          </button>
+          </Link>
         )}
-        <div className={styles.wrp}>
+        <div className={s.wrp}>
           {showName && (
-            <div className={styles.userInfo}>
+            <div className={s.userInfo}>
               <img
-                className={styles.avatar}
-                src={user?.avatar || '/default-avatar.png'}
-                //   alt={user?.name || 'User'}
+                className={s.avatar}
+                src={user?.avatar || defaultAvatar}
+                alt={user?.name || 'User'}
               />
-              <span className={styles.name}>{user?.name || 'User'}</span>
-              <span className={styles.divider} />
+              <span className={s.name}>{user?.name || 'User'}</span>
+              <span className={s.divider} />
             </div>
           )}
 
           {showExit && (
             <button
-              className={`${styles.btn} ${styles.exit}`}
+              className={`${s.btn} ${s.exit}`}
               onClick={() => setLogoutOpen(true)}
               aria-label="Log out"
             >
@@ -47,10 +60,7 @@ export default function UserMenu({ showCreate = true, showName = true, showExit 
         </div>
       </div>
 
-      {/* модалки */}
-      {addOpen && <AddArticleForm onClose={() => setAddOpen(false)} />}
-
-      <LogoutModal isOpen={logoutOpen} onRequestClose={() => setLogoutOpen(false)} />
+      <LogoutModal isOpen={logoutOpen} onClose={() => setLogoutOpen(false)} />
     </>
   );
 }

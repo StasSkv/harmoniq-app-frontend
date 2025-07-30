@@ -16,26 +16,25 @@ import { useSelector } from 'react-redux';
 import { selectIsLoading } from '../../redux/global/globalSelectors';
 import Loader from '../../components/Loader/Loader';
 
-
 export const App = () => {
   const isLoading = useSelector(selectIsLoading);
   return (
-    <> 
-    {isLoading && <Loader />}
-    <Routes>
-      <Route path="/" element={<Layout />}>
-        <Route index element={<HomePage />} />
-        <Route path="article" element={<ArticlePage />} />
-        <Route path="/articles" element={<ArticlesPage />} />
-        <Route path="author-profile" element={<AuthorProfilePage />} />
-        <Route path="/authors" element={<AuthorsPage />} />
-        <Route path="create" element={<CreateArticlePage />} />
-        <Route path="login" element={<LoginPage />} />
-        <Route path="register" element={<RegisterPage />} />
-        <Route path="creators" element={<CreatorsPage />} />
-        <Route path="upload-photo" element={<UploadPhotoPage />} />
-        <Route path="*" element={<Navigate to="/" replace />} />
-      </Route>
+    <>
+      {isLoading && <Loader />}
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<HomePage />} />
+          <Route path="article" element={<ArticlePage />} />
+          <Route path="/articles" element={<ArticlesPage />} />
+          <Route path="/profile" element={<AuthorProfilePage />} />
+          <Route path="/authors" element={<AuthorsPage />} />
+          <Route path="/create" element={<CreateArticlePage />} />
+          <Route path="login" element={<LoginPage />} />
+          <Route path="register" element={<RegisterPage />} />
+          <Route path="creators" element={<CreatorsPage />} />
+          <Route path="upload-photo" element={<UploadPhotoPage />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Route>
       </Routes>
       <ToastContainer position="top-right" autoClose={3000} />
     </>
