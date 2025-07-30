@@ -13,7 +13,7 @@ import { showMoreUsers } from '../../redux/users/usersSlice';
 
 import { AuthorsList } from '../../components/AuthorList/AuthorList';
 
-export const AuthorsPage = () => {
+const AuthorsPage = () => {
   const dispatch = useDispatch();
   const authors = useSelector(selectVisibleUsers);
   const isLoading = useSelector(selectUsersLoading);
@@ -49,3 +49,5 @@ export const AuthorsPage = () => {
     </section>
   );
 };
+
+export default AuthorsPage;

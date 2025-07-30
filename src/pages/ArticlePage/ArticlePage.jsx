@@ -6,7 +6,7 @@ import { fetchArticleById } from '../../redux/articlesSlice/articlesOperation';
 import { Loader } from '../../components/Loader/Loader';
 import { Container } from '../../components/Container/Container';
 
-export const ArticlePage = () => {
+const ArticlePage = () => {
   const { articleId } = useParams();
   const dispatch = useDispatch();
 
@@ -36,3 +36,5 @@ export const ArticlePage = () => {
     </article>
   );
 };
+
+export default ArticlePage;

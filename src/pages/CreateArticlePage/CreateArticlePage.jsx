@@ -3,20 +3,30 @@ import { Container } from '../../components/Container/Container';
 import { AddArticleForm } from '../../components/AddArticleForm/AddArticleForm.jsx';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { fetchArticleById } from '../../redux/articlesSlice/articlesOperation';
 import { selectCurrentArticle } from '../../redux/articlesSlice/articlesSelectors';
+import { selectUser } from '../../redux/auth/authSelectors';
+import { toast } from 'react-toastify';
 
-export const CreateArticlePage = () => {
-  const { articleId } = useParams();
+const CreateArticlePage = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { articleId } = useParams();
+  const user = useSelector(selectUser);
   const article = useSelector(selectCurrentArticle);
 
   useEffect(() => {
-    if (articleId) {
+    if (!articleId) return;
+    if (!article || article._id !== articleId) {
       dispatch(fetchArticleById(articleId));
+      return;
     }
-  }, [articleId, dispatch]);
+    if (user._id !== article.ownerId) {
+      navigate('/');
+      toast.error('You are not authorized to edit this article');
+    }
+  }, [articleId, dispatch, article, user, navigate]);
 
   return (
     <section className={s.createArticlePage}>
@@ -27,3 +37,5 @@ export const CreateArticlePage = () => {
     </section>
   );
 };
+
+export default CreateArticlePage;
