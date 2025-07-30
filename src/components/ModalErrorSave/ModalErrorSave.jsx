@@ -28,10 +28,10 @@ const ModalError = ({ isOpen, onClose }) => {
       </div>
 
       <div className={s.modalActions}>
-        <Link to="/loginPage" className={s.modalLink}>
+        <Link to="/login" className={s.modalLink}>
           Login
         </Link>
-        <Link to="/registerPage" className={s.modalLink}>
+        <Link to="/register" className={s.modalLink}>
           Register
         </Link>
       </div>
