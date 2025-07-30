@@ -16,9 +16,9 @@ const LoginPage = lazy(() => import('../../pages/LoginPage/LoginPage'));
 const UploadPhotoPage = lazy(() => import('../../pages/UploadPhotoPage/UploadPhotoPage'));
 const ArticlesPage = lazy(() => import('../../pages/ArticlesPage/ArticlesPage'));
 const ArticlePage = lazy(() => import('../../pages/ArticlePage/ArticlePage'));
-const AuthorsPage = lazy(() => import('../../pages/AuthorsPage/AuthorsPage'));
-const AuthorProfilePage = lazy(() => import('../../pages/AuthorProfilePage/AuthorProfilePage'));
-const CreateArticlePage = lazy(() => import('../../pages/CreateArticlePage/CreateArticlePage'));
+const AuthorsPage = lazy(() => import('../../pages/AuthorsPage/AuthorsPage.jsx'));
+const AuthorProfilePage = lazy(() => import('../../pages/AuthorProfilePage/AuthorProfilePage.jsx'));
+const CreateArticlePage = lazy(() => import('../../pages/CreateArticlePage/CreateArticlePage.jsx'));
 
 import { fetchAllUsers } from '../../redux/users/usersOperations';
 import { selectIsLoading } from '../../redux/global/globalSelectors';
@@ -41,15 +41,15 @@ export const App = () => {
 
             <Route
               path="register"
-              element={<RestrictedRoute redirectTo="/articles" component={<RegisterPage />} />}
+              element={<RestrictedRoute redirectTo="/" component={<RegisterPage />} />}
             />
             <Route
               path="upload-photo"
-              element={<RestrictedRoute redirectTo="/articles" component={<UploadPhotoPage />} />}
+              element={<RestrictedRoute redirectTo="/" component={<UploadPhotoPage />} />}
             />
             <Route
               path="login"
-              element={<RestrictedRoute redirectTo="/articles" component={<LoginPage />} />}
+              element={<RestrictedRoute redirectTo="/" component={<LoginPage />} />}
             />
 
             <Route path="articles" element={<ArticlesPage />} />

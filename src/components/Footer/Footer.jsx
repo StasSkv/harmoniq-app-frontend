@@ -26,7 +26,7 @@ export const Footer = () => {
             </Link>
           </li>
           <li className={s.linksItem}>
-            {user ? (
+            {user._id ? (
               <Link to={`/authors/${user._id}`} className={s.link}>
                 Account
               </Link>
