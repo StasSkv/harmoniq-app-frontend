@@ -2,9 +2,9 @@ import UploadForm from '../../components/UploadForm/UploadForm';
 
 const UploadPhotoPage = () => {
   return (
-    <div>
+    <>
       <UploadForm />
-    </div>
+    </>
   );
 };
 
