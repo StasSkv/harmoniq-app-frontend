@@ -1,9 +1,15 @@
+import { useSelector } from 'react-redux';
 import { Link as ScrollLink } from 'react-scroll';
 import { Link } from 'react-router-dom';
 import { Container } from '../../components/Container/Container';
 import s from './Hero.module.css';
 
 export const Hero = () => {
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+
+  const isUserLoggedIn =
+    typeof isLoggedIn === 'string' ? isLoggedIn === 'true' : Boolean(isLoggedIn);
+
   return (
     <section id="hero" className={s.heroSection}>
       <Container className={s.heroContainer}>
@@ -21,9 +27,12 @@ export const Hero = () => {
             >
               Go to Articles
             </ScrollLink>
-            <Link to="/register" className={`${s.btn} ${s.btnSecondary}`}>
-              Register
-            </Link>
+
+            {!isUserLoggedIn && (
+              <Link to="/register" className={`${s.btn} ${s.btnSecondary}`}>
+                Register
+              </Link>
+            )}
           </div>
         </div>
       </Container>
