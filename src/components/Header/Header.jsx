@@ -5,6 +5,7 @@ import { Container } from '../Container/Container';
 import { Navigation } from '../Navigation/Navigation';
 import HeaderAuthButtons from '../HeaderAuthButtons/HeaderAuthButtons';
 import UserMenu from '../UserMenu/UserMenu';
+//eslint-disable-next-line
 import { motion, useAnimation } from 'framer-motion';
 import s from './Header.module.css';
 import sprite from '../../assets/icons/sprite.svg';
