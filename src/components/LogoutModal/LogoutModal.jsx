@@ -2,7 +2,7 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import Modal from 'react-modal';
 import { toast } from 'react-toastify';
-import { logoutThunk } from '../../redux/auth/authOperations';
+import { logoutThunk } from '../../redux/authSlice/authOperations';
 import s from './LogoutModal.module.css';
 import sprite from '../../assets/icons/sprite.svg';
 

@@ -1,10 +1,13 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { api } from '../api.js';
 
-export const fetchAllArticles = createAsyncThunk('articles/fetchAllArticles', async () => {
-  const response = await api.get('/articles');
-  return response.data;
-});
+export const fetchAllArticles = createAsyncThunk(
+  'articles/fetchAllArticles',
+  async (params = {}) => {
+    const response = await api.get('/articles', { params });
+    return response.data;
+  }
+);
 
 export const fetchArticleById = createAsyncThunk('articles/fetchArticleById', async (id) => {
   const response = await api.get(`/articles/${id}`);

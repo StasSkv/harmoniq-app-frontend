@@ -1,7 +1,7 @@
 import 'react-toastify/dist/ReactToastify.css';
-import { useEffect, lazy, Suspense } from 'react';
+import { lazy, Suspense } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import { PrivateRoute } from './PrivateRoute.jsx';
 import { RestrictedRoute } from './RestrictedRoute.jsx';
@@ -21,16 +21,10 @@ const AuthorsPage = lazy(() => import('../../pages/AuthorsPage/AuthorsPage.jsx')
 const AuthorProfilePage = lazy(() => import('../../pages/AuthorProfilePage/AuthorProfilePage.jsx'));
 const CreateArticlePage = lazy(() => import('../../pages/CreateArticlePage/CreateArticlePage.jsx'));
 
-import { fetchAllUsers } from '../../redux/users/usersOperations';
-import { selectIsLoading } from '../../redux/global/globalSelectors';
+import { selectIsLoading } from '../../redux/globalSlice/globalSelectors.js';
 
 export const App = () => {
   const isLoading = useSelector(selectIsLoading);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(fetchAllUsers());
-  }, [dispatch]);
 
   return (
     <>

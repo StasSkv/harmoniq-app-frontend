@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { selectIsLoggedIn } from '../../redux/auth/authSelectors';
+import { selectIsLoggedIn } from '../../redux/authSlice/authSelectors';
 import s from './Navigation.module.css';
 
 export const Navigation = ({ onLinkClick }) => {

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { selectIsLoggedIn } from '../../redux/auth/authSelectors';
+import { selectIsLoggedIn } from '../../redux/authSlice/authSelectors';
 import { Container } from '../Container/Container';
 import { Navigation } from '../Navigation/Navigation';
 import HeaderAuthButtons from '../HeaderAuthButtons/HeaderAuthButtons';
