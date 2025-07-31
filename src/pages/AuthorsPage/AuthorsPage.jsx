@@ -2,14 +2,14 @@ import s from './AuthorsPage.module.css';
 import { Container } from '../../components/Container/Container';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchAllUsers } from '../../redux/users/usersOperations';
+import { fetchAllUsers } from '../../redux/usersSlice/usersOperations.js';
 import {
   selectVisibleUsers,
   selectUsersLoading,
   selectUsersError,
   selectUsersHasMore,
-} from '../../redux/users/usersSelectors';
-import { showMoreUsers } from '../../redux/users/usersSlice';
+} from '../../redux/usersSlice/usersSelectors.js';
+import { showMoreUsers } from '../../redux/usersSlice/usersSlice.js';
 
 import { AuthorsList } from '../../components/AuthorList/AuthorList';
 

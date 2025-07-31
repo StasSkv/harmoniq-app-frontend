@@ -6,7 +6,7 @@ import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { fetchArticleById } from '../../redux/articlesSlice/articlesOperation';
 import { selectCurrentArticle } from '../../redux/articlesSlice/articlesSelectors';
-import { selectUser } from '../../redux/auth/authSelectors';
+import { selectUser } from '../../redux/authSlice/authSelectors.js';
 import { toast } from 'react-toastify';
 
 const CreateArticlePage = () => {
