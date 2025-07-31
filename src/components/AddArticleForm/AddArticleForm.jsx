@@ -9,11 +9,13 @@ import { useNavigate } from 'react-router-dom';
 import sprite from '../../assets/icons/sprite.svg';
 import { FormAutoSave } from './FormAutoSave.js';
 import { fileToBase64 } from './fileToBase64.js';
+import { toast } from 'react-toastify';
 
 export const AddArticleForm = ({ article }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const editorRef = useRef();
+  console.log(article);
 
   const draftKey = article?._id ? `draft-article-${article._id}` : 'draft-new-article';
 
@@ -23,6 +25,16 @@ export const AddArticleForm = ({ article }) => {
   const [preview, setPreview] = useState(parsedDraft?.preview || article?.img || '');
 
   const handleSubmit = async (values, { resetForm }) => {
+    if (!preview) {
+      toast.warning('Please upload a photo before publishing the article.');
+      return;
+    }
+    const isArticleEmpty =
+      !values.article || values.article.replace(/<[^>]*>/g, '').trim().length < 40;
+    if (isArticleEmpty) {
+      toast.warning('Article must contain at least 40 visible characters');
+      return;
+    }
     const formData = new FormData();
     formData.append('title', values.title);
     formData.append('article', values.article);

@@ -1,6 +1,6 @@
 .editor {
   width: 100%;
-  border: 1px solid var(--gray);
+  border: 1px solid var(--gray-light);
   border-radius: 8px;
   padding: 12px;
   background-color: var(--white);
@@ -14,14 +14,14 @@
   flex-wrap: wrap;
   margin-bottom: 10px;
   padding-bottom: 4px;
-  border-bottom: 1px solid var(--gray);
+  border-bottom: 1px solid var(--gray-light);
 }
 
 
 .toolbarSeparator {
   width: 1px;
   height: 28px;
-  background: var(--gray);
+  background: var(--gray-light);
 }
 
 .toolbar button {
@@ -83,7 +83,7 @@
   float: left;
   font-weight: 400;
   font-size: 18px;
-  color: var(--gray);
+  color: var(--gray-light);
   pointer-events: none;
   height: 0;
   outline: none;

@@ -1,26 +1,27 @@
 .container {
   width: 100%;
-  padding-top: 128px;
-  padding-bottom: 128px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .form {
+  width: 100%;
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 32px;
   border-radius: 24px;
-  background-color: #d1e0d8;
-  position: relative;
+  background-color: var(--green-light);
 }
 
 .title {
-  font-weight: 700;
+  font-weight: var(--font-weight-bold);
   font-size: 32px;
   line-height: 44px;
   text-align: center;
-  color: #070721;
+  color: var(--black);
   margin-bottom: 20px;
 }
 
@@ -33,14 +34,14 @@
   align-items: center;
   border: none;
   border-radius: 50%;
-  background-color: #d1e0d8;
+  background-color: var(--green-light);
   cursor: pointer;
   transition: transform ease-in-out 0.3s;
   padding: 0;
 }
 
 .buttonIcon {
-  stroke: #070721;
+  stroke: var(--black);
   stroke-width: 3;
   fill: none;
 }
@@ -65,7 +66,7 @@
   width: 136px;
   height: 136px;
   border-radius: 50%;
-  background-color: #4e7f6d;
+  background-color: var(--green);
   overflow: hidden;
   cursor: pointer;
   transition: box-shadow ease-in-out 0.3s;
@@ -84,7 +85,7 @@
 
 .cameraIcon {
   stroke-width: 2px;
-  stroke: #070707;
+  stroke: var(--black);
   fill: none;
 }
 
@@ -96,11 +97,10 @@
   width: 100%;
   height: 38px;
   padding: 8px;
-  background-color: #649179;
-  color: #ffffff;
-  font-weight: 700;
+  background-color: var(--green);
+  font-weight: var(--font-weight-bold);
   font-size: 16px;
-  color: #f7fffb;
+  color: var(--white);
   border: none;
   border-radius: 64px;
   cursor: pointer;
@@ -109,32 +109,27 @@
 
 .submitBtn:disabled {
   box-shadow: 0 0 0 6px rgba(78, 70, 180, 0.12), 0 0 0 2px #fff;
-  background: #649179;
+  background: var(--green);
   opacity: 0.3;
   cursor: not-allowed;
 }
 
 .submitBtn:hover:not(:disabled) {
-  background-color: #374f42;
+  background-color: var(--green-darker);
 }
 
 .submitBtn:focus:not(:disabled) {
   box-shadow: 0 0 0 6px rgba(78, 70, 180, 0.12), 0 0 0 2px #fff;
-  background-color: #649179;
+  background-color: var(--green);
 }
 
 .error {
-  color: #ff4d4d;
+  color: var(--red);
   margin-bottom: 12px;
   font-size: 14px;
 }
 
 @media (min-width: 768px) {
-  .container {
-    padding-top: 136px;
-    padding-bottom: 136px;
-  }
-
   .form {
     max-width: 522px;
     margin: 0 auto;
@@ -143,11 +138,6 @@
 }
 
 @media (min-width: 1440px) {
-  .container {
-    padding-top: 189px;
-    padding-bottom: 189px;
-  }
-
   .form {
     max-width: 392px;
   }
