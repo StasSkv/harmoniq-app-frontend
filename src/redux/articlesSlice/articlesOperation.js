@@ -39,7 +39,7 @@ export const fetchArticlesWithParams = createAsyncThunk(
       const params = {
         page,
         limit,
-        ...(filter !== 'all' && { type: filter }),
+        ...(filter !== 'all' && { filter }),
       };
 
       const response = await api.get('/articles', { params });
