@@ -77,10 +77,12 @@
   color: var(--green-darker);
   background-color: transparent;
 }
+
 .btnSecondary:hover,
 .btnSecondary:focus {
   color: var(--white);
   background-color: var(--green);
+  border: none;
 }
 
 @media (min-width: 768px) {
@@ -165,5 +167,14 @@
 
   .btn {
     max-width: 184px;
+  }
+
+  .btnLoggedIn {
+    max-width: none;
+    width: 85%;
+  }
+
+  .heroButtonsLoggedIn {
+    justify-content: center;
   }
 }
