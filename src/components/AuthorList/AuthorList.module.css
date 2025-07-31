@@ -2,19 +2,14 @@
   display: grid;
   gap: 16px;
   grid-template-columns: repeat(2, 1fr);
-  padding: 0;
-  margin: 0;
   list-style: none;
+  justify-items: center;
 }
 
 @media (min-width: 768px) {
   .authorsList {
     gap: 24px;
     grid-template-columns: repeat(2, 1fr);
-  }
-
-  .authorsList li {
-    width: calc((100% - (2 - 1) * 24px) / 2);
   }
 }
 
