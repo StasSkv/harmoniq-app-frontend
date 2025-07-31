@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import { useDispatch } from 'react-redux';
 import { useState } from 'react';
-import { setStepOneData } from '../../redux/auth/registrationSlice';
+import { setStepOneData } from '../../redux/authSlice/registrationSlice';
 import { ToggleBtn } from '../ToggleBtn/ToggleBtn';
 import css from './RegisterForm.module.css';
 import { Container } from '../Container/Container';

@@ -1,10 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
 import articlesReducer from './articlesSlice/articlesSlice';
-import globalReducer from './global/globalSlice';
-import { authReducer } from './auth/authSlice.js';
-import registrationReducer from './auth/registrationSlice';
+import globalReducer from './globalSlice/globalSlice.js';
+import { authReducer } from './authSlice/authSlice.js';
+import registrationReducer from './authSlice/registrationSlice.js';
 import storage from 'redux-persist/lib/storage';
-import usersReducer from './users/usersSlice.js';
+import usersReducer from './usersSlice/usersSlice.js';
 import {
   persistStore,
   persistReducer,

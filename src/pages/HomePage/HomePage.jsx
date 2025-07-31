@@ -4,12 +4,14 @@ import { PopularArticles } from '../../components/PopularArticles/PopularArticle
 import { Creators } from '../../components/Creators/Creators';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { fetchAllArticles } from '../../redux/articlesSlice/articlesOperation';
+import { fetchAllArticles } from '../../redux/articlesSlice/articlesOperation.js';
+import { fetchAllUsers } from '../../redux/usersSlice/usersOperations.js';
 
 export const HomePage = () => {
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(fetchAllArticles());
+    dispatch(fetchAllArticles({ filter: 'popular', limit: 4 }));
+    dispatch(fetchAllUsers({ filter: 'popular', limit: 6 }));
   }, [dispatch]);
 
   return (
