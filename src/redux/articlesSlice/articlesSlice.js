@@ -5,6 +5,7 @@ import {
   createArticle,
   updateArticle,
   deleteArticle,
+  fetchArticlesWithParams,
 } from './articlesOperation';
 
 const initialState = {
@@ -14,6 +15,7 @@ const initialState = {
   currentArticle: null,
   isLoading: false,
   error: null,
+  total: 0,
 };
 
 const articlesSlice = createSlice({
@@ -73,6 +75,20 @@ const articlesSlice = createSlice({
         state.isLoading = false;
       })
       .addCase(deleteArticle.rejected, (state, action) => {
+        state.error = action.payload;
+        state.isLoading = false;
+      })
+      .addCase(fetchArticlesWithParams.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(fetchArticlesWithParams.fulfilled, (state, action) => {
+        const page = action.meta.arg.page;
+        const { data, total } = action.payload;
+        state.articles = page === 1 ? data : [...state.articles, ...data];
+        state.total = total;
+        state.isLoading = false;
+      })
+      .addCase(fetchArticlesWithParams.rejected, (state, action) => {
         state.error = action.payload;
         state.isLoading = false;
       });

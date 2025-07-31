@@ -198,16 +198,23 @@
 
 .errorDesktop {
   display: none;
+  
+}
+
+.error {
+  color: var(--red);
 }
 
 @media only screen and (min-width: 1440px) {
   .errorDesktop {
     display: block;
+    color: var(--red);
   }
 }
 
 .errorMobile {
   display: block;
+  color: var(--red);
 }
 
 @media only screen and (max-width: 1439px) {

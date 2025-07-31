@@ -7,7 +7,6 @@ import { PrivateRoute } from './PrivateRoute.jsx';
 import { RestrictedRoute } from './RestrictedRoute.jsx';
 
 import { Layout } from '../Loyout/Loyout.jsx';
-import { Loader } from '../Loader/Loader.jsx';
 import { ToastContainer } from 'react-toastify';
 import { HomePage } from '../../pages/HomePage/HomePage.jsx';
 import { ScrollToTop } from '../ScrollToTop/ScrollToTop.jsx';
@@ -22,14 +21,15 @@ const AuthorProfilePage = lazy(() => import('../../pages/AuthorProfilePage/Autho
 const CreateArticlePage = lazy(() => import('../../pages/CreateArticlePage/CreateArticlePage.jsx'));
 
 import { selectIsLoading } from '../../redux/globalSlice/globalSelectors.js';
+import { LoaderPage } from '../Loader/LoaderPage/LoaderPage.jsx';
 
 export const App = () => {
   const isLoading = useSelector(selectIsLoading);
 
   return (
     <>
-      {isLoading && <Loader />}
-      <Suspense fallback={<Loader />}>
+      {isLoading && <LoaderPage />}
+      <Suspense fallback={<LoaderPage />}>
         <ScrollToTop />
         <Routes>
           <Route path="/" element={<Layout />}>

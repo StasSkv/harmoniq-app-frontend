@@ -1,0 +1,132 @@
+.editor {
+  width: 100%;
+  border: 1px solid var(--gray);
+  border-radius: 8px;
+  padding: 12px;
+  background-color: var(--white);
+  min-height: 393px;
+}
+
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid var(--gray);
+}
+
+
+.toolbarSeparator {
+  width: 1px;
+  height: 28px;
+  background: var(--gray);
+}
+
+.toolbar button {
+  background: var(--white);
+  font-weight: 400;
+  border: none;
+  font-size: 16px;
+  padding: 6px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+@media (min-width: 768px) {
+  .toolbar button {
+    font-size: 14px;
+    padding: 8px;
+  }
+}
+
+@media (max-width: 768px) {
+  .toolbar button {
+    font-size: 14px;
+    padding: 6px;
+  }
+  .toolbar {
+    justify-content: center;
+    align-items: start;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+}
+}
+
+.editor .toolbar button:hover {
+  color: var(--purple);
+}
+
+.toolbar button.active {
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+}
+
+.editor-content {
+  min-height: 200px;
+  outline: none;
+  padding: 8px;
+  font-weight: 400;
+  font-size: 18px;
+  color: var(--black);
+  white-space: normal;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  word-wrap: break-word;
+  line-height: 1.5;
+}
+
+.empty::before {
+  content: attr(data-placeholder);
+  float: left;
+  font-weight: 400;
+  font-size: 18px;
+  color: var(--gray);
+  pointer-events: none;
+  height: 0;
+  outline: none;
+  border: none;
+}
+
+.editor-content [contenteditable='true']:focus {
+  outline: none;
+}
+
+.editor-content ul,
+.editor-content ol {
+  padding-left: 24px;
+}
+
+.editor-content ul li {
+  list-style: disc;
+  list-style-type: disc;
+  display: list-item;
+  padding-left: 8px;
+}
+
+.editor-content ol li {
+  list-style: decimal;
+  list-style-type: decimal;
+  display: list-item;
+  padding-left: 8px;
+}
+
+.editor-content li > p {
+  margin: 0;
+  padding: 0;
+}
+
+.editor-content a {
+  pointer-events: auto;
+  user-select: none;
+  -webkit-user-select: none;
+  text-decoration: underline;
+  color: var(--purple);
+  cursor: pointer;
+}
+
+.editor-content a::selection {
+  background: none;
+}
