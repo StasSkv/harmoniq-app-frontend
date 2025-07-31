@@ -1,3 +1,10 @@
+import RecommendedArticles from '../../components/RecommendedArticles/RecommendedArticles';
+
 export const ArticlesPage = () => {
-  return <p>ArticlesPage</p>;
+  return (
+    <div>
+      <h2>ArticlesPage</h2>
+      <RecommendedArticles />
+    </div>
+  );
 };
