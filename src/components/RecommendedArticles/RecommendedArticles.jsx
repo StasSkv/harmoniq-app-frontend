@@ -22,15 +22,37 @@ const RecommendedArticles = ({ currentArticle }) => {
     fetchArticles();
   }, []);
 
+  const handleSave = async () => {
+    try {
+      const accessToken = localStorage.getItem('accessToken');
+
+      if (!accessToken) {
+        alert('Please log in first.');
+        return;
+      }
+
+      await axios.post(`http://localhost:3000/users/save/${currentArticle._id}`, null, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+
+      alert('Article saved to bookmarks!');
+    } catch (error) {
+      console.error('Failed to save article:', error);
+      alert('Failed to save');
+    }
+  };
+
   return (
     <>
-      <div className={s.wrapper}>
+      <div className={s.recommendedWrapper}>
         <div className={s.articleInfo}>
           <p>Author: {currentArticle?.author?.name || 'Unknown'}</p>
           <p>Publication date: {new Date(currentArticle?.createdAt).toLocaleDateString('en-GB')}</p>
         </div>
 
-        <h3 className={s.title}>You can also be interested</h3>
+        <h3 className={s.recommendedTitle}>You can also be interested</h3>
 
         <div className={s.recommendationBox}>
           <ul className={s.list}>
@@ -41,8 +63,8 @@ const RecommendedArticles = ({ currentArticle }) => {
                   <p className={s.author}>By {article.author?.name || 'Unknown'}</p>
                 </div>
                 <Link to={`/articles/${article._id}`} className={s.linkBtn}>
-                  <svg className={s.icon} width="25" height="24">
-                    <use href="/sprite.svg#icon-arrow-right" />
+                  <svg className={s.iconRight} width="25" height="24">
+                    <use href="/src/assets/icons/sprite.svg#icon-arrow-right" />
                   </svg>
                 </Link>
               </li>
@@ -50,10 +72,12 @@ const RecommendedArticles = ({ currentArticle }) => {
           </ul>
         </div>
       </div>
-
-      <div className={s.saveWrapper}>
-        <button className={s.saveBtn}>Save</button>
-      </div>
+      <button className={s.saveBtn} onClick={handleSave}>
+        <svg className={s.iconSave} width="25" height="25">
+          <use href="/src/assets/icons/sprite.svg#icon-save" />
+        </svg>
+        Save
+      </button>
     </>
   );
 };

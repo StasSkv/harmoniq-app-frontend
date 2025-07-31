@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchArticleById } from '../../redux/articlesSlice/articlesOperation';
 import { LoaderPage } from '../../components/Loader/LoaderPage/LoaderPage';
 import { Container } from '../../components/Container/Container';
+import RecommendedArticles from '../../components/RecommendedArticles/RecommendedArticles';
 
 const ArticlePage = () => {
   const { articleId } = useParams();
@@ -30,7 +31,9 @@ const ArticlePage = () => {
         {article.img && <img src={article.img} alt={article.title} className={s.articleImg} />}
         <div className={s.content}>
           <div className={s.articleText} dangerouslySetInnerHTML={{ __html: article.article }} />
-          <div className={s.future}>You can also interested</div>
+          <div className={s.future}>
+            <RecommendedArticles currentArticle={article} />
+          </div>
         </div>
       </Container>
     </article>

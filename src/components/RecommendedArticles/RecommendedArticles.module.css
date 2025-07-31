@@ -1,4 +1,4 @@
-.wrapper {
+.recommendedWrapper {
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
@@ -8,7 +8,6 @@
   padding: 32px 32px 40px 32px;
   border-radius: 32px;
   width: 393px;
-  height: 551px;
 }
 .articleInfo {
   display: flex;
@@ -18,7 +17,7 @@
   font-size: 16px;
   color: #070721;
 }
-.title {
+.recommendedTitle {
   font-weight: 700;
   font-size: 24px;
   color: #070721;
@@ -64,9 +63,8 @@
   cursor: pointer;
   color: #2d2d2d;
 }
-
 .saveBtn {
-  margin-top: 20px;
+  margin-top: 24px;
   width: 100%;
   background-color: #649179;
   color: white;
