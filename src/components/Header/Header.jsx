@@ -5,14 +5,23 @@ import { Container } from '../Container/Container';
 import { Navigation } from '../Navigation/Navigation';
 import HeaderAuthButtons from '../HeaderAuthButtons/HeaderAuthButtons';
 import UserMenu from '../UserMenu/UserMenu';
-
+import { motion, useAnimation } from 'framer-motion';
 import s from './Header.module.css';
 import sprite from '../../assets/icons/sprite.svg';
 
 export const Header = () => {
   const isLoggedIn = useSelector(selectIsLoggedIn);
   const [menuOpen, setMenuOpen] = useState(false);
-  const toggleMenu = () => setMenuOpen((p) => !p);
+  const controls = useAnimation();
+
+  const toggleMenu = () => {
+    setMenuOpen((prev) => !prev);
+    if (menuOpen) {
+      controls.start('exit');
+    } else {
+      controls.start('enter');
+    }
+  };
 
   useEffect(() => {
     document.body.style.overflow = menuOpen ? 'hidden' : '';
@@ -20,7 +29,27 @@ export const Header = () => {
       document.body.style.overflow = '';
     };
   }, [menuOpen]);
+
   const isTablet = window.innerWidth >= 768 && window.innerWidth < 1440;
+
+  const menuVariants = {
+    enter: {
+      opacity: 1,
+      scale: 1,
+      transition: { duration: 0.3, ease: 'easeInOut' },
+    },
+    exit: {
+      opacity: 0,
+      scale: 0,
+      transition: { duration: 0.3, ease: 'easeInOut' },
+    },
+  };
+
+  const handleLinkClick = () => {
+    setMenuOpen(false);
+    controls.start('exit');
+  };
+
   return (
     <header className={s.header}>
       <Container className={s.container}>
@@ -58,23 +87,22 @@ export const Header = () => {
         </button>
       </Container>
 
-      {menuOpen && (
-        <div className={s.menu}>
-          <Navigation className={s.menuNav} onLinkClick={() => setMenuOpen(false)} />
-          <div className={s.menuButtons}>
-            {isLoggedIn ? (
-              <UserMenu
-                showCreate={!isTablet}
-                showName
-                showExit
-                onLinkClick={() => setMenuOpen(false)}
-              />
-            ) : (
-              <HeaderAuthButtons showJoin={!isTablet} onLinkClick={() => setMenuOpen(false)} />
-            )}
-          </div>
+      <motion.div
+        className={s.menu}
+        variants={menuVariants}
+        initial="exit"
+        animate={controls}
+        exit="exit"
+      >
+        <Navigation className={s.menuNav} onLinkClick={handleLinkClick} />
+        <div className={s.menuButtons}>
+          {isLoggedIn ? (
+            <UserMenu showCreate={!isTablet} showName showExit onLinkClick={handleLinkClick} />
+          ) : (
+            <HeaderAuthButtons showJoin={!isTablet} onLinkClick={handleLinkClick} />
+          )}
         </div>
-      )}
+      </motion.div>
     </header>
   );
 };

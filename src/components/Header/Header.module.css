@@ -114,3 +114,13 @@
   stroke: var(--black);
   stroke-width: 1.33px;
 }
+
+.mobileBurger:hover,
+.burger:hover,
+.mobileBurger:focus,
+.burger:focus,
+.mobileBurger:active,
+.burger:active {
+  transform: scale(1.1);
+  transition: transform 0.3s ease;
+}
