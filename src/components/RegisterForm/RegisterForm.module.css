@@ -1,31 +1,35 @@
 .container {
   width: 100%;
-  padding: 85px 16.5px;
+  padding-left: 16.5px;
+  padding-right: 16.5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .loginWrapper {
   width: 100%;
-  background-color: #d1e0d8;
+  background-color: var(--green-light);
   border-radius: 32px;
   padding: 48px 32px;
 }
 
 .loginTitle {
-  font-weight: 700;
+  font-weight: var(--font-weight-bold);
   height: 44px;
   font-size: 32px;
   text-align: center;
-  color: #070721;
+  color: var(--black);
   margin-bottom: 20px;
 }
 
 .registerText {
   max-width: 278px;
-  font-weight: 400;
+  font-weight: var(--font-weight-regular);
   font-size: 16px;
   line-height: 1.55;
   text-align: center;
-  color: #070721;
+  color: var(--black);
   margin: 0 auto 20px;
 }
 
@@ -36,31 +40,29 @@
   padding: 0;
 }
 
+.emailField,
+.nameField,
+.passwordField {
+  display: block;
+  margin-bottom: 16px;
+}
+
 .loginLabel {
-  font-weight: 400;
+  font-weight: var(--font-weight-regular);
   display: block;
   font-size: 12px;
-  color: #070721;
+  color: var(--black);
   margin-bottom: 4px;
 }
 
 .input {
   width: 100%;
-  border: 1px solid #9f9f9f;
+  background-color: var(--white);
+  border: 1px solid var(--gray-light);
   border-radius: 8px;
   padding: 8px;
-  height: 41px;
+  height: 43px;
   transition: border-color ease-in-out 0.3s;
-}
-
-.emailField,
-.nameField {
-  display: block;
-  margin-bottom: 20px;
-}
-
-.passwordField {
-  margin-bottom: 20px;
 }
 
 .passwordConfirmField {
@@ -70,7 +72,7 @@
 .input::placeholder {
   font-size: 16px;
   line-height: 1.55;
-  color: #595d62;
+  color: var(--gray);
   transition: color ease-in-out 0.3s;
 }
 
@@ -81,26 +83,22 @@
 
 input:hover::placeholder,
 input:focus::placeholder {
-  color: #070721;
+  color: var(--black);
 }
 
 .errorMessage {
   font-size: 12px;
-  color: #ad6a6c !important;
+  color: var(--red) !important;
   margin-top: 4px;
   font-weight: 400;
 }
 
 .inputError {
-  border-color: #ad6a6c !important;
+  border-color: var(--red) !important;
 }
 
 .inputError::placeholder {
-  color: #ad6a6c !important;
-}
-
-.emailField {
-  margin-bottom: 16px;
+  color: var(--red) !important;
 }
 
 .passwordField {
@@ -113,46 +111,42 @@ input:focus::placeholder {
   height: 38px;
   text-align: center;
   margin: 0 auto;
-  background: #649179;
+  background: var(--green);
   border-radius: 64px;
   padding: 8px;
   font-size: 16px;
-  font-weight: 700;
-  color: #f7fffb;
+  font-weight: var(--font-weight-bold);
+  color: var(--white);
   outline: none;
   border: none;
+  margin-bottom: 20px;
   transition: background-color ease-in-out 0.3s, box-shadow ease-in-out 0.3s;
 }
 
 .btn:hover {
-  background-color: #374f42;
+  background-color: var(--green-darker);
 }
 
 .btn:focus {
   box-shadow: 0 0 0 6px rgba(78, 70, 180, 0.12), 0 0 0 2px #fff;
-  background-color: #649179;
+  background-color: var(--green);
 }
 
 .link {
   display: block;
   text-align: center;
-  font-weight: 400;
+  font-weight: var(--font-weight-regular);
   font-size: 16px;
   line-height: 1.55;
-  margin-top: 20px;
+  height: 25px;
 }
 
 .span {
-  font-weight: 700;
+  font-weight: var(--font-weight-bold);
   text-decoration: underline;
 }
 
 @media screen and (min-width: 768px) {
-  .container {
-    padding-top: 120px;
-    padding-bottom: 119px;
-  }
-
   .loginWrapper {
     max-width: 522px;
     margin: 0 auto;
@@ -160,11 +154,6 @@ input:focus::placeholder {
 }
 
 @media screen and (min-width: 1440px) {
-  .container {
-    padding-top: 50px;
-    padding-bottom: 50px;
-  }
-
   .loginWrapper {
     max-width: 392px;
   }

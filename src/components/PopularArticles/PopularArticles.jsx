@@ -3,12 +3,10 @@ import { Container } from '../Container/Container';
 import { ArticleItem } from '../ArticleItem/ArticleItem.jsx';
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
-import {
-  selectArticles,
-  selectIsLoading,
-} from '../../redux/articlesSlice/articlesSelectors.js';
+import { selectArticles, selectIsLoading } from '../../redux/articlesSlice/articlesSelectors.js';
 import { Loader } from '../Loader/Loader.jsx';
 import { Link } from 'react-router-dom';
+import sprite from '../../assets/icons/sprite.svg';
 
 export const PopularArticles = () => {
   const articles = useSelector(selectArticles);
@@ -35,7 +33,7 @@ export const PopularArticles = () => {
             <Link to="/articles" className={s.allArticlesLink}>
               <span>Go to all Articles</span>
               <svg className={s.arrorIcon}>
-                <use href="/src/assets/icons/sprite.svg#icon-arrow-right"></use>
+                <use href={`${sprite}#icon-arrow-right`}></use>
               </svg>
             </Link>
           </div>
