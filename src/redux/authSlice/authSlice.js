@@ -53,9 +53,14 @@ const slice = createSlice({
         state.isPending = true;
         state.isError = false;
       })
-      .addCase(logoutThunk.fulfilled, () => ({
-        ...initialState,
-      }))
+      .addCase(logoutThunk.fulfilled, (state) => {
+        state.user = {};
+        state.refreshToken = null;
+        state.accessToken = null;
+        state.isLoggedIn = false;
+        state.isPending = false;
+        state.isError = false;
+      })
       .addCase(logoutThunk.rejected, (state) => {
         state.isPending = false;
         state.isError = true;
