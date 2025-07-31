@@ -1,18 +1,18 @@
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { selectIsLoggedIn } from '../../redux/authSlice/authSelectors';
+import { selectIsLoggedIn, selectUser } from '../../redux/authSlice/authSelectors';
 import s from './Navigation.module.css';
 
 export const Navigation = ({ onLinkClick }) => {
   const isAuth = useSelector(selectIsLoggedIn);
-
+  const user = useSelector(selectUser);
   const getClass = ({ isActive }) => (isActive ? `${s.link} ${s.active}` : s.link);
 
   const links = [
     { to: '/', label: 'Home', end: true },
     { to: '/articles', label: 'Articles' },
     { to: '/authors', label: 'Creators' },
-    ...(isAuth ? [{ to: '/profile', label: 'My Profile' }] : []),
+    ...(isAuth ? [{ to: `/authors/${user.id}`, label: 'My Profile' }] : []),
   ];
 
   return (
