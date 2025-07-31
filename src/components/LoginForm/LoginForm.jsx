@@ -31,7 +31,8 @@ export const LoginForm = () => {
       navigate('/');
       actions.resetForm();
     } catch (error) {
-      toast.error(`Login failed: ${error === undefined ? 'Unknown error' : error.message}`);
+      const message = error?.response?.data?.message || error?.message || 'Unknown error';
+      toast.error(`Login failed: ${message}`);
     }
   };
 

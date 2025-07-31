@@ -55,7 +55,8 @@ const UploadPhotoForm = () => {
         dispatch(clearRegistrationData());
         navigate('/');
       } catch (error) {
-        toast.error(`Registration failed: ${error === undefined ? 'Unknown error' : error}`);
+        const message = error?.response?.data?.message || error?.message || 'Unknown error';
+        toast.error(`Registration failed: ${message}`);
       }
     },
   });
