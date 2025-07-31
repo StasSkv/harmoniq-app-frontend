@@ -1,25 +1,28 @@
 import s from './AddArticleForm.module.css';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-import { useEffect, useState } from 'react';
-import { TextArea } from './TextArea';
+import { useRef, useState } from 'react';
+import { MyEditor } from './EditorContent/EditorContent';
 import { useDispatch } from 'react-redux';
 import { createArticle, updateArticle } from '../../redux/articlesSlice/articlesOperation';
 import { validationSchema } from './validetionSchema';
 import { useNavigate } from 'react-router-dom';
 import sprite from '../../assets/icons/sprite.svg';
+import { FormAutoSave } from './FormAutoSave.js';
+import { fileToBase64 } from './fileToBase64.js';
 
 export const AddArticleForm = ({ article }) => {
   const dispatch = useDispatch();
-  const [preview, setPreview] = useState(article?.img || '');
   const navigate = useNavigate();
+  const editorRef = useRef();
 
-  useEffect(() => {
-    if (article?.img) {
-      setPreview(article.img);
-    }
-  }, [article?.img]);
+  const draftKey = article?._id ? `draft-article-${article._id}` : 'draft-new-article';
 
-  const handleSubmit = async (values) => {
+  const savedDraft = localStorage.getItem(draftKey);
+  const parsedDraft = savedDraft ? JSON.parse(savedDraft) : null;
+
+  const [preview, setPreview] = useState(parsedDraft?.preview || article?.img || '');
+
+  const handleSubmit = async (values, { resetForm }) => {
     const formData = new FormData();
     formData.append('title', values.title);
     formData.append('article', values.article);
@@ -30,103 +33,136 @@ export const AddArticleForm = ({ article }) => {
     if (article) {
       result = await dispatch(updateArticle({ articleId: article._id, data: formData }));
       if (updateArticle.fulfilled.match(result)) {
-        navigate(`/articles/${result.payload.data._id}`);
+        localStorage.removeItem(draftKey);
+        resetForm({
+          values: {
+            title: '',
+            article: '',
+            img: null,
+          },
+        });
+        editorRef.current?.commands?.setContent('');
+        setPreview('');
+        setTimeout(() => {
+          navigate(`/articles/${result.payload.data._id}`);
+        }, 0);
       }
     } else {
       result = await dispatch(createArticle(formData));
       if (createArticle.fulfilled.match(result)) {
-        navigate(`/articles/${result.payload.data._id}`);
+        localStorage.removeItem(draftKey);
+        resetForm({
+          values: {
+            title: '',
+            article: '',
+            img: null,
+          },
+        });
+        editorRef.current?.commands?.setContent('');
+        setPreview('');
+        setTimeout(() => {
+          navigate(`/articles/${result.payload.data._id}`);
+        }, 0);
       }
     }
   };
 
   return (
     <Formik
-      enableReinitialize={true}
+      enableReinitialize
       initialValues={{
-        title: article?.title || '',
-        article: article?.article || '',
-        img: article?.img || '',
+        title: parsedDraft?.title || article?.title || '',
+        article: parsedDraft?.article || article?.article || '',
+        img: null,
       }}
       onSubmit={handleSubmit}
       validationSchema={validationSchema}
     >
-      {({ setFieldValue }) => {
-        const handleFileChange = (e) => {
+      {({ setFieldValue, values }) => {
+        const handleFileChange = async (e) => {
           const file = e.currentTarget.files[0];
           setFieldValue('img', file);
           if (file) {
-            setPreview(URL.createObjectURL(file));
+            const base64 = await fileToBase64(file);
+            setPreview(base64);
           } else {
-            setPreview(article.img || null);
+            setPreview(article?.img || '');
           }
         };
+
         return (
-          <Form className={s.form}>
-            {preview ? (
-              <div className={s.previewContainerDesktop}>
-                <img src={preview} alt="Preview" className={s.previewImage} />
-              </div>
-            ) : (
-              <label htmlFor="img" className={s.uploadBoxDesktop}>
-                <svg className={s.icon} width="99" height="99">
-                  <use href={`${sprite}#icon-camera`} />
-                </svg>
-                <input
-                  id="img"
-                  name="img"
-                  type="file"
-                  accept="image/*"
-                  onChange={handleFileChange}
-                  className={s.input}
-                />
-              </label>
-            )}
-            <ErrorMessage name="img" component="div" className={s.errorDesktop} />
-
-            <div className={s.uploadInputContainer}>
-              <div className={s.uploadContainer}>
-                {preview ? (
-                  <div className={s.previewContainerMobile}>
-                    <img src={preview} alt="Preview" className={s.previewImage} />
-                  </div>
-                ) : (
-                  <label htmlFor="img" className={s.uploadBox}>
-                    <svg className={s.icon} width="99" height="99">
-                      <use href={`${sprite}#icon-camera`} />
-                    </svg>
-                    <input
-                      id="img"
-                      name="img"
-                      type="file"
-                      accept="image/*"
-                      onChange={handleFileChange}
-                      className={s.input}
-                    />
-                  </label>
-                )}
-                <ErrorMessage name="img" component="div" className={s.errorMobile} />
-
-                <div className={s.inputBox}>
-                  <label htmlFor="title" className={s.title}>
-                    Article title
-                  </label>
-                  <Field
-                    className={s.inputText}
-                    name="title"
-                    type="text"
-                    placeholder="Enter the title"
-                  />
+          <>
+            <Form className={s.form}>
+              {preview ? (
+                <div className={s.previewContainerDesktop}>
+                  <img src={preview} alt="Preview" className={s.previewImage} />
                 </div>
-              </div>
-              <ErrorMessage name="title" component="div" className={s.error} />
+              ) : (
+                <label htmlFor="img" className={s.uploadBoxDesktop}>
+                  <svg className={s.icon} width="99" height="99">
+                    <use href={`${sprite}#icon-camera`} />
+                  </svg>
+                  <input
+                    id="img"
+                    name="img"
+                    type="file"
+                    accept="image/*"
+                    onChange={handleFileChange}
+                    className={s.input}
+                  />
+                </label>
+              )}
+              <ErrorMessage name="img" component="div" className={s.errorDesktop} />
 
-              <TextArea name="article" />
-              <button type="submit" className={s.btn}>
-                Publish
-              </button>
-            </div>
-          </Form>
+              <div className={s.uploadInputContainer}>
+                <div className={s.uploadContainer}>
+                  {preview ? (
+                    <div className={s.previewContainerMobile}>
+                      <img src={preview} alt="Preview" className={s.previewImage} />
+                    </div>
+                  ) : (
+                    <label htmlFor="img" className={s.uploadBox}>
+                      <svg className={s.icon} width="99" height="99">
+                        <use href={`${sprite}#icon-camera`} />
+                      </svg>
+                      <input
+                        id="img"
+                        name="img"
+                        type="file"
+                        accept="image/*"
+                        onChange={handleFileChange}
+                        className={s.input}
+                      />
+                    </label>
+                  )}
+                  <ErrorMessage name="img" component="div" className={s.errorMobile} />
+
+                  <div className={s.inputBox}>
+                    <label htmlFor="title" className={s.title}>
+                      Article title
+                    </label>
+                    <Field
+                      className={s.inputText}
+                      name="title"
+                      type="text"
+                      placeholder="Enter the title"
+                    />
+                    <ErrorMessage name="title" component="div" className={s.error} />
+                  </div>
+                </div>
+
+                <MyEditor
+                  value={values.article}
+                  onChange={(val) => setFieldValue('article', val)}
+                  ref={editorRef}
+                />
+                <button type="submit" className={s.btn}>
+                  Publish
+                </button>
+              </div>
+            </Form>
+            <FormAutoSave draftKey={draftKey} preview={preview} />
+          </>
         );
       }}
     </Formik>
