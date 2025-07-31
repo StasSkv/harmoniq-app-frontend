@@ -81,7 +81,6 @@
 .btnSecondary:focus {
   color: var(--white);
   background-color: var(--green);
-  border: none;
 }
 
 @media (min-width: 768px) {
