@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import { useDispatch } from 'react-redux';
 import { useState } from 'react';
-import { setStepOneData } from '../../redux/auth/registrationSlice';
+import { setStepOneData } from '../../redux/authSlice/registrationSlice';
 import { ToggleBtn } from '../ToggleBtn/ToggleBtn';
 import css from './RegisterForm.module.css';
 import { Container } from '../Container/Container';
@@ -36,7 +36,7 @@ export const RegisterForm = () => {
   };
 
   return (
-    <Container>
+    <Container className={css.container}>
       <div className={css.loginWrapper}>
         <h2 className={css.loginTitle}>Register</h2>
         <p className={css.registerText}>Join our community of mindfulness and wellbeing!</p>
@@ -50,7 +50,7 @@ export const RegisterForm = () => {
             <fieldset className={css.fieldset}>
               <Field name="name">
                 {({ field, meta }) => (
-                  <div className={css.emailField}>
+                  <div className={css.nameField}>
                     <label className={css.loginLabel}>Enter your name</label>
                     <input
                       {...field}
@@ -102,7 +102,7 @@ export const RegisterForm = () => {
                 <ErrorMessage name="password" component="span" className={css.errorMessage} />
               </div>
 
-              <div className={css.passwordField}>
+              <div className={css.passwordConfirmField}>
                 <label className={css.loginLabel}>Repeat your password</label>
                 <Field name="confirmPassword">
                   {({ field, meta }) => (
@@ -136,7 +136,7 @@ export const RegisterForm = () => {
 
               <p className={css.link}>
                 Already have an account?{' '}
-                <Link to="/loginPage" className={css.span}>
+                <Link to="/login" className={css.span}>
                   Log in!
                 </Link>
               </p>

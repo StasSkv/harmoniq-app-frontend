@@ -1,20 +1,18 @@
 import s from './PopularArticles.module.css';
 import { Container } from '../Container/Container';
-import ArticleItem from '../ArticleItem/ArticleItem.jsx';
+import { ArticleItem } from '../ArticleItem/ArticleItem.jsx';
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import {
   selectArticles,
-  selectError,
   selectIsLoading,
 } from '../../redux/articlesSlice/articlesSelectors.js';
-import Loader from '../Loader/Loader.jsx';
+import { Loader } from '../Loader/Loader.jsx';
 import { Link } from 'react-router-dom';
 
-const PopularArticles = () => {
+export const PopularArticles = () => {
   const articles = useSelector(selectArticles);
   const loading = useSelector(selectIsLoading);
-  const error = useSelector(selectError);
   const [visibleCount, setVisibleCount] = useState(4);
 
   useEffect(() => {
@@ -42,15 +40,14 @@ const PopularArticles = () => {
             </Link>
           </div>
         </div>
-        {loading && (
-          <div className={s.loader}>
-            <Loader />
-          </div>
-        )}
+
         <ul className={s.articlesList}>
-          {error ? (
-            <span>Server error. Please check later</span>
-          ) : (
+          {loading && (
+            <div className={s.loader}>
+              <Loader />
+            </div>
+          )}
+          {!loading &&
             articles.slice(0, visibleCount).map(({ _id, img, title, article, ownerName }) => (
               <li key={_id}>
                 <ArticleItem
@@ -61,11 +58,9 @@ const PopularArticles = () => {
                   ownerName={ownerName}
                 />
               </li>
-            ))
-          )}
+            ))}
         </ul>
       </Container>
     </section>
   );
 };
-export default PopularArticles;

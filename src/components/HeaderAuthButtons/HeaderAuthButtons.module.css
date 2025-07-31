@@ -24,18 +24,18 @@
 }
 
 .login {
-  font-family: var(--font-family);
+  font-family: var(--font-primary);
   font-weight: 700;
   font-size: 12px;
   color: var(--green-darker);
   background: transparent;
-    text-align: center;
+  text-align: center;
   padding: 12px 16px;
 }
 
 .join {
   background: var(--green);
-  font-family: var(--font-family);
+  font-family: var(--font-primary);
   font-weight: 500;
   font-size: 16px;
   color: var(--white);
@@ -44,4 +44,8 @@
 
 .join:hover {
   background: var(--green-darker);
+}
+
+.join:focus {
+  box-shadow: 0 0 0 6px rgba(78, 70, 180, 0.12), 0 0 0 2px #fff;
 }

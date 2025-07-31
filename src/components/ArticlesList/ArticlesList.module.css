@@ -1,0 +1,22 @@
+.articles_list_wrapper {
+  margin-bottom: 24px;
+}
+
+.articles_list_item:not(:last-child) {
+  margin-bottom: 24px;
+}
+
+@media (min-width: 768px) {
+  .articles_list_item:not(:last-child) {
+    margin-bottom: 0;
+  }
+  .articles_list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 24px;
+  }
+}
+
+@media (min-width: 1440px) {
+}

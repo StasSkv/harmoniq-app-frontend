@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import s from './ArticleItem.module.css';
 import ButtonAddToBookmarks from '../ButtonAddToBookmarks/ButtonAddToBookmarks.jsx';
 
-const ArticleItem = ({ img, title, article, ownerName, articleId }) => {
+export const ArticleItem = ({ img, title, article, ownerName, articleId }) => {
   return (
     <div className={s.article}>
       <img src={img} alt="Article" className={s.image} />
@@ -12,7 +12,7 @@ const ArticleItem = ({ img, title, article, ownerName, articleId }) => {
         <p className={s.articlePreview}>{article}</p>
       </div>
       <div className={s.buttons}>
-        <Link className={s.learnLink} to={`/article/${articleId}`}>
+        <Link className={s.learnLink} to={`/articles/${articleId}`}>
           Learn more
         </Link>
         <ButtonAddToBookmarks />
@@ -20,4 +20,3 @@ const ArticleItem = ({ img, title, article, ownerName, articleId }) => {
     </div>
   );
 };
-export default ArticleItem;

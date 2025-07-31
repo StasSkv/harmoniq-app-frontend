@@ -82,9 +82,11 @@
 }
 
 .icon {
-  stroke-width: 0.2;
-  color: var(--black);
-  size: 99;
+  stroke-width: 1px;
+  stroke: var(--black);
+  fill: none;
+  width: 162px;
+  height: 136px;
 }
 
 .inputBox {
@@ -141,7 +143,6 @@
   outline: none;
 }
 
-
 .inputTextArea::placeholder {
   font-size: 18px;
   color: var(--gray);
@@ -197,16 +198,23 @@
 
 .errorDesktop {
   display: none;
+  
+}
+
+.error {
+  color: var(--red);
 }
 
 @media only screen and (min-width: 1440px) {
   .errorDesktop {
     display: block;
+    color: var(--red);
   }
 }
 
 .errorMobile {
   display: block;
+  color: var(--red);
 }
 
 @media only screen and (max-width: 1439px) {

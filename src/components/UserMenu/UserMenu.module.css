@@ -1,0 +1,81 @@
+.exit {
+  position: relative;
+  z-index: 1101;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.exit:hover,
+.exit:focus {
+  transform: scale(1.1);
+  transition: transform 0.3s ease;
+}
+.exit svg {
+  width: 32px;
+  height: 32px;
+  stroke-width: 1px;
+  stroke: var(--green-darker);
+  fill: none;
+}
+
+.create {
+  background: var(--green);
+  font-family: var(--font-primary);
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--white);
+  padding: 12px 16px;
+  border-radius: 64px;
+  border: none;
+}
+.create:hover {
+  background: var(--green-darker);
+}
+.create:focus {
+  box-shadow: 0 0 0 6px rgba(78, 70, 180, 0.12), 0 0 0 2px #fff;
+}
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+}
+
+@media (min-width: 768px) and (max-width: 1439px) {
+  .wrapper {
+    gap: 0px;
+  }
+}
+@media (min-width: 1440px) {
+  .wrapper {
+    flex-direction: row;
+  }
+}
+.wrp {
+  display: flex;
+  gap: 16px;
+}
+.userInfo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.avatar {
+  border-radius: 256px;
+  width: 32px;
+  height: 32px;
+  object-fit: cover;
+}
+.divider {
+  width: 1px;
+  height: 39px;
+  background: var(--green-darker);
+  margin-left: 16px;
+}

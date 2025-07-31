@@ -1,0 +1,126 @@
+.logo {
+  fill: var(--green);
+}
+.header {
+  background-color: var(--green-light);
+  padding: 14px 0;
+  height: 74px;
+  position: relative;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  height: 100%;
+}
+
+@media (min-width: 768px) and (max-width: 1439px) {
+  .container {
+    padding: 0 32px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .container {
+    padding: 0 108px;
+  }
+
+  .desktopNav {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+  }
+
+  .tabletArea,
+  .mobileBurger,
+  .menu {
+    display: none;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1439px) {
+  .desktopNav,
+  .mobileBurger {
+    display: none;
+  }
+
+  .tabletArea {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+  }
+}
+
+@media (max-width: 767px) {
+  .desktopNav,
+  .tabletArea {
+    display: none;
+  }
+
+  .mobileBurger {
+    display: block;
+  }
+}
+
+.menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  height: calc(100vh - 100%);
+  background-color: var(--green-light);
+  padding: 24px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  align-items: center;
+  z-index: 999;
+  overflow-y: auto;
+}
+
+.menuNav {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.menuButtons {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+@media (min-width: 768px) and (max-width: 1439px) {
+  .menuButtons [class*='create'] {
+    display: none;
+  }
+}
+
+.mobileBurger,
+.burger {
+  position: relative;
+  z-index: 1100;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+}
+
+.mobileBurger svg,
+.burger svg {
+  stroke: var(--black);
+  stroke-width: 1.33px;
+}
+
+.mobileBurger:hover,
+.burger:hover,
+.mobileBurger:focus,
+.burger:focus,
+.mobileBurger:active,
+.burger:active {
+  transform: scale(1.1);
+  transition: transform 0.3s ease;
+}

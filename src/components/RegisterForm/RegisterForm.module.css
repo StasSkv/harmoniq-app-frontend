@@ -1,8 +1,10 @@
 .container {
-  padding: 85px 31.5px;
+  width: 100%;
+  padding: 85px 16.5px;
 }
 
 .loginWrapper {
+  width: 100%;
   background-color: #d1e0d8;
   border-radius: 32px;
   padding: 48px 32px;
@@ -10,7 +12,7 @@
 
 .loginTitle {
   font-weight: 700;
-  line-height: 44px;
+  height: 44px;
   font-size: 32px;
   text-align: center;
   color: #070721;
@@ -18,7 +20,7 @@
 }
 
 .registerText {
-  width: 278px;
+  max-width: 278px;
   font-weight: 400;
   font-size: 16px;
   line-height: 1.55;
@@ -51,13 +53,17 @@
   transition: border-color ease-in-out 0.3s;
 }
 
-.emailField {
+.emailField,
+.nameField {
   display: block;
   margin-bottom: 20px;
 }
 
 .passwordField {
-  display: block;
+  margin-bottom: 20px;
+}
+
+.passwordConfirmField {
   margin-bottom: 27px;
 }
 
@@ -141,22 +147,22 @@ input:focus::placeholder {
   text-decoration: underline;
 }
 
-@media (min-width: 768px) {
+@media screen and (min-width: 768px) {
   .container {
-    padding-top: 232px;
-    padding-bottom: 232px;
+    padding-top: 120px;
+    padding-bottom: 119px;
   }
 
   .loginWrapper {
     max-width: 522px;
-    align-items: center;
     margin: 0 auto;
   }
 }
 
-@media (min-width: 1440px) {
+@media screen and (min-width: 1440px) {
   .container {
     padding-top: 50px;
+    padding-bottom: 50px;
   }
 
   .loginWrapper {

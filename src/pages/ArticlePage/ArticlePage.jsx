@@ -1,12 +1,12 @@
+import s from './ArticlePage.module.css';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchArticleById } from '../../redux/articlesSlice/articlesOperation';
-import s from './ArticlePage.module.css';
-import Loader from '../../components/Loader/Loader';
+import { LoaderPage } from '../../components/Loader/LoaderPage/LoaderPage';
 import { Container } from '../../components/Container/Container';
 
-export const ArticlePage = () => {
+const ArticlePage = () => {
   const { articleId } = useParams();
   const dispatch = useDispatch();
 
@@ -19,7 +19,7 @@ export const ArticlePage = () => {
     dispatch(fetchArticleById(articleId));
   }, [dispatch, articleId]);
 
-  if (isLoading) return <Loader />;
+  if (isLoading) return <LoaderPage />;
   if (error) return <p>Помилка: {error}</p>;
   if (!article) return <p>Статтю не знайдено</p>;
 
@@ -29,10 +29,12 @@ export const ArticlePage = () => {
         <h2 className={s.articleTitle}>{article.title}</h2>
         {article.img && <img src={article.img} alt={article.title} className={s.articleImg} />}
         <div className={s.content}>
-          <p className={s.articleText}>{article.article}</p>
+          <div className={s.articleText} dangerouslySetInnerHTML={{ __html: article.article }} />
           <div className={s.future}>You can also interested</div>
         </div>
       </Container>
     </article>
   );
 };
+
+export default ArticlePage;

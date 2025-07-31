@@ -1,5 +1,7 @@
 .container {
+  width: 100%;
   padding-top: 128px;
+  padding-bottom: 128px;
 }
 
 .form {
