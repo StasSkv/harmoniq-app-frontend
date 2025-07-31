@@ -4,7 +4,7 @@ import { AuthorItem } from '../AuthorItem/AuthorItem.jsx';
 import sprite from '../../assets/icons/sprite.svg';
 import { Container } from '../Container/Container';
 import { useSelector } from 'react-redux';
-import { selectAllUsers } from '../../redux/users/usersSelectors';
+import { selectAllUsers } from '../../redux/usersSlice/usersSelectors.js';
 
 export const Creators = () => {
   const creators = useSelector(selectAllUsers);

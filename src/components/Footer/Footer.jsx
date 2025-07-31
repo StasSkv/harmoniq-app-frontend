@@ -3,7 +3,7 @@ import { Container } from '../Container/Container.jsx';
 import sprite from '../../assets/icons/sprite.svg';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { selectUser } from '../../redux/auth/authSelectors';
+import { selectUser } from '../../redux/authSlice/authSelectors.js';
 
 export const Footer = () => {
   const user = useSelector(selectUser);

@@ -1,9 +1,9 @@
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { registerThunk } from '../../redux/auth/authOperations';
+import { registerThunk } from '../../redux/authSlice/authOperations';
 import sprite from '../../assets/icons/sprite.svg';
-import { clearRegistrationData } from '../../redux/auth/registrationSlice';
+import { clearRegistrationData } from '../../redux/authSlice/registrationSlice';
 import * as Yup from 'yup';
 import { toast } from 'react-toastify';
 import { useState } from 'react';
@@ -13,7 +13,7 @@ import {
   selectRegistrationEmail,
   selectRegistrationName,
   selectRegistrationPassword,
-} from '../../redux/auth/authSelectors';
+} from '../../redux/authSlice/authSelectors';
 
 const UploadPhotoForm = () => {
   const dispatch = useDispatch();

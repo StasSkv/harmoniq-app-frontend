@@ -1,12 +1,13 @@
 .section {
+  width: 100%;
   margin: 32px 0;
 }
 
 .title {
-  text-align: left;
-  font-size: 32px;
-  color: #000;
   font: var(--font-primary);
+  text-align: left;
+  color: var(--black);
+  font-size: 32px;
 }
 
 .header {
@@ -38,7 +39,9 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 24px;
+  width: 100%;
 }
 
 .loader {

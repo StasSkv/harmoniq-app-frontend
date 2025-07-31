@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchArticleById } from '../../redux/articlesSlice/articlesOperation';
-import { Loader } from '../../components/Loader/Loader';
+import { LoaderPage } from '../../components/Loader/LoaderPage/LoaderPage';
 import { Container } from '../../components/Container/Container';
 
 const ArticlePage = () => {
@@ -19,7 +19,7 @@ const ArticlePage = () => {
     dispatch(fetchArticleById(articleId));
   }, [dispatch, articleId]);
 
-  if (isLoading) return <Loader />;
+  if (isLoading) return <LoaderPage />;
   if (error) return <p>Помилка: {error}</p>;
   if (!article) return <p>Статтю не знайдено</p>;
 
