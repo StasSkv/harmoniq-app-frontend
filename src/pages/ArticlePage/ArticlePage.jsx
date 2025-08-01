@@ -29,7 +29,12 @@ const ArticlePage = () => {
         <h2 className={s.articleTitle}>{article.title}</h2>
         {article.img && <img src={article.img} alt={article.title} className={s.articleImg} />}
         <div className={s.content}>
-          <p className={s.articleText}>{article.article}</p>
+          <div className={s.articleText}>
+            {' '}
+            {article.article.split('\n').map((paragraph, idx) => (
+              <p key={idx}>{paragraph}</p>
+            ))}
+          </div>
           <div className={s.future}>You can also interested</div>
         </div>
       </Container>

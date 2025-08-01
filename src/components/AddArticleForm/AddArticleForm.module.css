@@ -156,6 +156,12 @@
   color: var(--white);
   border: none;
   font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.btn:hover {
+  background-color: var(--green-darker);
 }
 
 .previewContainerDesktop {
@@ -198,16 +204,23 @@
 
 .errorDesktop {
   display: none;
+  
+}
+
+.error {
+  color: var(--red);
 }
 
 @media only screen and (min-width: 1440px) {
   .errorDesktop {
     display: block;
+    color: var(--red);
   }
 }
 
 .errorMobile {
   display: block;
+  color: var(--red);
 }
 
 @media only screen and (max-width: 1439px) {

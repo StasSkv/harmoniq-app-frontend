@@ -1,6 +1,7 @@
 .articlePage {
     font-family: var(--font-primary);
     margin: 48px 0;
+    width: 100%;
 }
 
 .articleTitle {
@@ -24,6 +25,16 @@
     margin-bottom: 24px;
 }
 
+/* .articleText p {
+    margin-bottom: 0 !important;
+} */
+
+.articleText p {
+    margin-bottom: 16px;
+    line-height: 1.55;
+    text-indent: 20px;
+}
+
 .future {
     background-color: var(--green-light);
     width: 100%;
@@ -32,7 +43,6 @@
 }
 
 @media (min-width: 768px) {
-
     .articleTitle {
         font-size: 40px;
     }
@@ -43,7 +53,6 @@
 }
 
 @media (min-width: 1440px) {
-
     .articleImg {
         height: 624px;
     }
@@ -62,3 +71,24 @@
         width: 393px;
     }
 }
+
+/* .articleText {
+    white-space: normal;
+    word-wrap: break-word;
+    line-height: 1.6;
+    text-align: justify;
+}
+
+.articleText ul {
+    padding-left: 20px;
+    list-style: disc;
+}
+
+.articleText p {
+    margin-bottom: 1em;
+}
+
+.articleText a {
+    color: var(--purple);
+    text-decoration: underline;
+} */

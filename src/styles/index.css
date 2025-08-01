@@ -1,5 +1,5 @@
-@import "./fonts.css";
-@import "./variables.css";
+@import './fonts.css';
+@import './variables.css';
 
 :root {
   font-synthesis: none;
@@ -48,8 +48,8 @@ p:last-child {
   margin-bottom: 0;
 }
 
-ul,
-li {
+ul:not(.allow-style),
+li:not(.allow-style) {
   margin: 0;
   padding: 0;
   list-style: none;
