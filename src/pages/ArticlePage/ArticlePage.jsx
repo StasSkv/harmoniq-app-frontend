@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchArticleById } from '../../redux/articlesSlice/articlesOperation';
 import { LoaderPage } from '../../components/Loader/LoaderPage/LoaderPage';
 import { Container } from '../../components/Container/Container';
-import RecommendedArticles from '../../components/RecommendedArticles/RecommendedArticles';
+import { RecommendedArticles } from '../../components/RecommendedArticles/RecommendedArticles';
 
 const ArticlePage = () => {
   const { articleId } = useParams();

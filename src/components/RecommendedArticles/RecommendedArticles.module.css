@@ -5,7 +5,6 @@
   justify-content: flex-start;
   flex-direction: column;
   gap: 15px;
-  background-color: #d1e0d8;
   padding: 32px 32px 40px 32px;
   border-radius: 32px;
 }
@@ -15,12 +14,12 @@
   gap: 15px;
   font-weight: 700;
   font-size: 16px;
-  color: #070721;
+  color: var(--black);
 }
 .recommendedTitle {
   font-weight: 700;
   font-size: 24px;
-  color: #070721;
+  color: var(--black);
   margin-bottom: 15px;
 }
 
@@ -31,7 +30,7 @@
 }
 
 .recommendList .recommendItem {
-  background: #f7fffb;
+  background: var(--white);
   padding: 16px;
   border-radius: 32px;
   display: flex;
@@ -53,7 +52,7 @@
   word-break: break-word;
   font-size: 16px;
   font-weight: 700;
-  color: #070721;
+  color: var(--black);
   line-height: 1.2;
 }
 
@@ -61,14 +60,7 @@
   font-weight: 400;
   font-size: 16px;
   line-height: 1.55;
-  color: #070721;
-}
-
-.linkBtn {
-  font-size: 20px;
-  background: none;
-  cursor: pointer;
-  color: #2d2d2d;
+  color: var(--black);
 }
 
 .iconRight {
