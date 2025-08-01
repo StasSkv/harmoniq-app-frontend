@@ -51,15 +51,23 @@ export const logoutThunk = createAsyncThunk('auth/logout', async (_, thunkAPI) =
 export const refreshThunk = createAsyncThunk('auth/refresh', async (_, thunkAPI) => {
   try {
     const persistedRefreshToken = thunkAPI.getState().auth.refreshToken;
+
     if (!persistedRefreshToken) {
       return thunkAPI.rejectWithValue('No refresh token');
     }
+
     const response = await api.post('/auth/refresh', {
       refreshToken: persistedRefreshToken,
     });
-    const { accessToken } = response.data.data;
+
+    const { accessToken, refreshToken } = response.data.data;
+
     setAuthNav(accessToken);
-    return { accessToken };
+
+    const userResponse = await api.get('/users/current');
+    const user = userResponse.data.data.user;
+
+    return { user, refreshToken, accessToken };
   } catch (error) {
     return thunkAPI.rejectWithValue(handleError(error));
   }
