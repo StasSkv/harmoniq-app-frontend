@@ -1,12 +1,15 @@
 import { Field, Form, Formik, ErrorMessage } from 'formik';
 import { Link, useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
 import { setStepOneData } from '../../redux/authSlice/registrationSlice';
 import { ToggleBtn } from '../ToggleBtn/ToggleBtn';
 import css from './RegisterForm.module.css';
 import { Container } from '../Container/Container';
+import { setLoading } from '../../redux/globalSlice/globalSlice';
+import { selectIsLoading } from '../../redux/globalSlice/globalSelectors';
+import { LoaderPage } from '../Loader/LoaderPage/LoaderPage';
 
 const validationSchema = Yup.object().shape({
   name: Yup.string().min(2, 'Too short!').max(32, 'Too long!').required('Required'),
@@ -19,6 +22,7 @@ const validationSchema = Yup.object().shape({
 
 export const RegisterForm = () => {
   const dispatch = useDispatch();
+  const isLoading = useSelector(selectIsLoading);
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
@@ -31,9 +35,13 @@ export const RegisterForm = () => {
   };
 
   const handleSubmit = (values) => {
+    dispatch(setLoading(true));
     dispatch(setStepOneData(values));
     navigate('/upload-photo');
+    dispatch(setLoading(false));
   };
+
+  if (isLoading) return <LoaderPage />;
 
   return (
     <Container className={css.container}>
