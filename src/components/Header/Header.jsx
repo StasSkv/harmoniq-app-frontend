@@ -15,6 +15,20 @@ export const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const controls = useAnimation();
 
+  const [showHeader, setShowHeader] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      setShowHeader(currentScrollY < lastScrollY);
+      setLastScrollY(currentScrollY);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [lastScrollY]);
+
   const toggleMenu = () => {
     setMenuOpen((prev) => !prev);
     if (menuOpen) {
@@ -24,10 +38,31 @@ export const Header = () => {
     }
   };
 
+  const closeMenu = () => {
+    setMenuOpen(false);
+    controls.start('exit');
+  };
+
   useEffect(() => {
     document.body.style.overflow = menuOpen ? 'hidden' : '';
     return () => {
       document.body.style.overflow = '';
+    };
+  }, [menuOpen]);
+
+  useEffect(() => {
+    const handleEscape = (event) => {
+      if (event.key === 'Escape') {
+        closeMenu();
+      }
+    };
+
+    if (menuOpen) {
+      window.addEventListener('keydown', handleEscape);
+    }
+
+    return () => {
+      window.removeEventListener('keydown', handleEscape);
     };
   }, [menuOpen]);
 
@@ -47,12 +82,15 @@ export const Header = () => {
   };
 
   const handleLinkClick = () => {
-    setMenuOpen(false);
-    controls.start('exit');
+    closeMenu();
+  };
+
+  const handleLogoutCloseMenu = () => {
+    closeMenu();
   };
 
   return (
-    <header className={s.header}>
+    <header className={`${s.header} ${showHeader ? s['header-visible'] : s['header-hidden']}`}>
       <Container className={s.container}>
         <a href="/" className={s.logo}>
           <svg width="165" height="46">
@@ -63,13 +101,17 @@ export const Header = () => {
         {/* десктоп */}
         <div className={s.desktopNav}>
           <Navigation />
-          {isLoggedIn ? <UserMenu /> : <HeaderAuthButtons />}
+          {isLoggedIn ? (
+            <UserMenu onLogoutCloseMenu={handleLogoutCloseMenu} />
+          ) : (
+            <HeaderAuthButtons />
+          )}
         </div>
 
         {/* планшет: кнопка + бургер */}
         <div className={s.tabletArea}>
           {isLoggedIn ? (
-            <UserMenu showName={false} showExit={false} />
+            <UserMenu showName={false} showExit={false} onLogoutCloseMenu={handleLogoutCloseMenu} />
           ) : (
             <HeaderAuthButtons showLogin={false} />
           )}
@@ -94,11 +136,18 @@ export const Header = () => {
         initial="exit"
         animate={controls}
         exit="exit"
+        onClick={closeMenu}
       >
         <Navigation className={s.menuNav} onLinkClick={handleLinkClick} />
         <div className={s.menuButtons}>
           {isLoggedIn ? (
-            <UserMenu showCreate={!isTablet} showName showExit onLinkClick={handleLinkClick} />
+            <UserMenu
+              showCreate={!isTablet}
+              showName
+              showExit
+              onLinkClick={handleLinkClick}
+              onLogoutCloseMenu={handleLogoutCloseMenu}
+            />
           ) : (
             <HeaderAuthButtons showJoin={!isTablet} onLinkClick={handleLinkClick} />
           )}

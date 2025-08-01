@@ -55,12 +55,22 @@ export const MyEditor = ({ value, onChange }) => {
 
   const handleAddLink = (url) => {
     if (!url) return;
-    editorRef.current
-      ?.chain()
-      .focus()
-      .insertContent(`<a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`)
-      .run();
 
+    const editor = editorRef.current;
+    if (!editor) {
+      toast.error('Editor is not ready');
+      return;
+    }
+    if (!editor.state.selection || editor.state.selection.empty) {
+      toast.error('Please select the text you want to link.');
+      return;
+    }
+    editor
+      .chain()
+      .focus()
+      .extendMarkRange('link')
+      .setLink({ href: url, target: '_blank', rel: 'noopener noreferrer' })
+      .run();
     closeLinkModal();
   };
 
@@ -70,6 +80,7 @@ export const MyEditor = ({ value, onChange }) => {
     <div className={s.editor}>
       <div className={s.toolbar}>
         <button
+          type="button"
           onClick={() => editor.chain().focus().toggleBold().run()}
           className={clsx(s.toolbarButton, {
             [s.active]: editor.isActive('bold'),
@@ -78,6 +89,7 @@ export const MyEditor = ({ value, onChange }) => {
           B
         </button>
         <button
+          type="button"
           onClick={() => editor.chain().focus().toggleItalic().run()}
           className={clsx(s.toolbarButton, {
             [s.active]: editor.isActive('italic'),
@@ -86,6 +98,7 @@ export const MyEditor = ({ value, onChange }) => {
           I
         </button>
         <button
+          type="button"
           onClick={() => editor.chain().focus().toggleStrike().run()}
           className={clsx(s.toolbarButton, {
             [s.active]: editor.isActive('strike'),
@@ -96,6 +109,7 @@ export const MyEditor = ({ value, onChange }) => {
         <span className={s.toolbarSeparator}></span>
 
         <button
+          type="button"
           onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
           className={clsx(s.toolbarButton, {
             [s.active]: editor.isActive('heading', { level: 1 }),
@@ -104,6 +118,7 @@ export const MyEditor = ({ value, onChange }) => {
           H1
         </button>
         <button
+          type="button"
           onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
           className={clsx(s.toolbarButton, {
             [s.active]: editor.isActive('heading', { level: 2 }),
@@ -114,6 +129,7 @@ export const MyEditor = ({ value, onChange }) => {
         <span className={s.toolbarSeparator}></span>
 
         <button
+          type="button"
           onClick={() => editor.chain().focus().setTextAlign('left').run()}
           className={clsx(s.toolbarButton, {
             [s.active]: editor.isActive({ textAlign: 'left' }),
@@ -124,6 +140,7 @@ export const MyEditor = ({ value, onChange }) => {
         </button>
 
         <button
+          type="button"
           onClick={() => editor.chain().focus().setTextAlign('center').run()}
           className={clsx(s.toolbarButton, {
             [s.active]: editor.isActive({ textAlign: 'center' }),
@@ -134,6 +151,7 @@ export const MyEditor = ({ value, onChange }) => {
         </button>
 
         <button
+          type="button"
           onClick={() => editor.chain().focus().setTextAlign('right').run()}
           className={clsx(s.toolbarButton, {
             [s.active]: editor.isActive({ textAlign: 'right' }),
@@ -145,6 +163,7 @@ export const MyEditor = ({ value, onChange }) => {
         <span className={s.toolbarSeparator}></span>
 
         <button
+          type="button"
           onClick={() => editor.chain().focus().toggleBulletList().run()}
           className={clsx(s.toolbarButton, {
             [s.active]: editor.isActive('bulletList'),
@@ -153,6 +172,7 @@ export const MyEditor = ({ value, onChange }) => {
           • List
         </button>
         <button
+          type="button"
           onClick={() => editor.chain().focus().toggleOrderedList().run()}
           className={clsx(s.toolbarButton, {
             [s.active]: editor.isActive('orderedList'),
@@ -163,6 +183,7 @@ export const MyEditor = ({ value, onChange }) => {
         <span className={s.toolbarSeparator}></span>
 
         <button
+          type="button"
           onClick={openLinkModal}
           className={clsx(s.toolbarButton, {
             [s.active]: editor.isActive('link'),
@@ -171,6 +192,7 @@ export const MyEditor = ({ value, onChange }) => {
           Link
         </button>
         <button
+          type="button"
           onClick={() => editor.chain().focus().unsetLink().run()}
           className={clsx(s.toolbarButton, {
             [s.active]: !editor.isActive('link'),
@@ -181,6 +203,7 @@ export const MyEditor = ({ value, onChange }) => {
         <span className={s.toolbarSeparator}></span>
 
         <button
+          type="button"
           onClick={() => editor.chain().focus().undo().run()}
           className={clsx(s.toolbarButton, {
             [s.active]: editor.can().undo(),
@@ -189,6 +212,7 @@ export const MyEditor = ({ value, onChange }) => {
           ↶ Undo
         </button>
         <button
+          type="button"
           onClick={() => editor.chain().focus().redo().run()}
           className={clsx(s.toolbarButton, {
             [s.active]: editor.can().redo(),

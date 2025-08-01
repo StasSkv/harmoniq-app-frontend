@@ -2,13 +2,16 @@ import { Field, Form, Formik, ErrorMessage } from 'formik';
 import { Link } from 'react-router-dom';
 import * as Yup from 'yup';
 import { toast } from 'react-toastify';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
 import { loginThunk } from '../../redux/authSlice/authOperations';
 import { useNavigate } from 'react-router-dom';
 import { Container } from '../Container/Container';
 import s from './LoginForm.module.css';
 import { ToggleBtn } from '../ToggleBtn/ToggleBtn';
+import { setLoading } from '../../redux/globalSlice/globalSlice';
+import { selectIsLoading } from '../../redux/globalSlice/globalSelectors';
+import { LoaderPage } from '../Loader/LoaderPage/LoaderPage';
 
 const FeedbackSchema = Yup.object().shape({
   email: Yup.string().email('Invalid email address').max(64, 'Too Long!').required('Required'),
@@ -19,6 +22,7 @@ export const LoginForm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+  const isLoading = useSelector(selectIsLoading);
 
   const initialValues = {
     email: '',
@@ -26,14 +30,20 @@ export const LoginForm = () => {
   };
 
   const handleSubmit = async (values, actions) => {
+    dispatch(setLoading(true));
     try {
       await dispatch(loginThunk(values)).unwrap();
       navigate('/');
       actions.resetForm();
     } catch (error) {
-      toast.error(`Login failed: ${error === undefined ? 'Unknown error' : error.message}`);
+      const message = error?.response?.data?.message || error?.message || 'Unknown error';
+      toast.error(`Login failed: ${message}`);
+    } finally {
+      dispatch(setLoading(false));
     }
   };
+
+  if (isLoading) return <LoaderPage />;
 
   return (
     <Container className={s.container}>

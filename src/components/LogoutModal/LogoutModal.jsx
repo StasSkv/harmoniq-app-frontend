@@ -1,3 +1,4 @@
+import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import Modal from 'react-modal';
@@ -25,6 +26,7 @@ export const LogoutModal = ({ isOpen, onClose }) => {
       dispatch({ type: 'auth/logoutSuccess' });
     }
   };
+
   return (
     <Modal
       isOpen={isOpen}

@@ -5,8 +5,7 @@ import clsx from 'clsx';
 export const InputLinkModal = ({ isOpen, onClose, onSubmit }) => {
   const [url, setUrl] = useState('');
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = () => {
     if (url.trim()) {
       onSubmit(url.trim());
       setUrl('');
@@ -18,7 +17,7 @@ export const InputLinkModal = ({ isOpen, onClose, onSubmit }) => {
 
   return (
     <div className={s.modal}>
-      <form onSubmit={handleSubmit} className={s.form}>
+      <div className={s.form}>
         <label className={s.label}>
           Enter URL:
           <input
@@ -41,11 +40,17 @@ export const InputLinkModal = ({ isOpen, onClose, onSubmit }) => {
           >
             Cancel
           </button>
-          <button type="submit" className={clsx(s.btn, s.btnAdd)}>
+          <button
+            type="button"
+            className={clsx(s.btn, s.btnAdd)}
+            onClick={() => {
+              handleSubmit();
+            }}
+          >
             Add Link
           </button>
         </div>
-      </form>
+      </div>
     </div>
   );
 };

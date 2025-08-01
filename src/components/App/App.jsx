@@ -1,7 +1,7 @@
 import 'react-toastify/dist/ReactToastify.css';
-import { lazy, Suspense } from 'react';
+import { lazy, Suspense, useEffect } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { PrivateRoute } from './PrivateRoute.jsx';
 import { RestrictedRoute } from './RestrictedRoute.jsx';
@@ -22,9 +22,16 @@ const CreateArticlePage = lazy(() => import('../../pages/CreateArticlePage/Creat
 
 import { selectIsLoading } from '../../redux/globalSlice/globalSelectors.js';
 import { LoaderPage } from '../Loader/LoaderPage/LoaderPage.jsx';
+import { refreshThunk } from '../../redux/authSlice/authOperations.js';
 
 export const App = () => {
   const isLoading = useSelector(selectIsLoading);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(refreshThunk());
+  }, [dispatch]);
 
   return (
     <>
