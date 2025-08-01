@@ -10,8 +10,7 @@ import {
   selectUsersHasMore,
 } from '../../redux/usersSlice/usersSelectors.js';
 import { showMoreUsers } from '../../redux/usersSlice/usersSlice.js';
-
-import { AuthorsList } from '../../components/AuthorList/AuthorList';
+import { AuthorsList } from '../../components/AuthorList/AuthorList.jsx';
 
 const AuthorsPage = () => {
   const dispatch = useDispatch();
@@ -33,18 +32,16 @@ const AuthorsPage = () => {
 
   return (
     <section>
-      <Container className={s.wrapper}>
-        <div className={s.authorsPageContent}>
-          <h2 className={s.authorsPageTitle}>Authors</h2>
-          {isLoading && <p>Loading authors...</p>}
-          {error && <p>Error: {error}</p>}
-          <AuthorsList authors={authors} />
-          {hasMore && !isLoading && (
-            <button className={s.authorsPageLoadMoreBtn} onClick={handleLoadMore}>
-              Load More
-            </button>
-          )}
-        </div>
+      <Container className={s.authorsPage}>
+        <h2 className={s.authorsPageTitle}>Authors</h2>
+        {isLoading && <p>Loading authors...</p>}
+        {error && <p>Error: {error}</p>}
+        <AuthorsList authors={authors} />
+        {hasMore && !isLoading && (
+          <button className={s.authorsPageLoadMoreBtn} onClick={handleLoadMore}>
+            Load More
+          </button>
+        )}
       </Container>
     </section>
   );

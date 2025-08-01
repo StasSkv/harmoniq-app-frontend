@@ -1,13 +1,6 @@
-.wrapper {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 24px;
-  justify-content: center;
-}
-
-.authorsPageContent {
-  width: 100%;
-  height: auto;
+.authorsPage {
+  padding-top: 48px;
+  padding-bottom: 48px;
 }
 
 .authorsPageTitle {
@@ -20,7 +13,7 @@
 
 .authorsPageLoadMoreBtn {
   margin-top: 16px;
-  padding: 16px;
+  padding: 18px 0;
   font-size: 18px;
   font-weight: 700;
   color: #fff;
@@ -31,19 +24,22 @@
   margin-left: auto;
   margin-right: auto;
   background-color: var(--green);
-  width: 340px;
-  height: 57px;
+  width: 94%;
+  text-align: center;
 }
 
-.loadMoreBtn:hover {
+.authorsPageLoadMoreBtn:hover {
   background-color: var(--green-darker);
 }
 
 @media (min-width: 768px) {
+  .authorsPageLoadMoreBtn {
+    width: 340px;
+  }
 }
 
 @media (min-width: 1440px) {
-  .loadMoreBtn {
+  authorsPageLoadMoreBtn {
     width: 390px;
   }
 }
