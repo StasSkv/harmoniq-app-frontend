@@ -8,7 +8,6 @@ import { selectAllUsers } from '../../redux/usersSlice/usersSelectors.js';
 
 export const Creators = () => {
   const creators = useSelector(selectAllUsers);
-
   return (
     <section className={s.creators}>
       <Container className={s.container}>
@@ -17,27 +16,23 @@ export const Creators = () => {
           <Link to="/authors" className={s.link}>
             Go to all Authors
             <svg className={s.icon}>
-              <use xlinkHref={`${sprite}#icon-arrow-right`} />
+              <use href={`${sprite}#icon-arrow-right`} />
             </svg>
           </Link>
         </div>
-
-        {/* {loading ? (
-        <p>Loading...</p>
-      ) : ( */}
         <ul className={s.creatorsList}>
-          {creators.slice(0, 6).map((creator) => (
-            <li key={creator.id} className={s.item}>
+          {creators?.data?.slice(0, 6).map((creator) => (
+            <li key={creator.id}>
               <AuthorItem
                 key={creator.id}
                 id={creator.id}
                 name={creator.name}
                 avatar={creator.avatar}
+                className={s.item}
               />
             </li>
           ))}
         </ul>
-        {/* )} */}
       </Container>
     </section>
   );

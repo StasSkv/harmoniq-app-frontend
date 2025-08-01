@@ -1,11 +1,18 @@
 .authorsList {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: 16px;
   list-style: none;
 }
 
+.authorsList .authorsListItem {
+  padding: 12px;
+  width: calc((100% - 16px) / 2);
+}
+
 .authorsListItem {
+  padding: 12px;
   width: calc((100% - 16px) / 2);
 }
 
@@ -14,14 +21,14 @@
     gap: 24px;
   }
 
-  .authorsListItem {
+  .authorsList .authorsListItem {
     box-sizing: border-box;
-    width: calc((100% - 24px) / 2);
+    width: calc((100% - 132px) / 2);
   }
 }
 
 @media (min-width: 1440px) {
-  .authorsListItem {
+  .authorsList .authorsListItem {
     width: calc((100% - 72px) / 4);
   }
 }

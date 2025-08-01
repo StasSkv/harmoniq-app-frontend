@@ -3,45 +3,25 @@ import { Container } from '../../components/Container/Container';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAllUsers } from '../../redux/usersSlice/usersOperations.js';
-import {
-  selectVisibleUsers,
-  selectUsersLoading,
-  selectUsersError,
-  selectUsersHasMore,
-} from '../../redux/usersSlice/usersSelectors.js';
-import { showMoreUsers } from '../../redux/usersSlice/usersSlice.js';
+import { selectAllUsers, selectUsersLoading } from '../../redux/usersSlice/usersSelectors.js';
 import { AuthorsList } from '../../components/AuthorList/AuthorList.jsx';
+import { LoaderPage } from '../../components/Loader/LoaderPage/LoaderPage.jsx';
 
 const AuthorsPage = () => {
   const dispatch = useDispatch();
-  const authors = useSelector(selectVisibleUsers);
+  const authors = useSelector(selectAllUsers);
   const isLoading = useSelector(selectUsersLoading);
-  const error = useSelector(selectUsersError);
-  const hasMore = useSelector(selectUsersHasMore);
-
-  console.log('AUTHORS from Redux:', authors);
 
   useEffect(() => {
-    //
-    dispatch(fetchAllUsers()); //
+    dispatch(fetchAllUsers({ filter: 'popular', limit: 20 }));
   }, [dispatch]);
-
-  const handleLoadMore = () => {
-    dispatch(showMoreUsers());
-  };
 
   return (
     <section>
+      {isLoading && <LoaderPage />}
       <Container className={s.authorsPage}>
         <h2 className={s.authorsPageTitle}>Authors</h2>
-        {isLoading && <p>Loading authors...</p>}
-        {error && <p>Error: {error}</p>}
-        <AuthorsList authors={authors} />
-        {hasMore && !isLoading && (
-          <button className={s.authorsPageLoadMoreBtn} onClick={handleLoadMore}>
-            Load More
-          </button>
-        )}
+        <AuthorsList authors={authors.data} />
       </Container>
     </section>
   );

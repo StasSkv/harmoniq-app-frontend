@@ -26,10 +26,6 @@
   text-decoration: none;
 }
 
-.item {
-  padding: 12px;
-  width: calc((100% - 16px) / 2);
-}
 
 
 .icon {
@@ -60,12 +56,6 @@
 
   .title {
     margin-bottom: 0px;
-  }
-
-  .creatorsList {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
-    list-style: none;
   }
 }
 

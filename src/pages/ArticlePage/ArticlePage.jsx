@@ -11,19 +11,25 @@ import {
   selectError,
   selectIsLoading,
 } from '../../redux/articlesSlice/articlesSelectors';
+import { fetchAllArticles } from '../../redux/articlesSlice/articlesOperation';
+import { selectAllArticles } from '../../redux/articlesSlice/articlesSelectors';
 
 const ArticlePage = () => {
   const { articleId } = useParams();
   const dispatch = useDispatch();
 
+  const recommendedArticles = useSelector(selectAllArticles);
   const currentArticle = useSelector(selectCurrentArticle);
   const isLoading = useSelector(selectIsLoading);
   const error = useSelector(selectError);
+
+  console.log(recommendedArticles.data);
 
   const isHTML = (str) => /<\/?[a-z][\s\S]*>/i.test(str);
   const article = currentArticle?.data || currentArticle;
 
   useEffect(() => {
+    dispatch(fetchAllArticles({ filter: 'popular', limit: 3 }));
     dispatch(fetchArticleById(articleId));
   }, [dispatch, articleId]);
 

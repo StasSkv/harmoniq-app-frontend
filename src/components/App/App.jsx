@@ -28,10 +28,9 @@ import { selectSavedArticles } from '../../redux/usersSlice/usersSelectors.js';
 import { setSavedArticles } from '../../redux/usersSlice/usersSlice.js';
 
 export const App = () => {
-  const isLoading = useSelector(selectIsLoading);
-
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
+  const isLoading = useSelector(selectIsLoading);
   const savedArticles = useSelector(selectSavedArticles);
 
   useEffect(() => {
