@@ -23,11 +23,22 @@ const CreateArticlePage = lazy(() => import('../../pages/CreateArticlePage/Creat
 import { selectIsLoading } from '../../redux/globalSlice/globalSelectors.js';
 import { LoaderPage } from '../Loader/LoaderPage/LoaderPage.jsx';
 import { refreshThunk } from '../../redux/authSlice/authOperations.js';
+import { selectUser } from '../../redux/authSlice/authSelectors.js';
+import { selectSavedArticles } from '../../redux/usersSlice/usersSelectors.js';
+import { setSavedArticles } from '../../redux/usersSlice/usersSlice.js';
 
 export const App = () => {
   const isLoading = useSelector(selectIsLoading);
 
   const dispatch = useDispatch();
+  const user = useSelector(selectUser);
+  const savedArticles = useSelector(selectSavedArticles);
+
+  useEffect(() => {
+    if (user?.savedArticles?.length > 0 && savedArticles.length === 0) {
+      dispatch(setSavedArticles(user.savedArticles));
+    }
+  }, [user?.savedArticles, savedArticles.length, dispatch]);
 
   useEffect(() => {
     dispatch(refreshThunk());

@@ -15,7 +15,7 @@ export const ArticleItem = ({ img, title, article, ownerName, articleId }) => {
         <Link className={s.learnLink} to={`/articles/${articleId}`}>
           Learn more
         </Link>
-        <ButtonAddToBookmarks />
+        <ButtonAddToBookmarks articleId={articleId} />
       </div>
     </div>
   );
