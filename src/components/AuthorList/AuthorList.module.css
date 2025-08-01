@@ -1,20 +1,27 @@
 .authorsList {
-  display: grid;
+  display: flex;
+  flex-wrap: wrap;
   gap: 16px;
-  grid-template-columns: repeat(2, 1fr);
   list-style: none;
-  justify-items: center;
+}
+
+.authorsListItem {
+  width: calc((100% - 16px) / 2);
 }
 
 @media (min-width: 768px) {
   .authorsList {
     gap: 24px;
-    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .authorsListItem {
+    box-sizing: border-box;
+    width: calc((100% - 24px) / 2);
   }
 }
 
 @media (min-width: 1440px) {
-  .authorsList {
-    grid-template-columns: repeat(4, 1fr);
+  .authorsListItem {
+    width: calc((100% - 72px) / 4);
   }
 }
