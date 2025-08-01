@@ -6,9 +6,12 @@ import sprite from '../../assets/icons/sprite.svg';
 import { clearRegistrationData } from '../../redux/authSlice/registrationSlice';
 import * as Yup from 'yup';
 import { toast } from 'react-toastify';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import s from './UploadForm.module.css';
 import { Container } from '../Container/Container';
+import { setLoading } from '../../redux/globalSlice/globalSlice';
+import { selectIsLoading } from '../../redux/globalSlice/globalSelectors';
+import { LoaderPage } from '../Loader/LoaderPage/LoaderPage';
 import {
   selectRegistrationEmail,
   selectRegistrationName,
@@ -21,8 +24,15 @@ const UploadPhotoForm = () => {
   const name = useSelector(selectRegistrationName);
   const email = useSelector(selectRegistrationEmail);
   const password = useSelector(selectRegistrationPassword);
+  const isLoading = useSelector(selectIsLoading);
 
   const [preview, setPreview] = useState(null);
+
+  useEffect(() => {
+    if (!name || !email || !password) {
+      navigate('/register');
+    }
+  }, [name, email, password, navigate]);
 
   const formik = useFormik({
     initialValues: {
@@ -50,12 +60,19 @@ const UploadPhotoForm = () => {
       formData.append('password', password);
       formData.append('avatar', values.photo);
 
+      dispatch(setLoading(true));
       try {
         await dispatch(registerThunk(formData)).unwrap();
         dispatch(clearRegistrationData());
         navigate('/');
       } catch (error) {
-        toast.error(`Registration failed: ${error === undefined ? 'Unknown error' : error}`);
+        const message = error?.response?.data?.message || error?.message || 'Unknown error';
+        toast.error(`Registration failed: ${message}`);
+
+        dispatch(clearRegistrationData());
+        navigate('/register');
+      } finally {
+        dispatch(setLoading(false));
       }
     },
   });
@@ -77,6 +94,8 @@ const UploadPhotoForm = () => {
     dispatch(clearRegistrationData());
     navigate('/');
   };
+
+  if (isLoading) return <LoaderPage />;
 
   return (
     <Container className={s.container}>
