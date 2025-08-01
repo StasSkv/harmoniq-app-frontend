@@ -1,5 +1,5 @@
 .recommendedWrapper {
-  background-color: var(--green-light); /* фон тут */
+  background-color: var(--green-light);
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
@@ -8,7 +8,6 @@
   background-color: #d1e0d8;
   padding: 32px 32px 40px 32px;
   border-radius: 32px;
-  width: 393px;
 }
 .articleInfo {
   display: flex;
@@ -31,7 +30,7 @@
   gap: 12px;
 }
 
-.recommendItem {
+.recommendList .recommendItem {
   background: #f7fffb;
   padding: 16px;
   border-radius: 32px;
@@ -39,40 +38,23 @@
   align-items: flex-start;
   justify-content: flex-start;
   flex-direction: column;
-
-  /* width: 329px;
-  height: 109px; */
 }
 
 .recommendArticleTitle {
-  max-width: 300px; /* або будь-яка потрібна ширина */
-  min-height: 40px; /* мінімальна висота */
-  max-height: 48px; /* максимум 2 рядки (залежить від line-height) */
+  margin-bottom: 10px;
+  max-width: 297px;
+  min-height: 40px;
+  max-height: 48px;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
 
   -webkit-box-orient: vertical;
-  word-break: break-word; /* перенос слів */
-  font-size: 16px;
-  font-weight: 700;
-  color: #070721;
-  line-height: 1.2; /* щоб точно вкласти 2 рядки */
-
-  /* display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
-  flex-direction: row;
-  gap: 56px;
-  font-weight: 700;
-  font-size: 16px;
-  color: #070721;
-  margin-bottom: 9px; */
-  /* white-space: normal;
-  word-wrap: break-word;
   word-break: break-word;
-  overflow: hidden;
-  text-overflow: ellipsis; */
+  font-size: 16px;
+  font-weight: 700;
+  color: #070721;
+  line-height: 1.2;
 }
 
 .recommendAuthor {
@@ -80,11 +62,6 @@
   font-size: 16px;
   line-height: 1.55;
   color: #070721;
-  /* white-space: normal;
-  word-wrap: break-word;
-  word-break: break-word;
-  overflow: hidden;
-  text-overflow: ellipsis; */
 }
 
 .linkBtn {
@@ -93,16 +70,25 @@
   cursor: pointer;
   color: #2d2d2d;
 }
-.saveBtn {
-  margin-bottom: 0;
-  margin-top: 24px;
-  width: 100%;
-  background-color: #649179;
-  color: white;
-  border: none;
-  border-radius: 64px;
-  padding: 16px 0;
-  font-weight: 600;
-  font-size: 16px;
-  cursor: pointer;
+
+.iconRight {
+  fill: none;
+  stroke: var(--black);
+  width: 25px;
+  transform: rotate(-45deg);
+}
+.recommendSvg {
+  color: var(--black);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid black;
+}
+.recommendLink {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
 }
