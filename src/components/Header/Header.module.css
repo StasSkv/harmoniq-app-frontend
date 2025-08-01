@@ -1,13 +1,28 @@
 .logo {
   fill: var(--green);
 }
+
 .header {
   background-color: var(--green-light);
   padding: 14px 0;
   height: 74px;
-  position: relative;
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+  z-index: 1000;
 }
 
+.header-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.header-hidden {
+  opacity: 0;
+  transform: translateY(-100%);
+}
 .container {
   display: flex;
   align-items: center;
