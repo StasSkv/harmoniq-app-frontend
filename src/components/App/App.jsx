@@ -20,7 +20,6 @@ const AuthorsPage = lazy(() => import('../../pages/AuthorsPage/AuthorsPage.jsx')
 const AuthorProfilePage = lazy(() => import('../../pages/AuthorProfilePage/AuthorProfilePage.jsx'));
 const CreateArticlePage = lazy(() => import('../../pages/CreateArticlePage/CreateArticlePage.jsx'));
 
-import { selectIsLoading } from '../../redux/globalSlice/globalSelectors.js';
 import { LoaderPage } from '../Loader/LoaderPage/LoaderPage.jsx';
 import { refreshThunk } from '../../redux/authSlice/authOperations.js';
 import { selectUser } from '../../redux/authSlice/authSelectors.js';
@@ -28,8 +27,6 @@ import { selectSavedArticles } from '../../redux/usersSlice/usersSelectors.js';
 import { setSavedArticles } from '../../redux/usersSlice/usersSlice.js';
 
 export const App = () => {
-  const isLoading = useSelector(selectIsLoading);
-
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
   const savedArticles = useSelector(selectSavedArticles);
@@ -46,7 +43,6 @@ export const App = () => {
 
   return (
     <>
-      {isLoading && <LoaderPage />}
       <Suspense fallback={<LoaderPage />}>
         <ScrollToTop />
         <Routes>
