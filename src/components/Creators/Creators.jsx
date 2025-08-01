@@ -1,13 +1,11 @@
 import { Link } from 'react-router-dom';
 import s from './Creators.module.css';
-import { AuthorItem } from '../AuthorItem/AuthorItem.jsx';
 import sprite from '../../assets/icons/sprite.svg';
 import { Container } from '../Container/Container';
-import { useSelector } from 'react-redux';
-import { selectAllUsers } from '../../redux/usersSlice/usersSelectors.js';
+import { LoaderPage } from '../Loader/LoaderPage/LoaderPage.jsx';
 
-export const Creators = () => {
-  const creators = useSelector(selectAllUsers);
+export const Creators = ({ authors }) => {
+  if (!authors?.length) return <LoaderPage />;
   return (
     <section className={s.creators}>
       <Container className={s.container}>
@@ -20,16 +18,13 @@ export const Creators = () => {
             </svg>
           </Link>
         </div>
-        <ul className={s.creatorsList}>
-          {creators?.data?.slice(0, 6).map((creator) => (
-            <li key={creator.id}>
-              <AuthorItem
-                key={creator.id}
-                id={creator.id}
-                name={creator.name}
-                avatar={creator.avatar}
-                className={s.item}
-              />
+        <ul className={s.authorsList}>
+          {authors.map(({ _id, name, avatar }) => (
+            <li key={_id} className={s.authorsListItem}>
+              <Link to={`/authors/${_id}`} className={s.linkItem}>
+                <img src={avatar} alt={name} className={s.image} />
+                <p className={s.name}>{name}</p>
+              </Link>
             </li>
           ))}
         </ul>
