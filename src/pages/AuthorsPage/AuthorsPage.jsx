@@ -10,10 +10,7 @@ import {
   selectUsersHasMore,
 } from '../../redux/usersSlice/usersSelectors.js';
 import { showMoreUsers } from '../../redux/usersSlice/usersSlice.js';
-
-import AuthorsList from '../../components/AuthorList/AuthorList';
-// import { users } from './users';
-import s from './AuthorsPage.module.css';
+import { AuthorsList } from '../../components/AuthorList/AuthorList.jsx';
 
 const AuthorsPage = () => {
   const dispatch = useDispatch();
