@@ -9,6 +9,9 @@ import { toast } from 'react-toastify';
 import { useEffect, useState } from 'react';
 import s from './UploadForm.module.css';
 import { Container } from '../Container/Container';
+import { setLoading } from '../../redux/globalSlice/globalSlice';
+import { selectIsLoading } from '../../redux/globalSlice/globalSelectors';
+import { LoaderPage } from '../Loader/LoaderPage/LoaderPage';
 import {
   selectRegistrationEmail,
   selectRegistrationName,
@@ -21,6 +24,7 @@ const UploadPhotoForm = () => {
   const name = useSelector(selectRegistrationName);
   const email = useSelector(selectRegistrationEmail);
   const password = useSelector(selectRegistrationPassword);
+  const isLoading = useSelector(selectIsLoading);
 
   const [preview, setPreview] = useState(null);
 
@@ -56,6 +60,7 @@ const UploadPhotoForm = () => {
       formData.append('password', password);
       formData.append('avatar', values.photo);
 
+      dispatch(setLoading(true));
       try {
         await dispatch(registerThunk(formData)).unwrap();
         dispatch(clearRegistrationData());
@@ -66,6 +71,8 @@ const UploadPhotoForm = () => {
 
         dispatch(clearRegistrationData());
         navigate('/register');
+      } finally {
+        dispatch(setLoading(false));
       }
     },
   });
@@ -87,6 +94,8 @@ const UploadPhotoForm = () => {
     dispatch(clearRegistrationData());
     navigate('/');
   };
+
+  if (isLoading) return <LoaderPage />;
 
   return (
     <Container className={s.container}>
