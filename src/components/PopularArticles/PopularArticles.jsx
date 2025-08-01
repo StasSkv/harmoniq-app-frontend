@@ -40,11 +40,7 @@ export const PopularArticles = () => {
         </div>
 
         <ul className={s.articlesList}>
-          {loading && (
-            <div className={s.loader}>
-              <Loader />
-            </div>
-          )}
+          {loading && <Loader className={s.loader} />}
           {!loading &&
             articles.slice(0, visibleCount).map(({ _id, img, title, article, ownerName }) => (
               <li key={_id}>
