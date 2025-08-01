@@ -1,0 +1,86 @@
+.recommendedWrapper {
+  background-color: var(--green-light);
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+  gap: 15px;
+  padding: 32px 32px 40px 32px;
+  border-radius: 32px;
+}
+.articleInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--black);
+}
+.recommendedTitle {
+  font-weight: 700;
+  font-size: 24px;
+  color: var(--black);
+  margin-bottom: 15px;
+}
+
+.recommendList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.recommendList .recommendItem {
+  background: var(--white);
+  padding: 16px;
+  border-radius: 32px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+}
+
+.recommendArticleTitle {
+  margin-bottom: 10px;
+  max-width: 297px;
+  min-height: 40px;
+  max-height: 48px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+
+  -webkit-box-orient: vertical;
+  word-break: break-word;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--black);
+  line-height: 1.2;
+}
+
+.recommendAuthor {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--black);
+}
+
+.iconRight {
+  fill: none;
+  stroke: var(--black);
+  width: 25px;
+  transform: rotate(-45deg);
+}
+.recommendSvg {
+  color: var(--black);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid black;
+}
+.recommendLink {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+}

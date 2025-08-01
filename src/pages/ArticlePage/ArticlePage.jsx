@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchArticleById } from '../../redux/articlesSlice/articlesOperation';
 import { LoaderPage } from '../../components/Loader/LoaderPage/LoaderPage';
 import { Container } from '../../components/Container/Container';
+import { RecommendedArticles } from '../../components/RecommendedArticles/RecommendedArticles';
 
 const ArticlePage = () => {
   const { articleId } = useParams();
@@ -35,7 +36,10 @@ const ArticlePage = () => {
               <p key={idx}>{paragraph}</p>
             ))}
           </div>
-          <div className={s.future}>You can also interested</div>
+          <div className={s.future}>
+            {' '}
+            <RecommendedArticles currentArticle={article} />
+          </div>
         </div>
       </Container>
     </article>
