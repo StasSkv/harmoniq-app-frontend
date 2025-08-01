@@ -55,12 +55,12 @@ const RecommendedArticles = ({ currentArticle }) => {
         <h3 className={s.recommendedTitle}>You can also be interested</h3>
 
         <div className={s.recommendationBox}>
-          <ul className={s.list}>
+          <ul className={s.recommendList}>
             {recommended.map((article) => (
-              <li key={article._id} className={s.item}>
+              <li key={article._id} className={s.recommendItem}>
                 <div>
-                  <h4 className={s.articleTitle}>{article.title}</h4>
-                  <p className={s.author}>By {article.author?.name || 'Unknown'}</p>
+                  <h4 className={s.recommendArticleTitle}>{article.title}</h4>
+                  <p className={s.recommendAuthor}>By {article.author?.name || 'Unknown'}</p>
                 </div>
                 <Link to={`/articles/${article._id}`} className={s.linkBtn}>
                   <svg className={s.iconRight} width="25" height="24">

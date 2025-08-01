@@ -1,4 +1,5 @@
 .recommendedWrapper {
+  background-color: var(--green-light); /* фон тут */
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
@@ -24,13 +25,13 @@
   margin-bottom: 15px;
 }
 
-.list {
+.recommendList {
   display: flex;
   flex-direction: column;
   gap: 12px;
 }
 
-.item {
+.recommendItem {
   background: #f7fffb;
   padding: 16px;
   border-radius: 32px;
@@ -38,23 +39,52 @@
   align-items: flex-start;
   justify-content: flex-start;
   flex-direction: column;
-  gap: 8px;
-  width: 329px;
-  height: 109px;
+
+  /* width: 329px;
+  height: 109px; */
 }
 
-.articleTitle {
+.recommendArticleTitle {
+  max-width: 300px; /* або будь-яка потрібна ширина */
+  min-height: 40px; /* мінімальна висота */
+  max-height: 48px; /* максимум 2 рядки (залежить від line-height) */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+
+  -webkit-box-orient: vertical;
+  word-break: break-word; /* перенос слів */
+  font-size: 16px;
+  font-weight: 700;
+  color: #070721;
+  line-height: 1.2; /* щоб точно вкласти 2 рядки */
+
+  /* display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: row;
+  gap: 56px;
   font-weight: 700;
   font-size: 16px;
   color: #070721;
-  margin-bottom: 9px;
+  margin-bottom: 9px; */
+  /* white-space: normal;
+  word-wrap: break-word;
+  word-break: break-word;
+  overflow: hidden;
+  text-overflow: ellipsis; */
 }
 
-.author {
+.recommendAuthor {
   font-weight: 400;
   font-size: 16px;
   line-height: 1.55;
   color: #070721;
+  /* white-space: normal;
+  word-wrap: break-word;
+  word-break: break-word;
+  overflow: hidden;
+  text-overflow: ellipsis; */
 }
 
 .linkBtn {
@@ -64,6 +94,7 @@
   color: #2d2d2d;
 }
 .saveBtn {
+  margin-bottom: 0;
   margin-top: 24px;
   width: 100%;
   background-color: #649179;
