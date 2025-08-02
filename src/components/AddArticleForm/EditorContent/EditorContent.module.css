@@ -12,11 +12,13 @@
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  margin-bottom: 10px;
-  padding-bottom: 4px;
+  padding: 10px;
+  background-color: var(--white);
   border-bottom: 1px solid var(--gray-light);
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
-
 
 .toolbarSeparator {
   width: 1px;
@@ -53,7 +55,7 @@
     align-items: start;
     flex-wrap: wrap;
     margin-bottom: 10px;
-}
+  }
 }
 
 .editor .toolbar button:hover {
@@ -129,4 +131,62 @@
 
 .editor-content a::selection {
   background: none;
+}
+
+.colorPickerWrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.colorButton {
+  position: relative;
+  font-weight: bold !important;
+  min-width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  border: 1px solid var(--gray-light);
+}
+
+.colorPicker {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  margin-top: 4px;
+  background: var(--white);
+  border: 1px solid var(--gray-light);
+  border-radius: 8px;
+  padding: 8px;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 6px;
+  width: 160px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+}
+
+.colorOption {
+  width: 24px;
+  height: 24px;
+  border: 2px solid transparent;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.colorOption:hover {
+  transform: scale(1.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.colorOptionActive {
+  border-color: var(--black);
+  box-shadow: 0 0 0 2px var(--white), 0 0 0 4px var(--gray);
+}
+
+.editor {
+  position: relative;
 }

@@ -74,8 +74,8 @@
 }
 
 .btnAdd {
-  background: #649179;
-  color: #f7fffb;
+  background: var(--green-light);
+  color: var(--white);
 }
 
 .btnCancel:hover {
