@@ -15,7 +15,6 @@ export const AddArticleForm = ({ article }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const editorRef = useRef();
-  console.log(article);
 
   const draftKey = article?._id ? `draft-article-${article._id}` : 'draft-new-article';
 
