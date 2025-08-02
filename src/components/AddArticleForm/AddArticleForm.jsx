@@ -2,16 +2,15 @@ import s from './AddArticleForm.module.css';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { useRef, useState, useEffect } from 'react';
 import { MyEditor } from './EditorContent/EditorContent';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { createArticle, updateArticle } from '../../redux/articlesSlice/articlesOperation';
 import { validationSchema } from './validetionSchema';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import sprite from '../../assets/icons/sprite.svg';
+import { selectUser } from '../../redux/authSlice/authSelectors';
 import { FormAutoSave } from './FormAutoSave.js';
 import { fileToBase64 } from './fileToBase64.js';
 import { toast } from 'react-toastify';
-
-import { useLocation } from 'react-router-dom';
 
 export const AddArticleForm = ({ article: propArticle }) => {
   const dispatch = useDispatch();
@@ -19,17 +18,24 @@ export const AddArticleForm = ({ article: propArticle }) => {
   const location = useLocation();
   const editorRef = useRef();
 
-  // Отримуємо дані статті з пропсів або location.state
-  const article = propArticle || location.state?.article;
+  const currentUser = useSelector(selectUser);
+
+  // Визначаємо, чи це редагування статті
+  const isEditMode = Boolean(propArticle || location.state?.article);
+
+  // Перевіряємо права на редагування
+  const articleData = isEditMode ? propArticle || location.state?.article : null;
+  const canEdit = articleData ? articleData.ownerId === currentUser?._id : true;
+
+  // Використовуємо дані статті тільки якщо є права на редагування
+  const article = canEdit ? articleData : null;
 
   const draftKey = article?._id ? `draft-article-${article._id}` : 'draft-new-article';
 
   const savedDraft = localStorage.getItem(draftKey);
   const parsedDraft = savedDraft ? JSON.parse(savedDraft) : null;
 
-  // Стан для зображення
   const [imageState, setImageState] = useState(() => {
-    // Перевіряємо наявність даних в localStorage
     if (parsedDraft?.preview?.data) {
       return {
         type: parsedDraft.preview.type || 'base64',
@@ -38,9 +44,7 @@ export const AddArticleForm = ({ article: propArticle }) => {
       };
     }
 
-    // Перевіряємо наявність URL зображення з бекенду
     if (article?.img) {
-      // Якщо img це URL
       if (
         typeof article.img === 'string' &&
         (article.img.startsWith('http') || article.img.startsWith('/'))
@@ -51,7 +55,6 @@ export const AddArticleForm = ({ article: propArticle }) => {
           file: null,
         };
       }
-      // Якщо img це base64
       if (typeof article.img === 'string' && article.img.startsWith('data:image')) {
         return {
           type: 'base64',
@@ -61,7 +64,6 @@ export const AddArticleForm = ({ article: propArticle }) => {
       }
     }
 
-    // Якщо немає даних
     return {
       type: null,
       data: '',
@@ -69,18 +71,14 @@ export const AddArticleForm = ({ article: propArticle }) => {
     };
   });
 
-  // Стан для відстеження готовності редактора
   const [isEditorReady, setIsEditorReady] = useState(false);
 
-  // Ефект для встановлення початкового контенту редактора та зображення
   useEffect(() => {
-    // Встановлюємо контент редактора
     if (isEditorReady && editorRef.current && article?.article) {
       editorRef.current.commands.setContent(article.article);
     }
   }, [isEditorReady, article?.article]);
 
-  // Окремий ефект для оновлення зображення при зміні даних статті
   useEffect(() => {
     if (article?.img) {
       setImageState({
@@ -108,19 +106,14 @@ export const AddArticleForm = ({ article: propArticle }) => {
     formData.append('title', values.title);
     formData.append('article', values.article);
 
-    // Обробка зображення в залежності від типу
     if (imageState.file) {
-      // Якщо є новий завантажений файл
       formData.append('img', imageState.file);
     } else if (imageState.type === 'url') {
       if (article?.img !== imageState.data) {
-        // Якщо URL змінився, відправляємо новий URL
         formData.append('img', imageState.data);
       }
-      // Якщо URL не змінився, не відправляємо його - бекенд залишить старе зображення
     } else if (imageState.type === 'base64' && imageState.data) {
       try {
-        // Конвертуємо base64 в File
         const response = await fetch(imageState.data);
         const blob = await response.blob();
         const file = new File([blob], 'image.jpg', {
@@ -165,7 +158,7 @@ export const AddArticleForm = ({ article: propArticle }) => {
       enableReinitialize
       initialValues={{
         title: parsedDraft?.title || article?.title || '',
-        article: parsedDraft?.article || article?.article || '', // Початковий контент для редактора
+        article: parsedDraft?.article || article?.article || '',
         img: null,
       }}
       onSubmit={handleSubmit}
@@ -177,7 +170,6 @@ export const AddArticleForm = ({ article: propArticle }) => {
 
           if (!file) {
             setFieldValue('img', null);
-            // Повертаємось до початкового стану
             if (article?.img) {
               setImageState({
                 type: 'url',
@@ -194,14 +186,12 @@ export const AddArticleForm = ({ article: propArticle }) => {
             return;
           }
 
-          // Валідація розміру файлу (наприклад, 5MB)
-          const maxSize = 5 * 1024 * 1024; // 5MB
+          const maxSize = 5 * 1024 * 1024;
           if (file.size > maxSize) {
             toast.error('Image size should not exceed 5MB');
             return;
           }
 
-          // Валідація типу файлу
           const allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
           if (!allowedTypes.includes(file.type)) {
             toast.error('Please upload JPEG, PNG or WEBP image');
