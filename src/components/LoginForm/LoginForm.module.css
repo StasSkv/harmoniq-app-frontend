@@ -5,6 +5,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  padding-top: 85px;
+  padding-bottom: 49px;
 }
 
 .loginWrapper {
@@ -134,14 +136,24 @@ input:focus::placeholder {
   text-decoration: underline;
 }
 
-@media (min-width: 768px) {
+@media screen and (min-width: 768px) {
+  .container {
+    padding-top: 232px;
+    padding-bottom: 195px;
+  }
+
   .loginWrapper {
     max-width: 522px;
     margin: 0 auto;
   }
 }
 
-@media (min-width: 1440px) {
+@media screen and (min-width: 1440px) {
+  .container {
+    padding-top: 172px;
+    padding-bottom: 116px;
+  }
+
   .loginWrapper {
     max-width: 392px;
   }
