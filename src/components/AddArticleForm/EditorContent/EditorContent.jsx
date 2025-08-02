@@ -3,7 +3,6 @@ import s from './EditorContent.module.css';
 import { useEditor, EditorContent } from '@tiptap/react';
 import { AiOutlineAlignLeft, AiOutlineAlignCenter, AiOutlineAlignRight } from 'react-icons/ai';
 import StarterKit from '@tiptap/starter-kit';
-import Link from '@tiptap/extension-link';
 import TextAlign from '@tiptap/extension-text-align';
 import Placeholder from '@tiptap/extension-placeholder';
 import Italic from '@tiptap/extension-italic';
@@ -12,6 +11,7 @@ import { Color } from '@tiptap/extension-color';
 import { InputLinkModal } from '../InputLinkModal/InputLinkModal';
 import { useRef, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
+import { CustomLink } from './CustomLink';
 
 export const MyEditor = ({ value, onChange, onReady }) => {
   const [isModalOpen, setModalOpen] = useState(false);
@@ -52,7 +52,7 @@ export const MyEditor = ({ value, onChange, onReady }) => {
       Italic.configure({}),
       TextStyle,
       Color,
-      Link,
+      CustomLink,
       TextAlign.configure({
         types: ['heading', 'paragraph'],
         alignments: ['left', 'center', 'right', 'justify'],
