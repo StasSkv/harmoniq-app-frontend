@@ -11,7 +11,7 @@ import { InputLinkModal } from '../InputLinkModal/InputLinkModal';
 import { useRef, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 
-export const MyEditor = ({ value, onChange }) => {
+export const MyEditor = ({ value, onChange, onReady }) => {
   const [isModalOpen, setModalOpen] = useState(false);
   const editorRef = useRef(null);
 
@@ -34,9 +34,22 @@ export const MyEditor = ({ value, onChange }) => {
     ],
     content: value || '',
     onUpdate: ({ editor }) => {
-      onChange(editor.getHTML());
+      // Зберігаємо форматований HTML
+      const html = editor.getHTML();
+      onChange(html);
+    },
+    onCreate: ({ editor }) => {
+      // Повідомляємо про готовність редактора
+      onReady?.(editor);
     },
   });
+
+  // Синхронізуємо контент редактора при зміні value ззовні
+  useEffect(() => {
+    if (editor && value !== editor.getHTML()) {
+      editor.commands.setContent(value || '');
+    }
+  }, [value, editor]);
 
   useEffect(() => {
     if (editor) {
