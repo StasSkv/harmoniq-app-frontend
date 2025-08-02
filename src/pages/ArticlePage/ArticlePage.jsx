@@ -41,7 +41,9 @@ const ArticlePage = () => {
     <article className={s.articlePage}>
       <Container>
         <h2 className={s.articleTitle}>{article.title}</h2>
-        {article.img && <img src={article.img} alt={article.title} className={s.articleImg} />}
+        <div className={s.articleImgWrapper}>
+          {article.img && <img src={article.img} alt={article.title} className={s.articleImg} />}
+        </div>
         <div className={s.content}>
           <div className={s.articleText}>
             {isHTML(article.article) ? (
