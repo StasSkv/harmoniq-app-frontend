@@ -1,5 +1,6 @@
 .logo {
   fill: var(--green);
+  outline: none;
 }
 
 .header {
@@ -122,6 +123,7 @@
   cursor: pointer;
   width: 32px;
   height: 32px;
+  outline: none;
 }
 
 .mobileBurger svg,
