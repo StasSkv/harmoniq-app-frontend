@@ -19,9 +19,9 @@ export const Creators = ({ authors }) => {
           </Link>
         </div>
         <ul className={s.authorsList}>
-          {authors.map(({ _id, name, avatar }) => (
-            <li key={_id} className={s.authorsListItem}>
-              <Link to={`/authors/${_id}`} className={s.linkItem}>
+          {authors.map(({ id, name, avatar }) => (
+            <li key={id} className={s.authorsListItem}>
+              <Link to={`/authors/${id}`} className={s.linkItem}>
                 <img src={avatar} alt={name} className={s.image} />
                 <p className={s.name}>{name}</p>
               </Link>
