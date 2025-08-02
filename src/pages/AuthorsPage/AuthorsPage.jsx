@@ -34,14 +34,12 @@ const AuthorsPage = () => {
   }, [dispatch, currentPage]);
 
   const handlePageChange = (page) => {
-    // pag 2 Перевіряємо, чи не намагаємося перейти на неіснуючу сторінку
     if (page > totalPages && totalPages > 0) {
       console.warn(`Trying to navigate to page ${page}, but only ${totalPages} pages exist`);
       return;
     }
 
     setCurrentPage(page);
-    // Прокручуємо до початку списку при зміні сторінки
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 

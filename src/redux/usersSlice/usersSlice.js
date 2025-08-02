@@ -10,12 +10,12 @@ const usersSlice = createSlice({
   name: 'users',
   initialState: {
     items: [],
-    authorsPageItems: [], // Для сторінки авторів
-    total: 0, // Додаємо поле для total
-    totalPages: 0, // Додано для кількості сторінок pag2
-    currentServerPage: 1, // Поточна сторінка з сервера pag2
+    authorsPageItems: [],
+    total: 0,
+    totalPages: 0,
+    currentServerPage: 1,
     isLoading: false,
-    authorsPageLoading: false, // Окремий лоадер для сторінки авторів
+    authorsPageLoading: false,
     error: null,
     visibleCount: 20,
     saveLoading: {},
@@ -28,7 +28,7 @@ const usersSlice = createSlice({
     },
     resetUsers: (state) => {
       state.items = [];
-      state.total = 0; // Скидаємо також total
+      state.total = 0;
       state.visibleCount = 20;
       state.error = null;
     },
@@ -38,7 +38,7 @@ const usersSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      // Для головної сторінки
+
       .addCase(fetchAllUsers.pending, (state) => {
         state.isLoading = true;
         state.error = null;
@@ -51,7 +51,7 @@ const usersSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload;
       })
-      // Для сторінки авторів з пагінацією
+
       .addCase(fetchAllUsersForAuthorsPage.pending, (state) => {
         state.authorsPageLoading = true;
         state.error = null;
@@ -67,7 +67,7 @@ const usersSlice = createSlice({
         state.authorsPageLoading = false;
         state.error = action.payload;
       })
-      // Інші операції
+
       .addCase(saveArticle.pending, (state, action) => {
         const articleId = action.meta.arg;
         state.saveLoading[articleId] = true;
