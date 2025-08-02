@@ -12,18 +12,14 @@ import {
   selectIsLoading,
 } from '../../redux/articlesSlice/articlesSelectors';
 import { fetchAllArticles } from '../../redux/articlesSlice/articlesOperation';
-import { selectArticles } from '../../redux/articlesSlice/articlesSelectors';
 
 const ArticlePage = () => {
   const { articleId } = useParams();
   const dispatch = useDispatch();
 
-  const recommendedArticles = useSelector(selectArticles);
   const currentArticle = useSelector(selectCurrentArticle);
   const isLoading = useSelector(selectIsLoading);
   const error = useSelector(selectError);
-
-  console.log(recommendedArticles.data);
 
   const isHTML = (str) => /<\/?[a-z][\s\S]*>/i.test(str);
   const article = currentArticle?.data || currentArticle;
