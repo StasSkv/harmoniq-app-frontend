@@ -30,3 +30,29 @@ export const removeSavedArticle = createAsyncThunk(
     }
   }
 );
+
+export const fetchAllUsersForAuthorsPage = createAsyncThunk(
+  'users/fetchForAuthorsPage',
+  async (params = {}, thunkAPI) => {
+    try {
+      const response = await api.get('/users', { params });
+      console.log('Full response:', response.data);
+      console.log('Pagination:', response.data.pagination);
+
+      // Виправлена структура базуючись на реальній відповіді
+      const result = {
+        data: response.data.data, // масив користувачів
+        total: response.data.pagination.totalItems, // загальна кількість з pagination
+        totalPages: response.data.pagination.totalPages, // кількість сторінок
+        currentPage: response.data.pagination.page, // поточна сторінка
+        hasNextPage: response.data.pagination.hasNextPage,
+        hasPreviousPage: response.data.pagination.hasPreviousPage,
+      };
+
+      console.log('Returned result:', result);
+      return result;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message || 'Failed to fetch users');
+    }
+  }
+);
