@@ -20,14 +20,11 @@ export const AddArticleForm = ({ article: propArticle }) => {
 
   const currentUser = useSelector(selectUser);
 
-  // Визначаємо, чи це редагування статті
   const isEditMode = Boolean(propArticle || location.state?.article);
 
-  // Перевіряємо права на редагування
   const articleData = isEditMode ? propArticle || location.state?.article : null;
   const canEdit = articleData ? articleData.ownerId === currentUser?._id : true;
 
-  // Використовуємо дані статті тільки якщо є права на редагування
   const article = canEdit ? articleData : null;
 
   const draftKey = article?._id ? `draft-article-${article._id}` : 'draft-new-article';

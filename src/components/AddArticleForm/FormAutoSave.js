@@ -3,7 +3,6 @@ import { useEffect } from 'react';
 export const FormAutoSave = ({ draftKey, values, imageState }) => {
   useEffect(() => {
     const timeoutId = setTimeout(() => {
-      // Перевіряємо довжину тексту без тегів, але зберігаємо оригінальний HTML
       const isArticleEmpty =
         !values.article || values.article.replace(/<[^>]*>/g, '').trim().length < 40;
       const isTitleEmpty = !values.title.trim();
@@ -13,7 +12,6 @@ export const FormAutoSave = ({ draftKey, values, imageState }) => {
         localStorage.removeItem(draftKey);
         return;
       }
-
       const draftToSave = {
         title: values.title,
         article: values.article,

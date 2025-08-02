@@ -8,6 +8,7 @@
   border-radius: 32px;
   gap: 12px;
   max-height: 492px;
+  min-height: 492px;
 }
 
 .image {
@@ -92,7 +93,6 @@
 }
 
 @media only screen and (min-width: 768px) {
- 
 }
 
 @media only screen and (min-width: 1440px) {
