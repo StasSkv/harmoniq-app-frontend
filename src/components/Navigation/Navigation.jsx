@@ -22,7 +22,6 @@ export const Navigation = ({ onLinkClick }) => {
             <NavLink
               to={to}
               end={end}
-              strict
               className={({ isActive }) => (isActive ? `${s.link} ${s.active}` : s.link)}
               onClick={onLinkClick}
             >
