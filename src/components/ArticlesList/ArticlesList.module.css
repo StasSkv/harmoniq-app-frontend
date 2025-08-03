@@ -2,6 +2,8 @@
   margin-bottom: 24px;
 }
 
+
+
 .articles_list_item:not(:last-child) {
   margin-bottom: 24px;
 }
@@ -11,12 +13,21 @@
     margin-bottom: 0;
   }
   .articles_list {
+    width: 100%;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     gap: 24px;
   }
+
+  .articles_list_item {
+  width: calc((100% - 24px) / 2);
+}
 }
 
 @media (min-width: 1440px) {
+
+  .articles_list_item {
+  width: calc((100% - 48px) / 3);
+}
 }

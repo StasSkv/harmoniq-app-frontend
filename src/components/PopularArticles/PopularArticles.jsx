@@ -26,7 +26,7 @@ export const PopularArticles = () => {
 
   return (
     <section className={s.section} id="popular-articles">
-      <Container>
+      <Container className={s.container}>
         <div className={s.header}>
           <h2 className={s.title}>Popular Articles</h2>
           <div className={s.allArticlesLinkContainer}>
@@ -43,7 +43,7 @@ export const PopularArticles = () => {
           {loading && <Loader className={s.loader} />}
           {!loading &&
             articles.slice(0, visibleCount).map(({ _id, img, title, article, ownerName }) => (
-              <li key={_id}>
+              <li key={_id} className={s.articlesListItem}>
                 <ArticleItem
                   articleId={_id}
                   img={img}
