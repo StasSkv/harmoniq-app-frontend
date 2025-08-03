@@ -29,15 +29,23 @@ export const About = () => {
           </p>
         </div>
 
-        <picture>
-          <source
-            srcSet={`${lotusDesktop1x} 1x, ${lotusDesktop2x} 2x`}
-            media="(min-width: 1440px)"
-          />
-          <source srcSet={`${lotusTablet1x} 1x, ${lotusTablet2x} 2x`} media="(min-width: 768px)" />
-          <source srcSet={`${lotusMobile1x} 1x, ${lotusMobile2x} 2x`} media="(max-width: 767px)" />
-          <img className={s.aboutImage} src={lotusMobile1x} alt="Lotus" loading="lazy" />
-        </picture>
+        <div className={s.imgLotusWrapper}>
+          <picture>
+            <source
+              srcSet={`${lotusDesktop1x} 1x, ${lotusDesktop2x} 2x`}
+              media="(min-width: 1440px)"
+            />
+            <source
+              srcSet={`${lotusTablet1x} 1x, ${lotusTablet2x} 2x`}
+              media="(min-width: 768px)"
+            />
+            <source
+              srcSet={`${lotusMobile1x} 1x, ${lotusMobile2x} 2x`}
+              media="(max-width: 767px)"
+            />
+            <img className={s.aboutImage} src={lotusMobile1x} alt="Lotus" loading="lazy" />
+          </picture>
+        </div>
 
         <picture>
           <source
