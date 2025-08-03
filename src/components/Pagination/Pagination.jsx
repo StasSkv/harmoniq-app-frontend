@@ -5,14 +5,11 @@ export const Pagination = ({ currentPage = 1, totalItems, itemsPerPage = 20, onP
   const pageCount = Math.ceil(totalItems / itemsPerPage);
 
   const handlePageClick = (event) => {
-    const selectedPage = event.selected + 1; // react-paginate використовує 0-based індекси
+    const selectedPage = event.selected + 1;
     onPageChange(selectedPage);
   };
 
-  // Не показуємо пагінацію, якщо тільки одна сторінка або менше
   if (pageCount <= 1) return null;
-
-  console.log('Pagination render:', { currentPage, totalItems, pageCount });
 
   return (
     <div className={s.paginationWrapper}>
@@ -41,9 +38,10 @@ export const Pagination = ({ currentPage = 1, totalItems, itemsPerPage = 20, onP
           </svg>
         }
         onPageChange={handlePageClick}
-        pageRangeDisplayed={5}
+        pageRangeDisplayed={1} // Показує кількість сторінок навколо поточної
+        marginPagesDisplayed={1}
         pageCount={pageCount}
-        forcePage={currentPage - 1} // react-paginate використовує 0-based індекси
+        forcePage={currentPage - 1}
         renderOnZeroPageCount={null}
         containerClassName={s.pagination}
         pageClassName={s.pageItem}
