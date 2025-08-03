@@ -1,27 +1,63 @@
 import s from './AuthorsPage.module.css';
 import { Container } from '../../components/Container/Container';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchAllUsers } from '../../redux/usersSlice/usersOperations.js';
-import { selectAllUsers, selectUsersLoading } from '../../redux/usersSlice/usersSelectors.js';
+import { fetchAllUsersForAuthorsPage } from '../../redux/usersSlice/usersOperations.js';
+import {
+  selectAuthorsPageLoading,
+  selectAuthorsPageUsers,
+  selectUsersTotal,
+  selectUsersTotalPages,
+} from '../../redux/usersSlice/usersSelectors.js';
 import { AuthorsList } from '../../components/AuthorList/AuthorList.jsx';
 import { LoaderPage } from '../../components/Loader/LoaderPage/LoaderPage.jsx';
+import { Pagination } from '../../components/Pagination/Pagination.jsx';
 
 const AuthorsPage = () => {
   const dispatch = useDispatch();
-  const authors = useSelector(selectAllUsers);
-  const isLoading = useSelector(selectUsersLoading);
+  const authors = useSelector(selectAuthorsPageUsers);
+  const isLoading = useSelector(selectAuthorsPageLoading);
+  const totalUsers = useSelector(selectUsersTotal);
+  const totalPages = useSelector(selectUsersTotalPages);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 20;
 
   useEffect(() => {
-    dispatch(fetchAllUsers({ filter: 'popular', limit: 20 }));
-  }, [dispatch]);
+    dispatch(
+      fetchAllUsersForAuthorsPage({
+        filter: 'popular',
+        limit: itemsPerPage,
+        page: currentPage,
+      })
+    );
+  }, [dispatch, currentPage]);
+
+  const handlePageChange = (page) => {
+    if (page > totalPages && totalPages > 0) {
+      console.warn(`Trying to navigate to page ${page}, but only ${totalPages} pages exist`);
+      return;
+    }
+
+    setCurrentPage(page);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   return (
     <section>
       {isLoading && <LoaderPage />}
       <Container className={s.authorsPage}>
         <h2 className={s.authorsPageTitle}>Authors</h2>
-        <AuthorsList authors={authors.data} />
+        <AuthorsList authors={authors} />
+
+        {totalPages > 1 && (
+          <Pagination
+            currentPage={currentPage}
+            totalItems={totalUsers}
+            itemsPerPage={itemsPerPage}
+            onPageChange={handlePageChange}
+          />
+        )}
       </Container>
     </section>
   );
