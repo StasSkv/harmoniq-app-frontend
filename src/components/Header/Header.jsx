@@ -111,9 +111,14 @@ export const Header = () => {
         {/* планшет: кнопка + бургер */}
         <div className={s.tabletArea}>
           {isLoggedIn ? (
-            <UserMenu showName={false} showExit={false} onLogoutCloseMenu={handleLogoutCloseMenu} />
+            <UserMenu
+              showName={false}
+              showExit={false}
+              onLogoutCloseMenu={handleLogoutCloseMenu}
+              onCloseMenu={closeMenu}
+            />
           ) : (
-            <HeaderAuthButtons showLogin={false} />
+            <HeaderAuthButtons showLogin={false} onLinkClick={closeMenu} />
           )}
           <button className={s.burger} onClick={toggleMenu} aria-label="Toggle menu">
             <svg width="32" height="32">
@@ -146,6 +151,7 @@ export const Header = () => {
               showName
               showExit
               onLinkClick={handleLinkClick}
+              onCloseMenu={closeMenu}
               onLogoutCloseMenu={handleLogoutCloseMenu}
             />
           ) : (

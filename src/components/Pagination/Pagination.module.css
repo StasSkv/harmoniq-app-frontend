@@ -1,0 +1,129 @@
+.paginationWrapper {
+  display: flex;
+  justify-content: center;
+  margin: 32px 0;
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Стилі для стрілок назад/вперед */
+.previousItem,
+.nextItem {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.previousLink,
+.nextLink {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: var(--green);
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.previousLink:hover,
+.nextLink:hover {
+  background-color: var(--green-darker);
+}
+
+/* Відключені стрілки */
+.disabled .previousLink,
+.disabled .nextLink {
+  background-color: #e5e7eb;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.disabled .previousLink svg path,
+.disabled .nextLink svg path {
+  stroke: #9ca3af;
+}
+
+/* Стилі для номерів сторінок */
+.pageItem {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pageLink {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: transparent;
+  color: #1f2937; /* чорний колір */
+  text-decoration: none;
+  font-weight: 400;
+  font-size: 14px;
+  transition: all 0.2s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.pageLink:hover {
+  background-color: #f3f4f6;
+  transform: scale(1.1);
+}
+
+/* Активна сторінка - зелений кружечок з білою цифрою */
+.activePage .pageLink {
+  background-color: var(--green);
+  color: white !important; /* біла цифра */
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.activePage .pageLink:hover {
+  background-color: var(--green-darker);
+}
+
+/* Стилі для break (...) */
+.breakItem {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.breakLink {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  color: #6b7280;
+  text-decoration: none;
+  font-weight: 400;
+  font-size: 14px;
+  cursor: default;
+}
+
+@media (min-width: 768px) {
+  .previousLink,
+  .nextLink,
+  .pageLink {
+    width: 40px;
+    height: 40px;
+  }
+  .pageLink {
+    font-weight: 700;
+  }
+}
