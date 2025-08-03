@@ -1,100 +1,131 @@
-.wrapper {
-    display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        justify-content: flex-start;
-        padding: 24px 16px;
-        height: 100%;
+.profilePage {
+  width: 100%;
+  margin-top: 46px;
 }
 
 .header {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    margin-bottom: 24px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.title {
+  font-family: var(--font-primary);
+  font-weight: var(--font-weight-bold);
+  font-size: 40px;
+  color: var(--black);
+  margin-bottom: 24px;
 }
 
 .avatar {
-    width: 64px;
-    height: 64px;
-    border-radius: 50%;
-    object-fit: cover;
+  width: 124px;
+  height: 124px;
+  border-radius: 50%;
+  object-fit: cover;
 }
 
 .info {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.nameWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 }
 
 .name {
-    font-size: 20px;
-    font-weight: 600;
-    margin-bottom: 4px;
+  font-family: var(--font-primary);
+  font-weight: var(--font-weight-bold);
+  font-size: 32px;
+  text-align: center;
+  color: var(--black);
+}
+
+.btnSubscribe {
+  width: 100%;
+  height: 40px;
+  border-radius: 64px;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  font-family: var(--font-primary);
+  font-weight: var(--font-weight-bold);
+  font-size: 16px;
+  color: var(--white);
+  background-color: var(--green);
 }
 
 .articles {
-    font-size: 14px;
-    color: #777;
+  font-family: var(--font-primary);
+  font-weight: var(--font-weight-regular);
+  font-size: 18px;
+  color: var(--black);
 }
 
-/* Tabs — тільки для свого профілю */
 .tabs {
-    display: flex;
-    gap: 12px;
-    margin-bottom: 24px;
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
 }
 
 .tabBtn {
-    padding: 8px 16px;
-    border: 1px solid #ccc;
-    background-color: transparent;
-    border-radius: 20px;
-    cursor: pointer;
-    font-size: 14px;
+  padding: 8px 16px;
+  border: 1px solid #ccc;
+  background-color: transparent;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 14px;
 }
 
 .tabBtn:hover {
-    border-color: #4e54c8;
-    color: #4e54c8;
+  border-color: #4e54c8;
+  color: #4e54c8;
 }
 
-/* 💻 Tablet */
 @media screen and (min-width: 768px) {
-    .wrapper {
-        padding: 40px 32px;
-    }
+  .header {
+    justify-content: start;
+  }
 
-    .avatar {
-        width: 80px;
-        height: 80px;
-    }
+  .info {
+    flex-direction: row;
+    justify-content: start;
+    gap: 24px;
+  }
 
-    .name {
-        font-size: 24px;
-    }
+  .articles {
+    white-space: nowrap;
+  }
 
-    .articles {
-        font-size: 16px;
-    }
+  .nameWrapper {
+    width: max-content;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
 
-    .tabBtn {
-        font-size: 16px;
-        padding: 10px 20px;
-    }
+  .name {
+    text-align: start;
+  }
+
+  .btnSubscribe {
+    max-width: 148px;
+  }
 }
 
-/* 🖥 Desktop */
 @media screen and (min-width: 1280px) {
-    .wrapper {
-        padding: 64px 64px;
-    }
-
-    .avatar {
-        width: 96px;
-        height: 96px;
-    }
-
-    .name {
-        font-size: 28px;
-    }
+  .avatar {
+    width: 137px;
+    height: 137px;
+  }
 }

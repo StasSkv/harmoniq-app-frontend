@@ -19,6 +19,15 @@ export const saveArticle = createAsyncThunk('articles/saveArticle', async (artic
   }
 });
 
+export const fetchUserById = createAsyncThunk('users/fetchUserById', async (authorId, thunkAPI) => {
+  try {
+    const response = await api.get(`/users/${authorId}`);
+    return response.data.data;
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error.message || 'Failed to fetch user');
+  }
+});
+
 export const removeSavedArticle = createAsyncThunk(
   'articles/removeSavedArticle',
   async (articleId, thunkAPI) => {
@@ -36,7 +45,6 @@ export const fetchAllUsersForAuthorsPage = createAsyncThunk(
   async (params = {}, thunkAPI) => {
     try {
       const response = await api.get('/users', { params });
-
       const result = {
         data: response.data.data,
         total: response.data.pagination.totalItems,
@@ -45,8 +53,6 @@ export const fetchAllUsersForAuthorsPage = createAsyncThunk(
         hasNextPage: response.data.pagination.hasNextPage,
         hasPreviousPage: response.data.pagination.hasPreviousPage,
       };
-
-      console.log('Returned result:', result);
       return result;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message || 'Failed to fetch users');

@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import {
   fetchAllUsers,
   fetchAllUsersForAuthorsPage,
+  fetchUserById,
   removeSavedArticle,
   saveArticle,
 } from './usersOperations.js';
@@ -10,6 +11,7 @@ const usersSlice = createSlice({
   name: 'users',
   initialState: {
     items: [],
+    profileUser: null,
     authorsPageItems: [],
     total: 0,
     totalPages: 0,
@@ -38,7 +40,6 @@ const usersSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-
       .addCase(fetchAllUsers.pending, (state) => {
         state.isLoading = true;
         state.error = null;
@@ -48,6 +49,19 @@ const usersSlice = createSlice({
         state.items = action.payload;
       })
       .addCase(fetchAllUsers.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+
+      .addCase(fetchUserById.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(fetchUserById.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.profileUser = action.payload
+      })
+      .addCase(fetchUserById.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       })

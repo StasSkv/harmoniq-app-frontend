@@ -1,61 +1,55 @@
 import { useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import css from './AuthorProfilePage.module.css';
-import axios from '../../redux/services/axios';
-import { LoaderPage } from '../../components/Loader/LoaderPage/LoaderPage';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import s from './AuthorProfilePage.module.css';
+import { Container } from '../../components/Container/Container.jsx';
+import { selectProfileUser, selectIsLoading } from '../../redux/usersSlice/usersSelectors.js';
+import { fetchUserById } from '../../redux/usersSlice/usersOperations.js';
+import { LoaderPage } from '../../components/Loader/LoaderPage/LoaderPage.jsx';
 
 const AuthorProfilePage = () => {
-  const { authorId } = useParams(); // отримаєш ID з маршруту
-  const user = useSelector(state => state.auth.user);
+  const dispatch = useDispatch();
+  const { authorId } = useParams();
+  const profileUser = useSelector(selectProfileUser);
+  const isLoading = useSelector(selectIsLoading);
 
-  const [author, setAuthor] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
-
-  // Порівнюй з _id, а не id
-  const isOwnProfile = user?._id === authorId;
+  const ownProfile = profileUser?.id === authorId;
+  console.log(ownProfile);
 
   useEffect(() => {
-    const fetchAuthor = async () => {
-      try {
-        setIsLoading(true);
-        const { data } = await axios.get(`/users/${authorId}`);
-        setAuthor(data);
-      } catch (error) {
-        console.error('❌ Failed to fetch author:', error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
+    if (authorId) {
+      dispatch(fetchUserById(authorId));
+    }
+  }, [authorId, dispatch]);
 
-    fetchAuthor();
-  }, [authorId]);
-
-  if (isLoading) return <LoaderPage />;
-  if (!author) return <p>❌ Author not found.</p>;
-
-  return (
-    <section className={css.wrapper}>
-      <div className={css.header}>
-        <img
-          src={author.avatar}
-          alt="Author Avatar"
-          className={css.avatar}
-        />
-        <div className={css.info}>
-          <h1 className={css.name}>{author.name}</h1>
-          <p className={css.articles}>
-            {author.articlesAmount || 0} articles
-          </p>
+  return isLoading ? (
+    <LoaderPage />
+  ) : (
+    <section className={s.profilePage}>
+      <Container className={s.container}>
+        {ownProfile ? (
+          <h2 className={s.title}>My Profile</h2>
+        ) : (
+          <h2 className={s.title}>Author Profile</h2>
+        )}
+        <div className={s.header}>
+          <img src={profileUser?.avatar} alt="Author Avatar" className={s.avatar} />
+          <div className={s.info}>
+            <div className={s.nameWrapper}>
+              <h4 className={s.name}>{profileUser?.name}</h4>
+              <p className={s.articles}>{profileUser?.articlesAmount || 0} articles</p>
+            </div>
+            <button className={s.btnSubscribe}>Subscribe</button>
+          </div>
         </div>
-      </div>
-
-      {isOwnProfile && (
-        <div className={css.tabs}>
-          <button className={css.tabBtn}>My Articles</button>
-          <button className={css.tabBtn}>Saved Articles</button>
-        </div>
-      )}
+        {ownProfile && (
+          <div className={s.tabs}>
+            <button className={s.tabBtn}>My Articles</button>
+            <button className={s.tabBtn}>Saved Articles</button>
+            <button className={s.tabBtn}>Subscribers</button>
+          </div>
+        )}
+      </Container>
     </section>
   );
 };
