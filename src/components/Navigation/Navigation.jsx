@@ -9,9 +9,9 @@ export const Navigation = ({ onLinkClick }) => {
 
   const links = [
     { to: '/', label: 'Home', end: true },
-    { to: '/articles', label: 'Articles' },
-    { to: '/authors', label: 'Authors' },
-    ...(isAuth ? [{ to: `/authors/${user.id}`, label: 'My Profile' }] : []),
+    { to: '/articles', label: 'Articles', end: true },
+    { to: '/authors', label: 'Authors', end: true },
+    ...(isAuth ? [{ to: `/authors/${user._id}`, label: 'My Profile', end: true }] : []),
   ];
 
   return (
@@ -22,12 +22,8 @@ export const Navigation = ({ onLinkClick }) => {
             <NavLink
               to={to}
               end={end}
-              className={({ isActive }) => {
-                if (isActive && label === 'My Profile') {
-                  return `${s.link} ${s.active}`;
-                }
-                return s.link;
-              }}
+              strict
+              className={({ isActive }) => (isActive ? `${s.link} ${s.active}` : s.link)}
               onClick={onLinkClick}
             >
               {label}
