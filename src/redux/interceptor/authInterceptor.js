@@ -20,11 +20,18 @@ const processQueue = (error, token = null) => {
 
 export const setupAuthInterceptor = () => {
   api.interceptors.response.use(
-    (response) => response,
+    (response) => {
+      console.log('[Interceptor] Response success:', response);
+      return response;
+    },
     async (error) => {
+      console.log('[Interceptor] Response error:', error.response?.status, error.config.url);
       const originalRequest = error.config;
 
-      if (error.response?.status === 401 && !originalRequest._retry) {
+      const isRefreshRequest = error.config.url.includes('/auth/refresh');
+      const isUnauthorized = error.response?.status === 401 || error.response?.status === 403;
+
+      if (isRefreshRequest && isUnauthorized) {
         originalRequest._retry = true;
 
         const state = store.getState();
@@ -32,7 +39,13 @@ export const setupAuthInterceptor = () => {
 
         if (!refreshToken) {
           toast.error('Session expired. Please log in again.');
+          console.log('[Interceptor] Logging out due to refresh failure');
           await store.dispatch(logoutThunk());
+          if (typeof navigateTo === 'function') {
+            navigateTo('/login');
+          } else {
+            window.location.href = '/login';
+          }
           return Promise.reject(error);
         }
 
@@ -61,15 +74,25 @@ export const setupAuthInterceptor = () => {
             return api(originalRequest);
           } else {
             toast.error('Session expired. Please log in again.');
+            console.log('[Interceptor] Logging out due to refresh failure');
             await store.dispatch(logoutThunk());
             processQueue(resultAction.error, null);
+            if (typeof navigateTo === 'function') {
+              navigateTo('/login');
+            } else {
+              window.location.href = '/login';
+            }
             return Promise.reject(error);
           }
         } catch (err) {
           processQueue(err, null);
           toast.error('Session expired. Please log in again.');
           await store.dispatch(logoutThunk());
-          navigateTo('/login');
+          if (typeof navigateTo === 'function') {
+            navigateTo('/login');
+          } else {
+            window.location.href = '/login';
+          }
           return Promise.reject(err);
         } finally {
           isRefreshing = false;

@@ -78,6 +78,11 @@ const slice = createSlice({
       })
       .addCase(refreshThunk.rejected, (state) => {
         state.isRefreshing = false;
+        state.isError = true;
+        state.user = null;
+        state.refreshToken = null;
+        state.accessToken = null;
+        state.isLoggedIn = false;
       });
   },
 });
