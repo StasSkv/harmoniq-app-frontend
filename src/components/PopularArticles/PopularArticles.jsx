@@ -42,17 +42,20 @@ export const PopularArticles = () => {
         <ul className={s.articlesList}>
           {loading && <Loader className={s.loader} />}
           {!loading &&
-            articles.slice(0, visibleCount).map(({ _id, img, title, article, ownerName }) => (
-              <li key={_id} className={s.articlesListItem}>
-                <ArticleItem
-                  articleId={_id}
-                  img={img}
-                  title={title}
-                  article={article}
-                  ownerName={ownerName}
-                />
-              </li>
-            ))}
+            articles
+              .slice(0, visibleCount)
+              .map(({ _id, img, title, article, ownerName, ownerId }) => (
+                <li key={_id} className={s.articlesListItem}>
+                  <ArticleItem
+                    articleId={_id}
+                    img={img}
+                    title={title}
+                    article={article}
+                    ownerName={ownerName}
+                    ownerId={ownerId}
+                  />
+                </li>
+              ))}
         </ul>
       </Container>
     </section>
