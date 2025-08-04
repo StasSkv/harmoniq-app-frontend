@@ -60,10 +60,28 @@ export const fetchFollowingByUserId = createAsyncThunk('users/fetchFollowingByUs
 
 export const addFollower = createAsyncThunk('users/addFollowing', async (userId, thunkAPI) => {
   try {
-    const response = await api.post(`/users/following/${userId}`);
+    const response = await api.patch(`/users/follow/${userId}`);
     return response.data;
   } catch (error) {
     return thunkAPI.rejectWithValue(error.message || 'Failed to add follower');
+  }
+});
+
+export const deleteFollower = createAsyncThunk('users/deleteFollower', async (userId, thunkAPI) => {
+  try {
+    const response = await api.patch(`/users/unfollow/${userId}`);
+    return response.data;
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error.message || 'Failed to delete follower');
+  }
+});
+
+export const deleteUserInfo = createAsyncThunk('users/deleteUserInfo', async (userId, thunkAPI) => {
+  try {
+    const response = await api.delete(`/users/${userId}`);
+    return response.data;
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error.message || 'Failed to update user info');
   }
 });
 

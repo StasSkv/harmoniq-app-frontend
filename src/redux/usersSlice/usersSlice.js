@@ -8,6 +8,7 @@ import {
   fetchSavedArticles,
   fetchFollowingByUserId,
   addFollower,
+  deleteFollower,
 } from './usersOperations.js';
 
 const usersSlice = createSlice({
@@ -151,6 +152,18 @@ const usersSlice = createSlice({
         state.following = action.payload;
       })
       .addCase(addFollower.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+      .addCase(deleteFollower.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(deleteFollower.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.following = action.payload;
+      })
+      .addCase(deleteFollower.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       });
