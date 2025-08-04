@@ -3,7 +3,7 @@ import s from './ArticleItem.module.css';
 import ButtonAddToBookmarks from '../ButtonAddToBookmarks/ButtonAddToBookmarks.jsx';
 import DOMPurify from 'dompurify';
 
-export const ArticleItem = ({ img, title, article, ownerName, articleId }) => {
+export const ArticleItem = ({ img, title, article, ownerName, articleId, ownerId }) => {
   const isHTML = (str) => /<\/?[a-z][\s\S]*>/i.test(str);
 
   return (
@@ -32,7 +32,7 @@ export const ArticleItem = ({ img, title, article, ownerName, articleId }) => {
         <Link className={s.learnLink} to={`/articles/${articleId}`}>
           Learn more
         </Link>
-        <ButtonAddToBookmarks articleId={articleId} />
+        <ButtonAddToBookmarks articleId={articleId} ownerId={ownerId} />
       </div>
     </div>
   );
