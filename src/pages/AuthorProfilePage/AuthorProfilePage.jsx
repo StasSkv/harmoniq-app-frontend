@@ -24,6 +24,7 @@ import {
   fetchSavedArticles,
   fetchFollowingByUserId,
 } from '../../redux/usersSlice/usersOperations.js';
+import SubscribeButton from '../../components/SubscribeButton/SubscribeButton.jsx';
 import { selectArticlesByOwner } from '../../redux/articlesSlice/articlesSelectors.js';
 import { fetchArticlesByOwnerId } from '../../redux/articlesSlice/articlesOperation.js';
 
@@ -64,10 +65,6 @@ const AuthorProfilePage = () => {
     } else if (tab === 'subscribers') {
       dispatch(fetchFollowingByUserId(authorId));
     }
-  };
-
-  const handleClickSubscribe = () => {
-    dispatch(fetchFollowingByUserId(authorId));
   };
 
   const handleClickEditProfile = () => {
@@ -117,9 +114,7 @@ const AuthorProfilePage = () => {
                 Edit profile
               </button>
             ) : (
-              <button className={s.btnSubscribe} onClick={handleClickSubscribe}>
-                Subscribe
-              </button>
+              <SubscribeButton authorId={authorId} />
             )}
           </div>
         </div>
