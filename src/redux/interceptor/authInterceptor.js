@@ -2,6 +2,7 @@ import { api } from '../api.js';
 import { store } from '../store.js';
 import { logoutThunk, refreshThunk } from '../authSlice/authOperations.js';
 import { toast } from 'react-toastify';
+import { navigateTo } from '../../utils/navigateHelper.js';
 
 let isRefreshing = false;
 let failedQueue = [];
@@ -65,9 +66,10 @@ export const setupAuthInterceptor = () => {
             return Promise.reject(error);
           }
         } catch (err) {
+          processQueue(err, null);
           toast.error('Session expired. Please log in again.');
           await store.dispatch(logoutThunk());
-          processQueue(err, null);
+          navigateTo('/login');
           return Promise.reject(err);
         } finally {
           isRefreshing = false;

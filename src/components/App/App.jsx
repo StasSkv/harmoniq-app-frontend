@@ -25,11 +25,14 @@ import { refreshThunk } from '../../redux/authSlice/authOperations.js';
 import { selectUser } from '../../redux/authSlice/authSelectors.js';
 import { selectSavedArticles } from '../../redux/usersSlice/usersSelectors.js';
 import { setSavedArticles } from '../../redux/usersSlice/usersSlice.js';
+import { useNavigate } from 'react-router-dom';
+import { setNavigator } from '../../utils/navigateHelper.js';
 
 export const App = () => {
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
   const savedArticles = useSelector(selectSavedArticles);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (user?.savedArticles?.length > 0 && savedArticles.length === 0) {
@@ -40,6 +43,10 @@ export const App = () => {
   useEffect(() => {
     dispatch(refreshThunk());
   }, [dispatch]);
+
+  useEffect(() => {
+    setNavigator(navigate);
+  }, [navigate]);
 
   return (
     <>
