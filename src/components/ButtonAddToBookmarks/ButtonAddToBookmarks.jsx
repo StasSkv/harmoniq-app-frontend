@@ -7,20 +7,18 @@ import { Loader } from '../Loader/Loader.jsx';
 import sprite from '../../assets/icons/sprite.svg';
 import { selectIsLoggedIn, selectUser } from '../../redux/authSlice/authSelectors.js';
 import ModalError from '../ModalErrorSave/ModalErrorSave.jsx';
-import { selectArticleById } from '../../redux/articlesSlice/articlesSelectors.js';
 import { Link } from 'react-router-dom';
 import clsx from 'clsx';
 import { toast } from 'react-toastify';
 
-const ButtonAddToBookmarks = ({ articleId }) => {
+const ButtonAddToBookmarks = ({ articleId, ownerId }) => {
   const dispatch = useDispatch();
   const isLoggedIn = useSelector(selectIsLoggedIn);
   const savedArticles = useSelector(selectSavedArticles);
   const isSaved = savedArticles.includes(articleId);
   const loading = useSelector(selectSaveLoading(articleId));
   const user = useSelector(selectUser);
-  const article = useSelector((state) => selectArticleById(state, articleId));
-  const isOwner = user && article && article.ownerId === user._id;
+  const isOwner = user && ownerId === user._id;
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
