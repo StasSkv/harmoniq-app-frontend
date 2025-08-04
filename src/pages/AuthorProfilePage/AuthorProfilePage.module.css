@@ -181,6 +181,14 @@
   }
 }
 
+.loaderContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+  width: 100%;
+}
+
 @media screen and (min-width: 1280px) {
   .avatar {
     width: 137px;
