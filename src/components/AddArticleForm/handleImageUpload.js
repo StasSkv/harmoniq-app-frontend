@@ -1,7 +1,7 @@
 import { toast } from 'react-toastify';
 import { fileToBase64 } from './fileToBase64';
 
-export const handleImageUpload = async (event, maxSizeMB = 2) => {
+export const handleImageUpload = async (event, maxSizeMB = 1) => {
   const file = event?.target?.files?.[0];
 
   if (!file) return { error: 'No file selected' };
