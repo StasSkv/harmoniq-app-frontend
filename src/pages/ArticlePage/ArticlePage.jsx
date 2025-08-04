@@ -5,17 +5,30 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchArticleById } from '../../redux/articlesSlice/articlesOperation';
 import { LoaderPage } from '../../components/Loader/LoaderPage/LoaderPage';
 import { Container } from '../../components/Container/Container';
+import DOMPurify from 'dompurify';
+import {
+  selectCurrentArticle,
+  selectError,
+  selectIsLoading,
+  selectArticles,
+} from '../../redux/articlesSlice/articlesSelectors';
+import { fetchAllArticles } from '../../redux/articlesSlice/articlesOperation';
+import { RecommendedArticles } from '../../components/RecommendedArticles/RecommendedArticles';
 
 const ArticlePage = () => {
   const { articleId } = useParams();
   const dispatch = useDispatch();
+  const recommended = useSelector(selectArticles);
 
-  const rawArticle = useSelector((state) => state.articles.currentArticle);
-  const article = rawArticle?.data || rawArticle;
-  const isLoading = useSelector((state) => state.articles.isLoading);
-  const error = useSelector((state) => state.articles.error);
+  const currentArticle = useSelector(selectCurrentArticle);
+  const isLoading = useSelector(selectIsLoading);
+  const error = useSelector(selectError);
+
+  const isHTML = (str) => /<\/?[a-z][\s\S]*>/i.test(str);
+  const article = currentArticle?.data || currentArticle;
 
   useEffect(() => {
+    dispatch(fetchAllArticles({ filter: 'popular', limit: 3 }));
     dispatch(fetchArticleById(articleId));
   }, [dispatch, articleId]);
 
@@ -27,15 +40,22 @@ const ArticlePage = () => {
     <article className={s.articlePage}>
       <Container>
         <h2 className={s.articleTitle}>{article.title}</h2>
-        {article.img && <img src={article.img} alt={article.title} className={s.articleImg} />}
+        <div className={s.articleImgWrapper}>
+          {article.img && <img src={article.img} alt={article.title} className={s.articleImg} />}
+        </div>
         <div className={s.content}>
           <div className={s.articleText}>
-            {' '}
-            {article.article.split('\n').map((paragraph, idx) => (
-              <p key={idx}>{paragraph}</p>
-            ))}
+            {isHTML(article.article) ? (
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: DOMPurify.sanitize(article.article),
+                }}
+              />
+            ) : (
+              article.article.split('\n').map((paragraph, idx) => <p key={idx}>{paragraph}</p>)
+            )}
           </div>
-          <div className={s.future}>You can also interested</div>
+          <RecommendedArticles currentArticle={currentArticle} recommended={recommended} />
         </div>
       </Container>
     </article>

@@ -36,7 +36,7 @@ export const About = () => {
           />
           <source srcSet={`${lotusTablet1x} 1x, ${lotusTablet2x} 2x`} media="(min-width: 768px)" />
           <source srcSet={`${lotusMobile1x} 1x, ${lotusMobile2x} 2x`} media="(max-width: 767px)" />
-          <img src={lotusMobile1x} alt="Lotus" loading="lazy" />
+          <img src={lotusMobile1x} alt="Lotus, a symbol of peace and harmony" loading="lazy" />
         </picture>
 
         <picture>
@@ -52,7 +52,11 @@ export const About = () => {
             srcSet={`${friendsMobile1x} 1x, ${friendsMobile2x} 2x`}
             media="(max-width: 767px)"
           />
-          <img src={friendsMobile1x} alt="Friends" loading="lazy" />
+          <img
+            src={friendsMobile1x}
+            alt="Friends in nature, breathing in harmony and sunlight"
+            loading="lazy"
+          />
         </picture>
 
         <picture className={s.nirvanaImg}>
@@ -60,7 +64,11 @@ export const About = () => {
             srcSet={`${nirvanaDesktop1x} 1x, ${nirvanaDesktop2x} 2x`}
             media="(min-width: 1440px)"
           />
-          <img src={nirvanaDesktop1x} alt="Nirvana" loading="lazy" />
+          <img
+            src={nirvanaDesktop1x}
+            alt="A person meditates in nature, enjoying peace and harmony"
+            loading="lazy"
+          />
         </picture>
       </Container>
     </section>

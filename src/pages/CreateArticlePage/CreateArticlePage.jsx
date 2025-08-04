@@ -20,19 +20,23 @@ const CreateArticlePage = () => {
     if (!articleId) return;
     if (!article || article._id !== articleId) {
       dispatch(fetchArticleById(articleId));
-      return;
     }
-    if (user._id !== article.ownerId) {
+  }, [articleId, dispatch, article]);
+
+  const isOwner = article && article.ownerId === user._id;
+
+  useEffect(() => {
+    if (article && articleId && !isOwner) {
       navigate('/');
       toast.error('You are not authorized to edit this article');
     }
-  }, [articleId, dispatch, article, user, navigate]);
+  }, [article, articleId, isOwner, navigate]);
 
   return (
     <section className={s.createArticlePage}>
       <Container className={s.container}>
         <h2 className={s.title}>{article ? 'Edit article' : 'Create an article'}</h2>
-        <AddArticleForm article={article} />
+        <AddArticleForm article={article || null} />
       </Container>
     </section>
   );

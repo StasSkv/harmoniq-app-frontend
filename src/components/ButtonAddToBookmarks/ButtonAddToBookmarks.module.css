@@ -7,12 +7,33 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  max-width: 40px;
   transition: background-color 0.2s ease-out, border-color 0.2s ease-out;
+}
+
+.addBtnActive {
+  background-color: var(--green);
+  border-color: var(--green);
+}
+
+.addBtnActive .addIcon {
+  stroke: var(--white);
+  fill: var(--green);
 }
 
 .addBtn:hover {
   background-color: var(--green);
   border-color: var(--green);
+}
+
+.editIcon {
+  stroke: var(--green-darker);
+  fill: transparent;
+  transition: stroke 0.2s ease-out;
+}
+
+.addBtn:hover .editIcon {
+  stroke: var(--white);
 }
 
 .addIcon {
@@ -24,4 +45,15 @@
 .addBtn:hover .addIcon {
   stroke: var(--white);
   fill: var(--green);
+}
+
+.addBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.loader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

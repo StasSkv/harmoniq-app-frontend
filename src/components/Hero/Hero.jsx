@@ -21,8 +21,6 @@ export const Hero = () => {
           <div className={`${s.heroButtons} ${isUserLoggedIn ? s.heroButtonsLoggedIn : ''}`}>
             <ScrollLink
               to="popular-articles"
-              smooth={true}
-              duration={500}
               className={`${s.btn} ${s.btnPrimary} ${isUserLoggedIn ? s.btnLoggedIn : ''}`}
             >
               Go to Articles

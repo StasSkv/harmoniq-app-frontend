@@ -34,6 +34,19 @@
     font-weight: var(--font-weight-regular);
 }
 
+.aboutImage {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+}
+
+.imgLotusWrapper {
+    width: 100%;
+    max-width: 361px;
+    flex-shrink: 0;
+}
+
 .nirvanaImg {
     display: none;
 }
@@ -52,6 +65,10 @@
 
     .aboutDescription {
         margin-bottom: 57px;
+    }
+
+    .imgLotusWrapper {
+        max-width: 249px;
     }
 }
 
@@ -73,4 +90,7 @@
         display: block;
     }
 
+    .imgLotusWrapper {
+        max-width: 704px;
+    }
 }

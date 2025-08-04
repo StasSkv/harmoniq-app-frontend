@@ -1,31 +1,61 @@
 .article {
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: space-between;
   padding: 12px;
   background-color: var(--green-light);
   max-width: 361px;
-  height: 492px;
   border-radius: 32px;
   gap: 12px;
+  max-height: 492px;
+  min-height: 492px;
 }
 
 .image {
   width: 100%;
   max-height: 233px;
   border-radius: 24px;
+  object-fit: cover;
 }
 
 .authorName {
   font-size: 16px;
   color: var(--black);
+  max-width: 264px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .title {
-  max-width: 264px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
   font-size: 24px;
   color: var(--black);
+}
+
+.articleInfoWrapper {
+  height: 171px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
+}
+
+.articleInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  gap: 12px;
+  max-width: 337px;
+}
+
+@media only screen and (max-width: 391px) {
+  .articleInfo {
+    max-width: clamp(150px, 100%, 337px);
+  }
 }
 
 .articlePreview {
@@ -33,7 +63,6 @@
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
-
   font-size: 16px;
   color: var(--black);
   font-weight: var(--font-weight-regular);
@@ -53,7 +82,6 @@
   font-size: 16px;
   color: var(--green-darker);
   gap: 8px;
-
   border: 1px solid var(--green-darker);
   border-radius: 64px;
   width: 100%;
@@ -61,7 +89,8 @@
   align-items: center;
   justify-content: center;
 
-  transition: background-color 0.2s ease-out, color 0.2s ease-out, border-color 0.2s ease-out;
+  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out,
+    border-color 0.3s ease-in-out;
 }
 
 .learnLink:hover {
@@ -71,13 +100,18 @@
 }
 
 @media only screen and (min-width: 768px) {
-  .article {
-    max-width: 340px;
+  .articleInfo {
+    max-width: 316px;
   }
 }
 
 @media only screen and (min-width: 1440px) {
   .article {
     max-width: 392px;
+    height: 100%;
+  }
+
+  .articleInfo {
+    max-width: 368px;
   }
 }

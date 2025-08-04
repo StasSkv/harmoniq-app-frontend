@@ -1,0 +1,197 @@
+.profilePage {
+  width: 100%;
+  margin-top: 46px;
+}
+
+.header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.title {
+  font-family: var(--font-primary);
+  font-weight: var(--font-weight-bold);
+  font-size: 40px;
+  color: var(--black);
+  margin-bottom: 24px;
+}
+
+.avatar {
+  width: 124px;
+  height: 124px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.infoNameWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.nameWrapper {
+  display: flex;
+  gap: 0;
+}
+
+.name {
+  font-family: var(--font-primary);
+  font-weight: var(--font-weight-bold);
+  font-size: 32px;
+  text-align: center;
+  color: var(--black);
+}
+
+.btnSubscribe {
+  font-family: var(--font-primary);
+  font-weight: var(--font-weight-bold);
+  width: 100%;
+  height: 40px;
+  border-radius: 64px;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  font-size: 16px;
+  color: var(--white);
+  background-color: var(--green);
+  padding: 12px 24px;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.btnSubscribe:hover {
+  background-color: var(--green-darker);
+}
+
+.btnEdit {
+  font-family: var(--font-primary);
+  font-weight: var(--font-weight-bold);
+  color: var(--white);
+  background-color: var(--green);
+  width: 100%;
+  height: 40px;
+  border-radius: 64px;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  font-size: 16px;
+  padding: 12px 24px;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.btnEdit:hover {
+  background-color: var(--green-darker);
+}
+
+.articles {
+  font-family: var(--font-primary);
+  font-weight: var(--font-weight-regular);
+  font-size: 18px;
+  color: var(--black);
+}
+
+.tabs {
+  display: flex;
+  gap: clamp(8px, 2vw, 24px);
+  margin-bottom: 24px;
+}
+
+.tabBtn {
+  font-family: var(--font-primary);
+  font-weight: var(--font-weight-bold);
+  color: var(--black);
+  background-color: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-size: 16px;
+  position: relative;
+  transition: color 0.3s ease-in-out;
+}
+
+.tabBtn::after {
+  content: '';
+  display: block;
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 100%;
+  height: 2px;
+  background-color: var(--green);
+  transform: scaleX(0);
+  transform-origin: left;
+  opacity: 0;
+  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+}
+
+.tabBtn.activeTab {
+  color: var(--green);
+}
+
+.tabBtn.activeTab::after {
+  transform: scaleX(1);
+  opacity: 1;
+}
+
+.tabBtn:hover {
+  color: var(--green);
+}
+
+@media screen and (min-width: 768px) {
+  .header {
+    justify-content: start;
+  }
+
+  .info {
+    flex-direction: row;
+    justify-content: start;
+    gap: 24px;
+  }
+
+  .articles {
+    white-space: nowrap;
+  }
+
+  .nameWrapper {
+    width: max-content;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .name {
+    text-align: start;
+  }
+
+  .btnSubscribe {
+    max-width: 148px;
+  }
+}
+
+.loaderContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+  width: 100%;
+}
+
+@media screen and (min-width: 1280px) {
+  .avatar {
+    width: 137px;
+    height: 137px;
+  }
+}

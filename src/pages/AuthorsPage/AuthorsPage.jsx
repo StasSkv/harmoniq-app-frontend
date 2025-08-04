@@ -1,50 +1,63 @@
 import s from './AuthorsPage.module.css';
 import { Container } from '../../components/Container/Container';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchAllUsers } from '../../redux/usersSlice/usersOperations.js';
+import { fetchAllUsersForAuthorsPage } from '../../redux/usersSlice/usersOperations.js';
 import {
-  selectVisibleUsers,
-  selectUsersLoading,
-  selectUsersError,
-  selectUsersHasMore,
+  selectAuthorsPageLoading,
+  selectAuthorsPageUsers,
+  selectUsersTotal,
+  selectUsersTotalPages,
 } from '../../redux/usersSlice/usersSelectors.js';
-import { showMoreUsers } from '../../redux/usersSlice/usersSlice.js';
-
-import { AuthorsList } from '../../components/AuthorList/AuthorList';
+import { AuthorsList } from '../../components/AuthorList/AuthorList.jsx';
+import { LoaderPage } from '../../components/Loader/LoaderPage/LoaderPage.jsx';
+import { Pagination } from '../../components/Pagination/Pagination.jsx';
 
 const AuthorsPage = () => {
   const dispatch = useDispatch();
-  const authors = useSelector(selectVisibleUsers);
-  const isLoading = useSelector(selectUsersLoading);
-  const error = useSelector(selectUsersError);
-  const hasMore = useSelector(selectUsersHasMore);
+  const authors = useSelector(selectAuthorsPageUsers);
+  const isLoading = useSelector(selectAuthorsPageLoading);
+  const totalUsers = useSelector(selectUsersTotal);
+  const totalPages = useSelector(selectUsersTotalPages);
 
-  console.log('AUTHORS from Redux:', authors);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 20;
 
   useEffect(() => {
-    //
-    dispatch(fetchAllUsers()); //
-  }, [dispatch]);
+    dispatch(
+      fetchAllUsersForAuthorsPage({
+        filter: 'popular',
+        limit: itemsPerPage,
+        page: currentPage,
+      })
+    );
+  }, [dispatch, currentPage]);
 
-  const handleLoadMore = () => {
-    dispatch(showMoreUsers());
+  const handlePageChange = (page) => {
+    if (page > totalPages && totalPages > 0) {
+      console.warn(`Trying to navigate to page ${page}, but only ${totalPages} pages exist`);
+      return;
+    }
+
+    setCurrentPage(page);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
     <section>
-      <Container className={s.wrapper}>
-        <div className={s.authorsPageContent}>
-          <h2 className={s.authorsPageTitle}>Authors</h2>
-          {isLoading && <p>Loading authors...</p>}
-          {error && <p>Error: {error}</p>}
-          <AuthorsList authors={authors} />
-          {hasMore && !isLoading && (
-            <button className={s.authorsPageLoadMoreBtn} onClick={handleLoadMore}>
-              Load More
-            </button>
-          )}
-        </div>
+      {isLoading && <LoaderPage />}
+      <Container className={s.authorsPage}>
+        <h2 className={s.authorsPageTitle}>Authors</h2>
+        <AuthorsList authors={authors} />
+
+        {totalPages > 1 && (
+          <Pagination
+            currentPage={currentPage}
+            totalItems={totalUsers}
+            itemsPerPage={itemsPerPage}
+            onPageChange={handlePageChange}
+          />
+        )}
       </Container>
     </section>
   );

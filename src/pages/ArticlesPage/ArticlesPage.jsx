@@ -5,8 +5,12 @@ import SectionTitle from '../../components/SectionTitle/SectionTitle';
 import s from './ArticlesPage.module.css';
 import { useEffect, useRef, useState } from 'react';
 import { fetchArticlesWithParams } from '../../redux/articlesSlice/articlesOperation';
-import { selectIsLoading, selectTotal } from '../../redux/articlesSlice/articlesSelectors';
-import { Loader } from '../../components/Loader/Loader';
+import {
+  selectArticles,
+  selectIsLoading,
+  selectTotal,
+} from '../../redux/articlesSlice/articlesSelectors';
+import { LoaderPage } from '../../components/Loader/LoaderPage/LoaderPage.jsx';
 import { toast } from 'react-toastify';
 
 const ArticlesPage = () => {
@@ -23,6 +27,7 @@ const ArticlesPage = () => {
 
   const limit = 12;
 
+  const articles = useSelector(selectArticles);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -70,9 +75,9 @@ const ArticlesPage = () => {
       <Container className={s.container_wrapper}>
         <SectionTitle title="Articles" filter={filter} setFilter={setFilter} total={total} />
 
-        {isLoading && <Loader />}
+        {isLoading && <LoaderPage />}
 
-        <ArticlesList ref={listRef} firstNewItemRef={firstNewItemRef} page={page} limit={limit} />
+        <ArticlesList articles={articles} />
         {hasMore && (
           <div className={s.load_more_wrapper}>
             <button type="button" className={s.load_more_btn} onClick={handleLoadMore}>

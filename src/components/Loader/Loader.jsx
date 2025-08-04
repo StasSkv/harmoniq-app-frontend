@@ -1,10 +1,10 @@
 import { ClipLoader } from 'react-spinners';
-import styles from './Loader.module.css';
+import clsx from 'clsx';
 
-export const Loader = () => {
+export const Loader = ({ className, size = 80 }) => {
   return (
-    <div className={styles.backdrop}>
-      <ClipLoader color="#000000" loading={true} size={80} speedMultiplier={1} />
+    <div className={clsx(className)}>
+      <ClipLoader color="#000000" loading={true} size={size} speedMultiplier={1} />
     </div>
   );
 };
