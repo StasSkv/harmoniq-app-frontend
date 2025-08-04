@@ -1,4 +1,10 @@
-export const selectAllUsers = (state) => state.users.items; // Для головної сторінки
+export const selectAllUsers = (state) => state.users.items;
+export const selectProfileUser = (state) => state.users.profileUser;
+export const selectIsLoading = (state) => state.users.isLoading;
+export const selectVisibleSavedArticles = (state) => state.users.visibleSavedArticles;
+export const selectFollowing = (state) => state.users.following;
+
+
 export const selectAuthorsPageUsers = (state) => state.users.authorsPageItems; // Для сторінки авторів
 export const selectUsersLoading = (state) => state.users.isLoading; // Лоадер для головної
 export const selectAuthorsPageLoading = (state) => state.users.authorsPageLoading; // Лоадер для сторінки авторів

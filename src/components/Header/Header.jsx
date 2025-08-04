@@ -98,7 +98,6 @@ export const Header = () => {
           </svg>
         </a>
 
-        {/* десктоп */}
         <div className={s.desktopNav}>
           <Navigation />
           {isLoggedIn ? (
@@ -108,7 +107,6 @@ export const Header = () => {
           )}
         </div>
 
-        {/* планшет: кнопка + бургер */}
         <div className={s.tabletArea}>
           {isLoggedIn ? (
             <UserMenu
@@ -127,7 +125,6 @@ export const Header = () => {
           </button>
         </div>
 
-        {/* моб бургер */}
         <button className={s.mobileBurger} onClick={toggleMenu} aria-label="Toggle menu">
           <svg width="32" height="32">
             <use href={`${sprite}#${menuOpen ? 'icon-close' : 'icon-burger'}`} />

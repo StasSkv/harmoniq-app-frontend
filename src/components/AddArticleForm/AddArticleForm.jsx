@@ -183,9 +183,9 @@ export const AddArticleForm = ({ article: propArticle }) => {
             return;
           }
 
-          const maxSize = 5 * 1024 * 1024;
+          const maxSize = 1 * 1024 * 1024;
           if (file.size > maxSize) {
-            toast.error('Image size should not exceed 5MB');
+            toast.error('Image size should not exceed 1MB');
             return;
           }
 
