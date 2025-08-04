@@ -1,0 +1,100 @@
+.wrapper {
+    display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+        padding: 24px 16px;
+        height: 100%;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.avatar {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+}
+
+.name {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.articles {
+    font-size: 14px;
+    color: #777;
+}
+
+/* Tabs — тільки для свого профілю */
+.tabs {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.tabBtn {
+    padding: 8px 16px;
+    border: 1px solid #ccc;
+    background-color: transparent;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.tabBtn:hover {
+    border-color: #4e54c8;
+    color: #4e54c8;
+}
+
+/* 💻 Tablet */
+@media screen and (min-width: 768px) {
+    .wrapper {
+        padding: 40px 32px;
+    }
+
+    .avatar {
+        width: 80px;
+        height: 80px;
+    }
+
+    .name {
+        font-size: 24px;
+    }
+
+    .articles {
+        font-size: 16px;
+    }
+
+    .tabBtn {
+        font-size: 16px;
+        padding: 10px 20px;
+    }
+}
+
+/* 🖥 Desktop */
+@media screen and (min-width: 1280px) {
+    .wrapper {
+        padding: 64px 64px;
+    }
+
+    .avatar {
+        width: 96px;
+        height: 96px;
+    }
+
+    .name {
+        font-size: 28px;
+    }
+}
