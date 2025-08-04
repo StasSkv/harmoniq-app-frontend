@@ -11,6 +11,9 @@ import { ToastContainer } from 'react-toastify';
 import { HomePage } from '../../pages/HomePage/HomePage.jsx';
 import { ScrollToTop } from '../ScrollToTop/ScrollToTop.jsx';
 
+import ErrorPage from '../../pages/ErrorPage/ErrorPage';
+import spinner from '../../assets/animations/spinner.webp';
+
 const RegisterPage = lazy(() => import('../../pages/RegisterPage/RegisterPage'));
 const LoginPage = lazy(() => import('../../pages/LoginPage/LoginPage'));
 const UploadPhotoPage = lazy(() => import('../../pages/UploadPhotoPage/UploadPhotoPage'));
@@ -70,8 +73,30 @@ export const App = () => {
               element={<PrivateRoute redirectTo="/register" component={<CreateArticlePage />} />}
             />
 
-            <Route path="*" element={<Navigate to="/" replace />} />
+            {/* <Route path="*" element={<Navigate to="/" replace />} /> */}
           </Route>
+          <Route
+            path="*"
+            element={
+              <ErrorPage
+                code={404}
+                message="Not found page"
+                animation={spinner}
+                showBackButton={true}
+              />
+            }
+          />
+          <Route
+            path="/error"
+            element={
+              <ErrorPage
+                code={500}
+                message="Unexpected error"
+                animation={spinner}
+                showBackButton={true}
+              />
+            }
+          />
         </Routes>
       </Suspense>
       <ToastContainer position="top-right" autoClose={3000} />

@@ -8,6 +8,8 @@ import { selectAllUsers } from '../../redux/usersSlice/usersSelectors.js';
 
 export const Creators = () => {
   const creators = useSelector(selectAllUsers);
+  //   const creatorsRaw = useSelector(selectAllUsers);
+  //   const creators = Array.isArray(creatorsRaw) ? creatorsRaw : [];
 
   return (
     <section className={s.creators}>
