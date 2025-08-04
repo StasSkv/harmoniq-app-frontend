@@ -12,6 +12,10 @@
   align-items: center;
 }
 
+.userLinkNone {
+  display: none;
+}
+
 @media only screen and (min-width: 1440px) {
   .container {
     flex-direction: row;

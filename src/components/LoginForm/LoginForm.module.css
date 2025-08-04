@@ -5,7 +5,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding-top: 85px;
+  padding-top: 25%;
   padding-bottom: 49px;
 }
 
@@ -138,8 +138,7 @@ input:focus::placeholder {
 
 @media screen and (min-width: 768px) {
   .container {
-    padding-top: 232px;
-    padding-bottom: 195px;
+    padding-top: 15%;
   }
 
   .loginWrapper {
