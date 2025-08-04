@@ -127,5 +127,9 @@
 <symbol id="icon-alert" viewBox="0 0 32 32">
 <path stroke-linejoin="miter" stroke-linecap="round" stroke-miterlimit="4" stroke-width="1.6" d="M16 22.755v1.69M16 7.555v10.134M31.2 16c0 8.394-6.806 15.2-15.2 15.2s-15.2-6.806-15.2-15.2 6.806-15.2 15.2-15.2 15.2 6.806 15.2 15.2z"></path>
 </symbol>
+
+<symbol id="icon-chenge-photo" viewBox="0 0 32 32">
+<path fill="none" stroke="#f7fffb" style="stroke: var(--color1, #f7fffb)" stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="4" stroke-width="2.0513" d="M9.049 30.615h-7.87v-7.885l16.302-16.333M9.049 30.615h21.361M9.049 30.615l16.302-16.334M17.481 6.397l3.372-3.379c2.174-2.178 5.697-2.178 7.87 0s2.174 5.708 0 7.885l-3.372 3.379M17.481 6.397l7.87 7.885"></path>
+</symbol>
   </defs>
 </svg>

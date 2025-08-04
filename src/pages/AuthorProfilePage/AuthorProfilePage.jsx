@@ -1,11 +1,16 @@
 import s from './AuthorProfilePage.module.css';
 import clsx from 'clsx';
 
+import { Loader } from '../../components/Loader/Loader.jsx';
 import { Container } from '../../components/Container/Container.jsx';
+import { AuthorsList } from '../../components/AuthorList/AuthorList.jsx';
+import ArticlesList from '../../components/ArticlesList/ArticlesList.jsx';
 import { LoaderPage } from '../../components/Loader/LoaderPage/LoaderPage.jsx';
+import { NothingFoundItemsInProfile } from '../../components/NothingFoundItemsInProfile/NothingFoundItemsInProfile.jsx';
+import EditProfile from '../../components/EditProfile/EditProfile.jsx';
 
-import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   selectProfileUser,
@@ -13,21 +18,19 @@ import {
   selectIsLoading,
   selectFollowing,
 } from '../../redux/usersSlice/usersSelectors.js';
-import { selectArticlesByOwner } from '../../redux/articlesSlice/articlesSelectors.js';
 import { selectUser } from '../../redux/authSlice/authSelectors.js';
 import {
   fetchUserById,
   fetchSavedArticles,
   fetchFollowingByUserId,
 } from '../../redux/usersSlice/usersOperations.js';
+import { selectArticlesByOwner } from '../../redux/articlesSlice/articlesSelectors.js';
 import { fetchArticlesByOwnerId } from '../../redux/articlesSlice/articlesOperation.js';
-import ArticlesList from '../../components/ArticlesList/ArticlesList.jsx';
-import { AuthorsList } from '../../components/AuthorList/AuthorList.jsx';
-import { NothingFoundItemsInProfile } from '../../components/NothingFoundItemsInProfile/NothingFoundItemsInProfile.jsx';
 
 const AuthorProfilePage = () => {
   const [activeTab, setActiveTab] = useState('myArticles');
-
+  const [isInitialLoading, setIsInitialLoading] = useState(true);
+  const [isEditProfileOpen, setIsEditProfileOpen] = useState(false);
   const dispatch = useDispatch();
   const { authorId } = useParams();
 
@@ -39,7 +42,6 @@ const AuthorProfilePage = () => {
   const isLoading = useSelector(selectIsLoading);
   const ownProfile = profileUser?.id === currentUser?._id;
   const name = profileUser?.name.split(' ');
-  console.log(ownProfile);
 
   let articlesInfoText = '';
 
@@ -50,8 +52,6 @@ const AuthorProfilePage = () => {
   } else if (activeTab === 'subscribers') {
     articlesInfoText = `${following?.length || 0} Subscriptions`;
   }
-
-  console.log(following);
 
   const handleTabClick = (tab) => {
     setActiveTab(tab);
@@ -70,14 +70,25 @@ const AuthorProfilePage = () => {
     dispatch(fetchFollowingByUserId(authorId));
   };
 
+  const handleClickEditProfile = () => {
+    setIsEditProfileOpen(true);
+  };
+
   useEffect(() => {
     if (authorId) {
-      dispatch(fetchUserById(authorId));
-      dispatch(fetchArticlesByOwnerId(authorId));
+      const loadInitialData = async () => {
+        setIsInitialLoading(true);
+        await Promise.all([
+          dispatch(fetchUserById(authorId)),
+          dispatch(fetchArticlesByOwnerId(authorId)),
+        ]);
+        setIsInitialLoading(false);
+      };
+      loadInitialData();
     }
   }, [authorId, dispatch]);
 
-  return isLoading ? (
+  return isInitialLoading ? (
     <LoaderPage />
   ) : (
     <section className={s.profilePage}>
@@ -102,7 +113,9 @@ const AuthorProfilePage = () => {
               )}
             </div>
             {ownProfile ? (
-              <button className={s.btnEdit}>Edit profile</button>
+              <button className={s.btnEdit} onClick={handleClickEditProfile}>
+                Edit profile
+              </button>
             ) : (
               <button className={s.btnSubscribe} onClick={handleClickSubscribe}>
                 Subscribe
@@ -133,39 +146,54 @@ const AuthorProfilePage = () => {
           </div>
         )}
 
-        {activeTab === 'myArticles' &&
-          (myArticles.length === 0 ? (
-            <NothingFoundItemsInProfile
-              description={'No articles yet.'}
-              link={'create'}
-              linkText={'Create article'}
-            />
-          ) : (
-            <ArticlesList articles={myArticles} />
-          ))}
+        {isLoading ? (
+          <div className={s.loaderContainer}>
+            <Loader />
+          </div>
+        ) : (
+          <>
+            {activeTab === 'myArticles' &&
+              (myArticles.length === 0 ? (
+                <NothingFoundItemsInProfile
+                  description={'No articles yet.'}
+                  link={'create'}
+                  linkText={'Create article'}
+                />
+              ) : (
+                <ArticlesList articles={myArticles} />
+              ))}
 
-        {activeTab === 'savedArticles' &&
-          (savedArticles.length === 0 ? (
-            <NothingFoundItemsInProfile
-              description={'No saved articles yet.'}
-              link={'articles'}
-              linkText={'Go to articles'}
-            />
-          ) : (
-            <ArticlesList articles={savedArticles} />
-          ))}
+            {activeTab === 'savedArticles' &&
+              (savedArticles.length === 0 ? (
+                <NothingFoundItemsInProfile
+                  description={'No saved articles yet.'}
+                  link={'articles'}
+                  linkText={'Go to articles'}
+                />
+              ) : (
+                <ArticlesList articles={savedArticles} />
+              ))}
 
-        {activeTab === 'subscribers' &&
-          (following.length === 0 ? (
-            <NothingFoundItemsInProfile
-              description="No subscribers yet."
-              link="authors"
-              linkText="Go to authors"
-            />
-          ) : (
-            <AuthorsList authors={following} />
-          ))}
+            {activeTab === 'subscribers' &&
+              (following.length === 0 ? (
+                <NothingFoundItemsInProfile
+                  description="No subscribers yet."
+                  link="authors"
+                  linkText="Go to authors"
+                />
+              ) : (
+                <AuthorsList authors={following} />
+              ))}
+          </>
+        )}
       </Container>
+      {isEditProfileOpen && (
+        <EditProfile
+          isOpen={isEditProfileOpen}
+          onClose={() => setIsEditProfileOpen(false)}
+          userInfo={profileUser}
+        />
+      )}
     </section>
   );
 };
