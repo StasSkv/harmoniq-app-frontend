@@ -1,3 +1,14 @@
+.recommendedArticles {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: start;
+  gap: 24px;
+  position: sticky;
+  top: 0px;
+  z-index: 10;
+}
+
 .recommendedWrapper {
   max-width: 393px;
   height: 551px;
@@ -10,6 +21,7 @@
   gap: 15px;
   padding: 32px 16px 40px 16px;
   border-radius: 32px;
+  height: auto;
 }
 .articleInfo {
   display: flex;
@@ -47,14 +59,13 @@
   width: 100%;
 }
 .recommendArticleTitle {
-  max-width: 100%;
+  max-width: 80%;
   margin-bottom: 10px;
   min-height: 40px;
   max-height: 48px;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
-
   -webkit-box-orient: vertical;
   word-break: break-word;
   font-size: 16px;
@@ -93,6 +104,51 @@
   display: flex;
   align-items: start;
   justify-content: space-between;
+}
+
+.addBtn {
+  width: 100%;
+  border-radius: 32px;
+  background-color: var(--green-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+}
+
+.addBtn button {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-width: 100%;
+  border-radius: 64px;
+  border: none;
+  padding: 16.5px 0;
+  height: auto;
+  color: var(--black);
+}
+
+.addBtn button svg {
+  stroke: var(--black);
+}
+
+.addBtn p {
+  color: var(--black);
+  transition: color 0.2s ease-out;
+}
+
+.addBtn:hover p {
+  color: var(--white);
+}
+
+.addBtnArticlePageActive {
+  background-color: var(--green);
+}
+
+.addBtnArticlePageActive p {
+  color: var(--white);
 }
 
 @media screen and (min-width: 768px) and (max-width: 1439px) {

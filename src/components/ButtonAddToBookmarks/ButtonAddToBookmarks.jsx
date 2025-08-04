@@ -11,7 +11,7 @@ import { Link } from 'react-router-dom';
 import clsx from 'clsx';
 import { toast } from 'react-toastify';
 
-const ButtonAddToBookmarks = ({ articleId, ownerId }) => {
+const ButtonAddToBookmarks = ({ articleId, ownerId, className, addBtnArticlePageActive, isArticlePage }) => {
   const dispatch = useDispatch();
   const isLoggedIn = useSelector(selectIsLoggedIn);
   const savedArticles = useSelector(selectSavedArticles);
@@ -41,7 +41,7 @@ const ButtonAddToBookmarks = ({ articleId, ownerId }) => {
   };
 
   return (
-    <>
+    <div className={className}>
       {isOwner ? (
         <Link to={`/create/${articleId}`} className={s.addBtn}>
           <svg className={s.editIcon} width="24px" height="24px">
@@ -50,11 +50,15 @@ const ButtonAddToBookmarks = ({ articleId, ownerId }) => {
         </Link>
       ) : (
         <button
-          className={clsx(s.addBtn, { [s.addBtnActive]: isSaved })}
+          className={clsx(s.addBtn, {
+            [s.addBtnActive]: isSaved,
+            [addBtnArticlePageActive]: isSaved,
+          })}
           type="button"
           onClick={handleClick}
           disabled={loading}
         >
+          {isArticlePage && <p className={s.addBtnText}>{isSaved ? 'Remove' : 'Save'}</p>}
           {loading ? (
             <Loader className={s.loader} size="24" />
           ) : (
@@ -66,7 +70,7 @@ const ButtonAddToBookmarks = ({ articleId, ownerId }) => {
       )}
 
       <ModalError isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
-    </>
+    </div>
   );
 };
 
