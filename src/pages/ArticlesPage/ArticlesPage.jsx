@@ -5,7 +5,11 @@ import SectionTitle from '../../components/SectionTitle/SectionTitle';
 import s from './ArticlesPage.module.css';
 import { useEffect, useRef, useState } from 'react';
 import { fetchArticlesWithParams } from '../../redux/articlesSlice/articlesOperation';
-import { selectIsLoading, selectTotal } from '../../redux/articlesSlice/articlesSelectors';
+import {
+  selectArticles,
+  selectIsLoading,
+  selectTotal,
+} from '../../redux/articlesSlice/articlesSelectors';
 import { LoaderPage } from '../../components/Loader/LoaderPage/LoaderPage.jsx';
 import { toast } from 'react-toastify';
 
@@ -23,6 +27,7 @@ const ArticlesPage = () => {
 
   const limit = 12;
 
+  const articles = useSelector(selectArticles);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -72,7 +77,7 @@ const ArticlesPage = () => {
 
         {isLoading && <LoaderPage />}
 
-        <ArticlesList ref={listRef} firstNewItemRef={firstNewItemRef} page={page} limit={limit} />
+        <ArticlesList articles={articles} />
         {hasMore && (
           <div className={s.load_more_wrapper}>
             <button type="button" className={s.load_more_btn} onClick={handleLoadMore}>

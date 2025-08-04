@@ -6,13 +6,12 @@ import s from './Navigation.module.css';
 export const Navigation = ({ onLinkClick }) => {
   const isAuth = useSelector(selectIsLoggedIn);
   const user = useSelector(selectUser);
-  const getClass = ({ isActive }) => (isActive ? `${s.link} ${s.active}` : s.link);
 
   const links = [
     { to: '/', label: 'Home', end: true },
-    { to: '/articles', label: 'Articles' },
-    { to: '/authors', label: 'Creators' },
-    ...(isAuth ? [{ to: `/authors/${user.id}`, label: 'My Profile' }] : []),
+    { to: '/articles', label: 'Articles', end: true },
+    { to: '/authors', label: 'Authors', end: true },
+    ...(isAuth ? [{ to: `/authors/${user._id}`, label: 'My Profile', end: true }] : []),
   ];
 
   return (
@@ -20,7 +19,12 @@ export const Navigation = ({ onLinkClick }) => {
       <ul className={s.list}>
         {links.map(({ to, label, end }) => (
           <li key={to}>
-            <NavLink to={to} end={end} className={getClass} onClick={onLinkClick}>
+            <NavLink
+              to={to}
+              end={end}
+              className={({ isActive }) => (isActive ? `${s.link} ${s.active}` : s.link)}
+              onClick={onLinkClick}
+            >
               {label}
             </NavLink>
           </li>

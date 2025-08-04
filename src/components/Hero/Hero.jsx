@@ -25,7 +25,7 @@ export const Hero = () => {
               duration={500}
               className={`${s.btn} ${s.btnPrimary} ${isUserLoggedIn ? s.btnLoggedIn : ''}`}
             >
-              Go to Articles
+              <a href="#popular-articles">Go to Articles</a>
             </ScrollLink>
 
             {!isUserLoggedIn && (

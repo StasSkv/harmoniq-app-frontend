@@ -8,6 +8,7 @@
   border-radius: 32px;
   gap: 12px;
   max-height: 492px;
+  min-height: 492px;
 }
 
 .image {
@@ -40,7 +41,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: start;
 }
 
 .articleInfo {
@@ -48,6 +49,13 @@
   flex-direction: column;
   justify-content: start;
   gap: 12px;
+  max-width: 337px;
+}
+
+@media only screen and (max-width: 391px) {
+  .articleInfo {
+    max-width: clamp(150px, 100%, 337px);
+  }
 }
 
 .articlePreview {
@@ -92,11 +100,18 @@
 }
 
 @media only screen and (min-width: 768px) {
- 
+  .articleInfo {
+    max-width: 316px;
+  }
 }
 
 @media only screen and (min-width: 1440px) {
   .article {
     max-width: 392px;
+    height: 100%;
+  }
+
+  .articleInfo {
+    max-width: 368px;
   }
 }

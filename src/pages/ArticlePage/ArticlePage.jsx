@@ -10,12 +10,15 @@ import {
   selectCurrentArticle,
   selectError,
   selectIsLoading,
+  selectArticles,
 } from '../../redux/articlesSlice/articlesSelectors';
 import { fetchAllArticles } from '../../redux/articlesSlice/articlesOperation';
+import { RecommendedArticles } from '../../components/RecommendedArticles/RecommendedArticles';
 
 const ArticlePage = () => {
   const { articleId } = useParams();
   const dispatch = useDispatch();
+  const recommended = useSelector(selectArticles);
 
   const currentArticle = useSelector(selectCurrentArticle);
   const isLoading = useSelector(selectIsLoading);
@@ -52,7 +55,7 @@ const ArticlePage = () => {
               article.article.split('\n').map((paragraph, idx) => <p key={idx}>{paragraph}</p>)
             )}
           </div>
-          <div className={s.future}>You can also interested</div>
+          <RecommendedArticles currentArticle={currentArticle} recommended={recommended} />
         </div>
       </Container>
     </article>

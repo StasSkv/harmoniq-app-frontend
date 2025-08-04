@@ -10,6 +10,7 @@
   top: 0;
   left: 0;
   right: 0;
+
   transition: transform 0.25s ease, opacity 0.25s ease;
   z-index: 1000;
 }
@@ -122,6 +123,7 @@
   cursor: pointer;
   width: 32px;
   height: 32px;
+  outline: none;
 }
 
 .mobileBurger svg,
