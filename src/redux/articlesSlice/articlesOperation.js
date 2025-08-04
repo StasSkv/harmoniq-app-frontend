@@ -32,6 +32,14 @@ export const deleteArticle = createAsyncThunk('articles/deleteArticle', async (a
   return response.data;
 });
 
+export const fetchArticlesByOwnerId = createAsyncThunk(
+  'articles/fetchArticlesByOwnerId',
+  async (ownerId) => {
+    const response = await api.get(`/articles/owner/${ownerId}`);
+    return response.data;
+  }
+);
+
 export const fetchArticlesWithParams = createAsyncThunk(
   'articles/fetchArticlesWithParams',
   async ({ filter = 'all', page = 1, limit = 12 }, thunkAPI) => {
