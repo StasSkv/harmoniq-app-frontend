@@ -3,82 +3,78 @@ import ArticlesList from '../../components/ArticlesList/ArticlesList';
 import { Container } from '../../components/Container/Container';
 import SectionTitle from '../../components/SectionTitle/SectionTitle';
 import s from './ArticlesPage.module.css';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { fetchArticlesWithParams } from '../../redux/articlesSlice/articlesOperation';
-import { selectIsLoading, selectTotal } from '../../redux/articlesSlice/articlesSelectors';
+import {
+  selectArticlesWithPagination,
+  selectPaginationData,
+  selectPaginationLoading,
+} from '../../redux/articlesSlice/articlesSelectors';
 import { LoaderPage } from '../../components/Loader/LoaderPage/LoaderPage.jsx';
 import { toast } from 'react-toastify';
+import { Pagination } from '../../components/Pagination/Pagination.jsx';
 
 const ArticlesPage = () => {
   const [filter, setFilter] = useState('all');
-  const [page, setPage] = useState(1);
-  const [hasMore, setHasMore] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
 
-  const listRef = useRef(null);
-  const scrollRef = useRef(null);
-  const firstNewItemRef = useRef(null);
+  const articles = useSelector(selectArticlesWithPagination);
+  const isLoading = useSelector(selectPaginationLoading);
+  const paginationData = useSelector(selectPaginationData);
 
-  const total = useSelector(selectTotal);
-  const isLoading = useSelector(selectIsLoading);
-
-  const limit = 12;
+  const itemsPerPage = 12;
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    setPage(1);
-    dispatch(fetchArticlesWithParams({ filter, page: 1, limit }))
-      .unwrap()
-      .then((res) => {
-        if (res.data.length < limit) {
-          setHasMore(false);
-        } else {
-          setHasMore(true);
-        }
+    dispatch(
+      fetchArticlesWithParams({
+        filter,
+        page: currentPage,
+        perPage: itemsPerPage,
       })
+    )
+      .unwrap()
       .catch((err) => {
         toast.error(`Failed to load articles: ${err}`);
       });
-  }, [dispatch, filter]);
+  }, [dispatch, filter, currentPage]);
 
-  const handleLoadMore = () => {
-    const lastItem = listRef.current?.lastElementChild;
-    if (lastItem) {
-      scrollRef.current = lastItem;
+  const handleFilterChange = (newFilter) => {
+    setFilter(newFilter);
+    setCurrentPage(1);
+  };
+  const handlePageChange = (page) => {
+    if (page > paginationData.totalPages && paginationData.totalPages > 0) {
+      console.warn(
+        `Trying to navigate to page ${page}, but only ${paginationData.totalPages} pages exist`
+      );
+      return;
     }
-
-    const nextPage = page + 1;
-    dispatch(fetchArticlesWithParams({ filter, page: nextPage, limit }))
-      .unwrap()
-      .then((res) => {
-        if (res.data.length < limit || nextPage * limit >= total) {
-          setHasMore(false);
-        }
-        setPage(nextPage);
-
-        setTimeout(() => {
-          firstNewItemRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }, 100);
-      })
-      .catch((err) => {
-        toast.error(`Failed to load more articles: ${err}`);
-      });
+    setCurrentPage(page);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
     <section id="articlesPage" className={s.articles_page}>
       <Container className={s.container_wrapper}>
-        <SectionTitle title="Articles" filter={filter} setFilter={setFilter} total={total} />
+        <SectionTitle
+          title="Articles"
+          filter={filter}
+          setFilter={handleFilterChange}
+          total={paginationData.totalItems}
+        />
 
         {isLoading && <LoaderPage />}
 
-        <ArticlesList ref={listRef} firstNewItemRef={firstNewItemRef} page={page} limit={limit} />
-        {hasMore && (
-          <div className={s.load_more_wrapper}>
-            <button type="button" className={s.load_more_btn} onClick={handleLoadMore}>
-              Load More
-            </button>
-          </div>
+        <ArticlesList articles={articles} />
+        {paginationData.totalPages > 1 && (
+          <Pagination
+            currentPage={currentPage}
+            totalItems={paginationData.totalItems}
+            itemsPerPage={itemsPerPage}
+            onPageChange={handlePageChange}
+          />
         )}
       </Container>
     </section>

@@ -34,11 +34,11 @@ export const deleteArticle = createAsyncThunk('articles/deleteArticle', async (a
 
 export const fetchArticlesWithParams = createAsyncThunk(
   'articles/fetchArticlesWithParams',
-  async ({ filter = 'all', page = 1, limit = 12 }, thunkAPI) => {
+  async ({ filter = 'all', page = 1, perPage = 12 }, thunkAPI) => {
     try {
       const params = {
         page,
-        limit,
+        perPage,
         ...(filter !== 'all' && { filter }),
       };
 
@@ -46,7 +46,13 @@ export const fetchArticlesWithParams = createAsyncThunk(
 
       return {
         data: response.data.data,
-        total: response.data.total,
+        pagination: {
+          totalItems: response.data.pagination.totalItems,
+          totalPages: response.data.pagination.totalPages,
+          currentPage: response.data.pagination.page,
+          hasNextPage: response.data.pagination.hasNextPage,
+          hasPreviousPage: response.data.pagination.hasPreviousPage,
+        },
       };
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);

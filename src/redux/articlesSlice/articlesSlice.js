@@ -16,6 +16,14 @@ const initialState = {
   isLoading: false,
   error: null,
   total: 0,
+  paginationData: {
+    totalItems: 0,
+    currentPage: 1,
+    hasNextPage: false,
+    hasPreviousPage: false,
+  },
+  articlesWithPagination: [],
+  paginationLoading: false,
 };
 
 const articlesSlice = createSlice({
@@ -82,15 +90,13 @@ const articlesSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(fetchArticlesWithParams.fulfilled, (state, action) => {
-        const page = action.meta.arg.page;
-        const { data, total } = action.payload;
-        state.articles = page === 1 ? data : [...state.articles, ...data];
-        state.total = total;
-        state.isLoading = false;
+        state.paginationLoading = false;
+        state.articles = action.payload.data;
+        state.paginationData = action.payload.pagination;
       })
       .addCase(fetchArticlesWithParams.rejected, (state, action) => {
+        state.paginationLoading = false;
         state.error = action.payload;
-        state.isLoading = false;
       });
   },
 });
