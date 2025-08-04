@@ -5,12 +5,16 @@ import {
   fetchUserById,
   removeSavedArticle,
   saveArticle,
+  fetchSavedArticles,
+  fetchFollowingByUserId,
+  addFollower,
 } from './usersOperations.js';
 
 const usersSlice = createSlice({
   name: 'users',
   initialState: {
     items: [],
+    visibleSavedArticles: [],
     profileUser: null,
     authorsPageItems: [],
     total: 0,
@@ -23,6 +27,7 @@ const usersSlice = createSlice({
     saveLoading: {},
     saveError: false,
     savedArticles: [],
+    following: [],
   },
   reducers: {
     showMoreUsers: (state) => {
@@ -59,7 +64,7 @@ const usersSlice = createSlice({
       })
       .addCase(fetchUserById.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.profileUser = action.payload
+        state.profileUser = action.payload;
       })
       .addCase(fetchUserById.rejected, (state, action) => {
         state.isLoading = false;
@@ -97,6 +102,18 @@ const usersSlice = createSlice({
         state.saveLoading[articleId] = false;
         state.saveError = action.payload;
       })
+      .addCase(fetchSavedArticles.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(fetchSavedArticles.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.visibleSavedArticles = action.payload;
+      })
+      .addCase(fetchSavedArticles.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
 
       .addCase(removeSavedArticle.pending, (state, action) => {
         const articleId = action.meta.arg;
@@ -112,6 +129,30 @@ const usersSlice = createSlice({
         const articleId = action.meta.arg;
         state.saveLoading[articleId] = false;
         state.saveError = action.payload;
+      })
+      .addCase(fetchFollowingByUserId.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(fetchFollowingByUserId.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.following = action.payload;
+      })
+      .addCase(fetchFollowingByUserId.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+      .addCase(addFollower.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(addFollower.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.following = action.payload;
+      })
+      .addCase(addFollower.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
       });
   },
 });

@@ -6,11 +6,13 @@ import {
   updateArticle,
   deleteArticle,
   fetchArticlesWithParams,
+  fetchArticlesByOwnerId,
 } from './articlesOperation';
 
 const initialState = {
   user: null,
   articles: [],
+  articlesByOwner: [],
   newArticle: null,
   currentArticle: null,
   isLoading: false,
@@ -75,6 +77,17 @@ const articlesSlice = createSlice({
         state.isLoading = false;
       })
       .addCase(deleteArticle.rejected, (state, action) => {
+        state.error = action.payload;
+        state.isLoading = false;
+      })
+      .addCase(fetchArticlesByOwnerId.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(fetchArticlesByOwnerId.fulfilled, (state, action) => {
+        state.articlesByOwner = action.payload.data;
+        state.isLoading = false;
+      })
+      .addCase(fetchArticlesByOwnerId.rejected, (state, action) => {
         state.error = action.payload;
         state.isLoading = false;
       })
