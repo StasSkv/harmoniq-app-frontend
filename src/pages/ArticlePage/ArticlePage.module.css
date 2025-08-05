@@ -91,6 +91,51 @@
   border-radius: 32px;
 }
 
+.deleteBtn {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-left: auto;
+  display: block;
+  margin-top: 10px;
+}
+
+.deleteBtn:hover {
+  background-color: #d32f2f;
+}
+
+.deleteBtn {
+  background: var(--green-light);
+  color: var(--black);
+  border: none;
+  border-radius: 64px;
+  padding: 16px;
+  width: 100%;
+  height: 57px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.2s ease-out, border-color 0.2s ease-out, color 0.2s ease-out;
+}
+
+
+/* .addBtnActive .addIcon {
+  stroke: var(--white);
+  fill: var(--green);
+} */
+
+.deleteBtn:hover,
+.deleteBtn:focus {
+  background-color: var(--green);
+  border-color: var(--green);
+  color: var(--white);
+}
+
+
 @media (min-width: 768px) {
   .articleTitle {
     font-size: 40px;
@@ -115,13 +160,18 @@
     max-height: 700px;
   }
 
-  .articleText  {
+  .articleText {
     max-width: 808px;
+  }
+
+  .deleteBtn {
+    max-width: 704px;
+    margin-bottom: 48px;
   }
 
   .content {
     display: flex;
-justify-content: space-between;
+    justify-content: space-between;
   }
 
   .future {
