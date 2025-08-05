@@ -151,9 +151,13 @@
   color: var(--white);
 }
 
+.addBtn a {
+  min-width: 100%;
+  border: none;
+}
+
 @media screen and (min-width: 768px) and (max-width: 1439px) {
   .recommendedWrapper {
-    width: 704px;
     max-width: 100%;
   }
 }

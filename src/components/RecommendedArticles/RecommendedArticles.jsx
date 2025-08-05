@@ -2,9 +2,12 @@ import { Link } from 'react-router-dom';
 import s from './RecommendedArticles.module.css';
 import sprite from '../../assets/icons/sprite.svg';
 import ButtonAddToBookmarks from '../ButtonAddToBookmarks/ButtonAddToBookmarks';
+import { useSelector } from 'react-redux';
+import { selectUser } from '../../redux/authSlice/authSelectors';
 
 export const RecommendedArticles = ({ currentArticle, recommended = [] }) => {
-  console.log(currentArticle);
+  const user = useSelector(selectUser);
+
   return (
     <div className={s.recommendedArticles}>
       <div className={s.recommendedWrapper}>
@@ -12,9 +15,7 @@ export const RecommendedArticles = ({ currentArticle, recommended = [] }) => {
           <p>Author: {currentArticle?.ownerName || 'Unknown'}</p>
           <p>Publication date: {new Date(currentArticle?.createdAt).toLocaleDateString('en-GB')}</p>
         </div>
-
         <h3 className={s.recommendedTitle}>You can also be interested</h3>
-
         <ul className={s.recommendList}>
           {recommended.map((article) => (
             <li key={article._id} className={s.recommendItem}>
@@ -40,6 +41,8 @@ export const RecommendedArticles = ({ currentArticle, recommended = [] }) => {
         className={s.addBtn}
         isArticlePage={true}
         addBtnArticlePageActive={s.addBtnArticlePageActive}
+        ownerId={currentArticle?.ownerId}
+        userId={user?._id}
       />
     </div>
   );

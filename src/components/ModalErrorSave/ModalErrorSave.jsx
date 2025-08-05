@@ -1,12 +1,24 @@
-import React from 'react';
+import s from './ModalErrorSave.module.css';
+import React, { useEffect } from 'react';
 import Modal from 'react-modal';
 import { Link } from 'react-router-dom';
-import s from './ModalErrorSave.module.css';
 import sprite from '../../assets/icons/sprite.svg';
 
 Modal.setAppElement('#root');
 
 const ModalError = ({ isOpen, onClose }) => {
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isOpen]);
+
   return (
     <Modal
       isOpen={isOpen}

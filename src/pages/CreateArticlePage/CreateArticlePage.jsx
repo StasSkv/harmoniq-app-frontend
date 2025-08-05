@@ -5,9 +5,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { fetchArticleById } from '../../redux/articlesSlice/articlesOperation';
-import { selectCurrentArticle } from '../../redux/articlesSlice/articlesSelectors';
+import { selectCurrentArticle, selectIsCreateArticle } from '../../redux/articlesSlice/articlesSelectors';
 import { selectUser } from '../../redux/authSlice/authSelectors.js';
 import { toast } from 'react-toastify';
+import { LoaderPage } from '../../components/Loader/LoaderPage/LoaderPage.jsx';
 
 const CreateArticlePage = () => {
   const navigate = useNavigate();
@@ -15,6 +16,7 @@ const CreateArticlePage = () => {
   const { articleId } = useParams();
   const user = useSelector(selectUser);
   const article = useSelector(selectCurrentArticle);
+  const isCreateArticle = useSelector(selectIsCreateArticle);
 
   useEffect(() => {
     if (!articleId) return;
@@ -34,6 +36,7 @@ const CreateArticlePage = () => {
 
   return (
     <section className={s.createArticlePage}>
+      {isCreateArticle && <LoaderPage />}
       <Container className={s.container}>
         <h2 className={s.title}>{article ? 'Edit article' : 'Create an article'}</h2>
         <AddArticleForm article={article || null} />

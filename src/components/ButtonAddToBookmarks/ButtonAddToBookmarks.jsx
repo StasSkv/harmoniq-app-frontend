@@ -11,14 +11,21 @@ import { Link } from 'react-router-dom';
 import clsx from 'clsx';
 import { toast } from 'react-toastify';
 
-const ButtonAddToBookmarks = ({ articleId, ownerId, className, addBtnArticlePageActive, isArticlePage }) => {
+const ButtonAddToBookmarks = ({
+  articleId,
+  ownerId,
+  className,
+  addBtnArticlePageActive,
+  isArticlePage,
+  userId,
+}) => {
   const dispatch = useDispatch();
   const isLoggedIn = useSelector(selectIsLoggedIn);
   const savedArticles = useSelector(selectSavedArticles);
   const isSaved = savedArticles.includes(articleId);
   const loading = useSelector(selectSaveLoading(articleId));
   const user = useSelector(selectUser);
-  const isOwner = user && ownerId === user._id;
+  const isOwner = (user && ownerId === user._id) || userId;
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
