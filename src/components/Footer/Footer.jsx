@@ -1,6 +1,7 @@
 import s from './Footer.module.css';
-import { Container } from '../Container/Container.jsx';
+import clsx from 'clsx';
 import sprite from '../../assets/icons/sprite.svg';
+import { Container } from '../Container/Container.jsx';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { selectUser } from '../../redux/authSlice/authSelectors.js';
@@ -25,13 +26,9 @@ export const Footer = () => {
               Articles
             </Link>
           </li>
-          <li className={s.linksItem}>
-            {user?._id ? (
+          <li className={clsx(s.linksItem, !user?._id && s.userLinkNone)}>
+            {user?._id && (
               <Link to={`/authors/${user._id}`} className={s.link}>
-                Account
-              </Link>
-            ) : (
-              <Link to="/register" className={s.link}>
                 Account
               </Link>
             )}

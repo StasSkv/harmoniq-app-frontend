@@ -18,14 +18,15 @@
   overflow: hidden;
   background-color: var(--white);
   border-radius: 24px;
-  max-height: 183px;
+  max-height: auto;
   margin: 32px 0;
 }
 
 .articleImg {
   width: 100%;
-  object-fit: contain;
+  object-fit: cover;
   display: block;
+  height: auto;
 }
 
 .articleText {
@@ -96,7 +97,7 @@
   }
 
   .articleImgWrapper {
-    max-height: 358px;
+    max-height: auto;
   }
 
   .articleText {
@@ -111,7 +112,7 @@
 
 @media (min-width: 1440px) {
   .articleImgWrapper {
-    max-height: 624px;
+    max-height: 700px;
   }
 
   .articleText  {

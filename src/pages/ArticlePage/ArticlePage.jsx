@@ -55,7 +55,10 @@ const ArticlePage = () => {
               article.article.split('\n').map((paragraph, idx) => <p key={idx}>{paragraph}</p>)
             )}
           </div>
-          <RecommendedArticles currentArticle={currentArticle} recommended={recommended} />
+          <RecommendedArticles
+            currentArticle={currentArticle}
+            recommended={recommended}
+          />
         </div>
       </Container>
     </article>

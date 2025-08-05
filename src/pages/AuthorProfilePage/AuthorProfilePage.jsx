@@ -75,6 +75,7 @@ const AuthorProfilePage = () => {
     if (authorId) {
       const loadInitialData = async () => {
         setIsInitialLoading(true);
+        setActiveTab('myArticles');
         await Promise.all([
           dispatch(fetchUserById(authorId)),
           dispatch(fetchArticlesByOwnerId(authorId)),

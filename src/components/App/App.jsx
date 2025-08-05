@@ -86,8 +86,6 @@ export const App = () => {
               path="create/:articleId"
               element={<PrivateRoute redirectTo="/register" component={<CreateArticlePage />} />}
             />
-
-            {/* <Route path="*" element={<Navigate to="/" replace />} /> */}
           </Route>
           <Route
             path="*"

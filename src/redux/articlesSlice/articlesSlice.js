@@ -18,6 +18,7 @@ const initialState = {
   isLoading: false,
   error: null,
   total: 0,
+  isCreateArticle: false,
 };
 
 const articlesSlice = createSlice({
@@ -48,26 +49,26 @@ const articlesSlice = createSlice({
         state.isLoading = false;
       })
       .addCase(createArticle.pending, (state) => {
-        state.isLoading = true;
+        state.isCreateArticle = true;
       })
       .addCase(createArticle.fulfilled, (state, action) => {
         state.newArticle = action.payload.data;
-        state.isLoading = false;
+        state.isCreateArticle = false;
       })
       .addCase(createArticle.rejected, (state, action) => {
         state.error = action.payload;
-        state.isLoading = false;
+        state.isCreateArticle = false;
       })
       .addCase(updateArticle.pending, (state) => {
-        state.isLoading = true;
+        state.isCreateArticle = true;
       })
       .addCase(updateArticle.fulfilled, (state, action) => {
         state.newArticle = action.payload;
-        state.isLoading = false;
+        state.isCreateArticle = false;
       })
       .addCase(updateArticle.rejected, (state, action) => {
         state.error = action.payload;
-        state.isLoading = false;
+        state.isCreateArticle = false;
       })
       .addCase(deleteArticle.pending, (state) => {
         state.isLoading = true;
