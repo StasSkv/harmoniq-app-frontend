@@ -8,13 +8,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 4px;
   list-style: none;
   padding: 0;
   margin: 0;
+  flex-wrap: wrap;
 }
 
-/* Стилі для стрілок назад/вперед */
 .previousItem,
 .nextItem {
   display: flex;
@@ -42,10 +42,9 @@
   background-color: var(--green-darker);
 }
 
-/* Відключені стрілки */
 .disabled .previousLink,
 .disabled .nextLink {
-  background-color: #e5e7eb;
+  background-color: var(--white);
   cursor: not-allowed;
   pointer-events: none;
 }
@@ -55,7 +54,6 @@
   stroke: #9ca3af;
 }
 
-/* Стилі для номерів сторінок */
 .pageItem {
   display: flex;
   align-items: center;
@@ -66,28 +64,28 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
+  min-width: 32px;
   height: 32px;
-  border-radius: 50%;
+  border-radius: 16px;
+  padding: 0 8px;
   background-color: transparent;
-  color: #1f2937; /* чорний колір */
+  color: var(--black);
   text-decoration: none;
-  font-weight: 400;
+  font-weight: 500;
   font-size: 14px;
   transition: all 0.2s ease;
-  border: none;
+  border: 1px solid transparent;
   cursor: pointer;
 }
 
 .pageLink:hover {
-  background-color: #f3f4f6;
-  transform: scale(1.1);
+  background-color: var(--white);
+  border-color: var(--green);
 }
 
-/* Активна сторінка - зелений кружечок з білою цифрою */
 .activePage .pageLink {
   background-color: var(--green);
-  color: white !important; /* біла цифра */
+  color: white !important;
   font-weight: 700;
   font-size: 16px;
 }
@@ -96,7 +94,6 @@
   background-color: var(--green-darker);
 }
 
-/* Стилі для break (...) */
 .breakItem {
   display: flex;
   align-items: center;
