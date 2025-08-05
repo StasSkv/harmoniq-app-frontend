@@ -7,7 +7,7 @@ import { LoaderPage } from '../../components/Loader/LoaderPage/LoaderPage.jsx';
 import { toast } from 'react-toastify';
 import { Pagination } from '../../components/Pagination/Pagination';
 
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchArticlesWithParams } from '../../redux/articlesSlice/articlesOperation';
@@ -20,10 +20,9 @@ import {
 const ArticlesPage = () => {
   const dispatch = useDispatch();
   const [searchParams, setSearchParams] = useSearchParams();
-  const [hasMore, setHasMore] = useState(false);
-  
+
   const articlesRef = useRef(null);
-  
+
   const paginationData = useSelector(selectArticlesPagination);
   const articles = useSelector(selectArticles);
   const isLoading = useSelector(selectIsLoading);
@@ -44,9 +43,7 @@ const ArticlesPage = () => {
 
     dispatch(fetchArticlesWithParams({ page, filter, limit }))
       .unwrap()
-      .then((res) => {
-        const { pagination } = res;
-        setHasMore(pagination.hasNextPage);
+      .then(() => {
         if (page > 1 && articlesRef.current) {
           const startIndex = (page - 1) * limit;
           const articleElements = articlesRef.current.getElementsByClassName('article-item');
@@ -73,7 +70,6 @@ const ArticlesPage = () => {
     setSearchParams(params);
   };
 
-
   return (
     <section id="articlesPage" className={s.articles_page}>
       <Container className={s.container_wrapper}>
@@ -87,17 +83,6 @@ const ArticlesPage = () => {
         <div ref={articlesRef}>
           <ArticlesList articles={articles} />
         </div>
-        {hasMore && (
-          <div className={s.load_more_wrapper}>
-            <button
-              type="button"
-              className={s.load_more_btn}
-              onClick={() => handlePageChange(page + 1)}
-            >
-              Load More
-            </button>
-          </div>
-        )}
         <Pagination pagination={paginationData} onPageChange={handlePageChange} />
       </Container>
     </section>

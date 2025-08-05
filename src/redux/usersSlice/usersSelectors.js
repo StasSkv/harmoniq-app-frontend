@@ -4,13 +4,11 @@ export const selectIsLoading = (state) => state.users.isLoading;
 export const selectVisibleSavedArticles = (state) => state.users.visibleSavedArticles;
 export const selectFollowing = (state) => state.users.following;
 
-
-export const selectAuthorsPageUsers = (state) => state.users.authorsPageItems; // Для сторінки авторів
-export const selectUsersLoading = (state) => state.users.isLoading; // Лоадер для головної
-export const selectAuthorsPageLoading = (state) => state.users.authorsPageLoading; // Лоадер для сторінки авторів
+export const selectAuthorsPageUsers = (state) => state.users.authorsPageItems;
+export const selectUsersLoading = (state) => state.users.isLoading;
+export const selectAuthorsPageLoading = (state) => state.users.authorsPageLoading;
 export const selectUsersError = (state) => state.users.error;
-export const selectUsersTotal = (state) => state.users.total; // Новий селектор для total
-export const selectUsersTotalPages = (state) => state.users.totalPages; // Селектор для кількості сторінок pag2
+export const selectUsersPagination = (state) => state.users.pagination;
 export const selectSavedArticles = (state) => state.users.savedArticles;
 export const selectSaveLoading = (articleId) => (state) =>
   state.users.saveLoading[articleId] || false;
