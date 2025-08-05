@@ -1,6 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { api } from '../api.js';
 import { TokenService } from '../../utils/tokenService';
+import { navigateTo } from '../../utils/navigateHelper';
 
 export const registerThunk = createAsyncThunk('auth/register', async (body, thunkAPI) => {
   try {
@@ -43,19 +44,37 @@ export const logoutThunk = createAsyncThunk('auth/logout', async (_, thunkAPI) =
 export const refreshThunk = createAsyncThunk('auth/refresh', async (_, thunkAPI) => {
   try {
     const persistedRefreshToken = thunkAPI.getState().auth.refreshToken;
+
     if (!persistedRefreshToken) {
+      console.error('No refresh token found in state');
       return thunkAPI.rejectWithValue('No refresh token');
     }
+
     const response = await api.post('/auth/refresh', {
       refreshToken: persistedRefreshToken,
     });
+
+    if (!response.data?.data?.accessToken) {
+      console.error('Invalid response format:', response.data);
+      return thunkAPI.rejectWithValue('Invalid response format');
+    }
+
     const { accessToken, refreshToken } = response.data.data;
     TokenService.setAuthHeader(accessToken);
+
     const userResponse = await api.get('/users/current');
     const user = userResponse.data.data.user;
+
     return { user, refreshToken, accessToken };
   } catch (error) {
+    console.error('Refresh token error:', error.response?.data || error.message);
     TokenService.clearAuthHeader();
+    if (
+      error.response?.status === 403 &&
+      error.response?.data?.message === 'Invalid refresh token'
+    ) {
+      navigateTo('/login');
+    }
     return thunkAPI.rejectWithValue(handleError(error));
   }
 });

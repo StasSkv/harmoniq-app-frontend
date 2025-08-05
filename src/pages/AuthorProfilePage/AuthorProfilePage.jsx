@@ -34,7 +34,7 @@ const AuthorProfilePage = () => {
   const [isEditProfileOpen, setIsEditProfileOpen] = useState(false);
   const dispatch = useDispatch();
   const { authorId } = useParams();
-
+  
   const profileUser = useSelector(selectProfileUser);
   const currentUser = useSelector(selectUser);
   const myArticles = useSelector(selectArticlesByOwner);
@@ -152,8 +152,8 @@ const AuthorProfilePage = () => {
               (myArticles.length === 0 ? (
                 <NothingFoundItemsInProfile
                   description={'No articles yet.'}
-                  link={'create'}
-                  linkText={'Create article'}
+                  link={'articles'}
+                  linkText={'Go to articles'}
                 />
               ) : (
                 <ArticlesList articles={myArticles} />

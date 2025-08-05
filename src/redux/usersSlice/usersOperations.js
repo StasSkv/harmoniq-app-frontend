@@ -95,7 +95,17 @@ export const updateUserInfo = createAsyncThunk(
   'users/updateUserInfo',
   async (userInfo, thunkAPI) => {
     try {
-      const response = await api.patch(`/users/info`, userInfo);
+      let dataToSend = userInfo;
+      let headers = {};
+      if (userInfo.avatar instanceof File) {
+        const formData = new FormData();
+        Object.entries(userInfo).forEach(([key, value]) => {
+          formData.append(key, value);
+        });
+        dataToSend = formData;
+        headers['Content-Type'] = 'multipart/form-data';
+      }
+      const response = await api.patch(`/users/info`, dataToSend, { headers });
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message || 'Failed to update user info');
