@@ -3,6 +3,7 @@ import { store } from '../store.js';
 import { logoutThunk, refreshThunk } from '../authSlice/authOperations.js';
 import { toast } from 'react-toastify';
 import { navigateTo } from '../../utils/navigateHelper.js';
+import { TokenService } from '../../utils/tokenService.js';
 
 let isRefreshing = false;
 let failedQueue = [];
@@ -23,19 +24,15 @@ export const setupAuthInterceptor = () => {
     (response) => response,
     async (error) => {
       const originalRequest = error.config;
-
-      if (error.response?.status === 401 && !originalRequest._retry) {
+      if (TokenService.isTokenExpired(error) && !originalRequest._retry) {
         originalRequest._retry = true;
-
         const state = store.getState();
         const refreshToken = state.auth.refreshToken;
-
         if (!refreshToken) {
           toast.error('Session expired. Please log in again.');
           await store.dispatch(logoutThunk());
           return Promise.reject(error);
         }
-
         if (isRefreshing) {
           return new Promise((resolve, reject) => {
             failedQueue.push({ resolve, reject });
@@ -51,12 +48,10 @@ export const setupAuthInterceptor = () => {
 
         try {
           const resultAction = await store.dispatch(refreshThunk());
-
           if (refreshThunk.fulfilled.match(resultAction)) {
             const newAccessToken = resultAction.payload.accessToken;
-            api.defaults.headers.common.Authorization = `Bearer ${newAccessToken}`;
+            TokenService.setAuthHeader(newAccessToken);
             processQueue(null, newAccessToken);
-
             originalRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
             return api(originalRequest);
           } else {

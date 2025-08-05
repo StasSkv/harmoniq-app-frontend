@@ -15,7 +15,7 @@ import {
   PURGE,
   REGISTER,
 } from 'redux-persist';
-import { api } from './api.js';
+import { TokenService } from '../utils/tokenService.js';
 
 const persistConfig = {
   key: 'root-auth',
@@ -26,10 +26,10 @@ const persistConfig = {
 const persistedReducer = persistReducer(persistConfig, authReducer);
 
 const tokenMiddleware = () => (next) => (action) => {
-  if (action.type === REHYDRATE) {
+  if (action.type === REHYDRATE && action.key === 'root-auth') {
     const accessToken = action.payload?.accessToken;
     if (accessToken) {
-      api.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
+      TokenService.setAuthHeader(accessToken);
     }
   }
   return next(action);

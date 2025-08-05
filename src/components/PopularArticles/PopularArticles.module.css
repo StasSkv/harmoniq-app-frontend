@@ -50,9 +50,13 @@
 }
 
 @media only screen and (min-width: 768px) {
-  .allArticlesLinkContainer {
-    display: none;
+  .header {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
   }
+
+  
   .articlesList {
     flex-wrap: wrap;
     flex-direction: row;
