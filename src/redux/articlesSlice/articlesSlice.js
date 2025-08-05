@@ -13,11 +13,11 @@ const initialState = {
   user: null,
   articles: [],
   articlesByOwner: [],
+  pagination: null,
   newArticle: null,
   currentArticle: null,
   isLoading: false,
   error: null,
-  total: 0,
   isCreateArticle: false,
 };
 
@@ -31,6 +31,7 @@ const articlesSlice = createSlice({
       })
       .addCase(fetchAllArticles.fulfilled, (state, action) => {
         state.articles = action.payload.data;
+        state.pagination = action.payload.pagination;
         state.isLoading = false;
       })
       .addCase(fetchAllArticles.rejected, (state, action) => {
@@ -96,10 +97,10 @@ const articlesSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(fetchArticlesWithParams.fulfilled, (state, action) => {
-        const page = action.meta.arg.page;
-        const { data, total } = action.payload;
+        const { data, pagination } = action.payload;
+        const page = Number(action.meta.arg.page);
         state.articles = page === 1 ? data : [...state.articles, ...data];
-        state.total = total;
+        state.pagination = pagination;
         state.isLoading = false;
       })
       .addCase(fetchArticlesWithParams.rejected, (state, action) => {

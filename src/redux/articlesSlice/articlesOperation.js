@@ -49,12 +49,10 @@ export const fetchArticlesWithParams = createAsyncThunk(
         limit,
         ...(filter !== 'all' && { filter }),
       };
-
       const response = await api.get('/articles', { params });
-
       return {
         data: response.data.data,
-        total: response.data.total,
+        pagination: response.data.pagination,
       };
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);

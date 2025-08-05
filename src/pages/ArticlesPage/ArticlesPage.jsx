@@ -1,90 +1,104 @@
-import { useDispatch, useSelector } from 'react-redux';
+import s from './ArticlesPage.module.css';
+
+import SectionTitle from '../../components/SectionTitle/SectionTitle';
 import ArticlesList from '../../components/ArticlesList/ArticlesList';
 import { Container } from '../../components/Container/Container';
-import SectionTitle from '../../components/SectionTitle/SectionTitle';
-import s from './ArticlesPage.module.css';
-import { useEffect, useRef, useState } from 'react';
+import { LoaderPage } from '../../components/Loader/LoaderPage/LoaderPage.jsx';
+import { toast } from 'react-toastify';
+import { Pagination } from '../../components/Pagination/Pagination';
+
+import { useEffect, useState, useRef } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import { fetchArticlesWithParams } from '../../redux/articlesSlice/articlesOperation';
 import {
   selectArticles,
   selectIsLoading,
-  selectTotal,
+  selectArticlesPagination,
 } from '../../redux/articlesSlice/articlesSelectors';
-import { LoaderPage } from '../../components/Loader/LoaderPage/LoaderPage.jsx';
-import { toast } from 'react-toastify';
 
 const ArticlesPage = () => {
-  const [filter, setFilter] = useState('all');
-  const [page, setPage] = useState(1);
-  const [hasMore, setHasMore] = useState(true);
-
-  const listRef = useRef(null);
-  const scrollRef = useRef(null);
-  const firstNewItemRef = useRef(null);
-
-  const total = useSelector(selectTotal);
+  const dispatch = useDispatch();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [hasMore, setHasMore] = useState(false);
+  
+  const articlesRef = useRef(null);
+  
+  const paginationData = useSelector(selectArticlesPagination);
+  const articles = useSelector(selectArticles);
   const isLoading = useSelector(selectIsLoading);
 
+  const page = Number(searchParams.get('page')) || 1;
+  const filter = searchParams.get('filter') || 'all';
   const limit = 12;
 
-  const articles = useSelector(selectArticles);
-  const dispatch = useDispatch();
-
   useEffect(() => {
-    setPage(1);
-    dispatch(fetchArticlesWithParams({ filter, page: 1, limit }))
-      .unwrap()
-      .then((res) => {
-        if (res.data.length < limit) {
-          setHasMore(false);
-        } else {
-          setHasMore(true);
-        }
-      })
-      .catch((err) => {
-        toast.error(`Failed to load articles: ${err}`);
-      });
-  }, [dispatch, filter]);
-
-  const handleLoadMore = () => {
-    const lastItem = listRef.current?.lastElementChild;
-    if (lastItem) {
-      scrollRef.current = lastItem;
+    const params = new URLSearchParams(searchParams);
+    if (!params.has('page')) {
+      params.set('page', '1');
     }
+    if (!params.has('filter')) {
+      params.set('filter', 'all');
+    }
+    setSearchParams(params, { replace: true });
 
-    const nextPage = page + 1;
-    dispatch(fetchArticlesWithParams({ filter, page: nextPage, limit }))
+    dispatch(fetchArticlesWithParams({ page, filter, limit }))
       .unwrap()
       .then((res) => {
-        if (res.data.length < limit || nextPage * limit >= total) {
-          setHasMore(false);
+        const { pagination } = res;
+        setHasMore(pagination.hasNextPage);
+        if (page > 1 && articlesRef.current) {
+          const startIndex = (page - 1) * limit;
+          const articleElements = articlesRef.current.getElementsByClassName('article-item');
+          if (articleElements[startIndex]) {
+            articleElements[startIndex].scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
         }
-        setPage(nextPage);
-
-        setTimeout(() => {
-          firstNewItemRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }, 100);
       })
       .catch((err) => {
-        toast.error(`Failed to load more articles: ${err}`);
+        toast.error(`Failed to load articles: ${err.message}`);
       });
+  }, [page, filter, dispatch]);
+
+  const handlePageChange = (newPage) => {
+    const params = new URLSearchParams(searchParams);
+    params.set('page', newPage.toString());
+    setSearchParams(params);
   };
+
+  const handleFilterChange = (newFilter) => {
+    const params = new URLSearchParams(searchParams);
+    params.set('filter', newFilter);
+    params.set('page', '1');
+    setSearchParams(params);
+  };
+
 
   return (
     <section id="articlesPage" className={s.articles_page}>
       <Container className={s.container_wrapper}>
-        <SectionTitle title="Articles" filter={filter} setFilter={setFilter} total={total} />
-
+        <SectionTitle
+          title="Articles"
+          filter={filter}
+          setFilter={handleFilterChange}
+          total={paginationData?.totalItems || 0}
+        />
         {isLoading && <LoaderPage />}
-
-        <ArticlesList articles={articles} />
+        <div ref={articlesRef}>
+          <ArticlesList articles={articles} />
+        </div>
         {hasMore && (
           <div className={s.load_more_wrapper}>
-            <button type="button" className={s.load_more_btn} onClick={handleLoadMore}>
+            <button
+              type="button"
+              className={s.load_more_btn}
+              onClick={() => handlePageChange(page + 1)}
+            >
               Load More
             </button>
           </div>
         )}
+        <Pagination pagination={paginationData} onPageChange={handlePageChange} />
       </Container>
     </section>
   );
