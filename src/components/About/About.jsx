@@ -29,7 +29,7 @@ export const About = () => {
           </p>
         </div>
 
-        <picture>
+        <picture className={s.imgLotusWrapper}>
           <source
             srcSet={`${lotusDesktop1x} 1x, ${lotusDesktop2x} 2x`}
             media="(min-width: 1440px)"
