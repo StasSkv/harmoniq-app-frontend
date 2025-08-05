@@ -9,7 +9,6 @@ export const AuthorsList = ({ authors }) => {
       {authors.map((author) => {
         const id = author.id || author._id;
         const { name, avatar } = author;
-
         return (
           <li key={id} className={s.authorsListItem}>
             <AuthorItem id={id} name={name} avatar={avatar} />

@@ -1,7 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import {
   fetchAllUsers,
-  fetchAllUsersForAuthorsPage,
   fetchUserById,
   removeSavedArticle,
   saveArticle,
@@ -9,6 +8,7 @@ import {
   fetchFollowingByUserId,
   addFollower,
   deleteFollower,
+  fetchUsersWithParams,
 } from './usersOperations.js';
 
 const usersSlice = createSlice({
@@ -18,28 +18,16 @@ const usersSlice = createSlice({
     visibleSavedArticles: [],
     profileUser: null,
     authorsPageItems: [],
-    total: 0,
-    totalPages: 0,
-    currentServerPage: 1,
     isLoading: false,
     authorsPageLoading: false,
     error: null,
-    visibleCount: 20,
     saveLoading: {},
     saveError: false,
     savedArticles: [],
     following: [],
+    pagination: null,
   },
   reducers: {
-    showMoreUsers: (state) => {
-      state.visibleCount += 20;
-    },
-    resetUsers: (state) => {
-      state.items = [];
-      state.total = 0;
-      state.visibleCount = 20;
-      state.error = null;
-    },
     setSavedArticles(state, action) {
       state.savedArticles = action.payload;
     },
@@ -72,22 +60,21 @@ const usersSlice = createSlice({
         state.error = action.payload;
       })
 
-      .addCase(fetchAllUsersForAuthorsPage.pending, (state) => {
+      .addCase(fetchUsersWithParams.pending, (state) => {
         state.authorsPageLoading = true;
         state.error = null;
       })
-      .addCase(fetchAllUsersForAuthorsPage.fulfilled, (state, action) => {
+      .addCase(fetchUsersWithParams.fulfilled, (state, action) => {
+        const { data, pagination } = action.payload;
+        const page = Number(action.meta.arg.page);
+        state.authorsPageItems = page === 1 ? data : [...state.authorsPageItems, ...data];
+        state.pagination = pagination;
         state.authorsPageLoading = false;
-        state.authorsPageItems = action.payload.data;
-        state.total = action.payload.total || 0;
-        state.totalPages = action.payload.totalPages || 0;
-        state.currentServerPage = action.payload.currentPage || 1;
       })
-      .addCase(fetchAllUsersForAuthorsPage.rejected, (state, action) => {
+      .addCase(fetchUsersWithParams.rejected, (state, action) => {
         state.authorsPageLoading = false;
         state.error = action.payload;
       })
-
       .addCase(saveArticle.pending, (state, action) => {
         const articleId = action.meta.arg;
         state.saveLoading[articleId] = true;
@@ -170,5 +157,5 @@ const usersSlice = createSlice({
   },
 });
 
-export const { showMoreUsers, resetUsers, setSavedArticles } = usersSlice.actions;
+export const { setSavedArticles } = usersSlice.actions;
 export default usersSlice.reducer;

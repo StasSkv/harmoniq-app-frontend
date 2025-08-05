@@ -85,20 +85,20 @@ export const deleteUserInfo = createAsyncThunk('users/deleteUserInfo', async (us
   }
 });
 
-export const fetchAllUsersForAuthorsPage = createAsyncThunk(
-  'users/fetchForAuthorsPage',
-  async (params = {}, thunkAPI) => {
+export const fetchUsersWithParams = createAsyncThunk(
+  'users/fetchUsersWithParams',
+  async ({ filter = 'all', page = 1, limit = 20 }, thunkAPI) => {
     try {
-      const response = await api.get('/users', { params });
-      const result = {
-        data: response.data.data,
-        total: response.data.pagination.totalItems,
-        totalPages: response.data.pagination.totalPages,
-        currentPage: response.data.pagination.page,
-        hasNextPage: response.data.pagination.hasNextPage,
-        hasPreviousPage: response.data.pagination.hasPreviousPage,
+      const params = {
+        page,
+        limit,
+        ...(filter !== 'all' && { filter }),
       };
-      return result;
+      const response = await api.get('/users', { params });
+      return {
+        data: response.data.data,
+        pagination: response.data.pagination,
+      };
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message || 'Failed to fetch users');
     }

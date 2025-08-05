@@ -21,7 +21,7 @@ export const Pagination = ({ pagination, onPageChange }) => {
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-label="next">
             <path
               d="M6 12L10 8L6 4"
-              stroke="currentColor"
+              stroke="white"
               strokeWidth="2"
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -32,7 +32,7 @@ export const Pagination = ({ pagination, onPageChange }) => {
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-label="previous">
             <path
               d="M10 12L6 8L10 4"
-              stroke="currentColor"
+              stroke="white"
               strokeWidth="2"
               strokeLinecap="round"
               strokeLinejoin="round"
