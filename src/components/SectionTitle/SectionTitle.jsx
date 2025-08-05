@@ -9,7 +9,11 @@ const SectionTitle = ({ title, filter, setFilter, total }) => {
     <div className={s.section_title_wrapper}>
       <h2 className={s.section_title}>{title}</h2>
       <div className={s.top_bar}>
-        {typeof total === 'number' && <p className={s.articles_count}>{total} articles</p>}
+        {typeof total === 'number' && (
+          <p className={s.articles_count}>
+            {total} {title}
+          </p>
+        )}
         <div className={s.filters}>
           <select name="filter" className={s.filter_select} value={filter} onChange={handleChange}>
             <option value="all">All</option>
