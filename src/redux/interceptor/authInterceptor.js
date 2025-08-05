@@ -19,6 +19,8 @@ const processQueue = (error, token = null) => {
 };
 
 export const setupAuthInterceptor = () => {
+  console.log('[Interceptor] Setting up...');
+
   api.interceptors.response.use(
     (response) => {
       console.log('[Interceptor] Response success:', response);
@@ -28,10 +30,10 @@ export const setupAuthInterceptor = () => {
       console.log('[Interceptor] Response error:', error.response?.status, error.config.url);
       const originalRequest = error.config;
 
-      const isRefreshRequest = error.config.url.includes('/auth/refresh');
+      const isRefreshRequest = originalRequest.url?.includes('/auth/refresh');
       const isUnauthorized = error.response?.status === 401 || error.response?.status === 403;
 
-      if (isRefreshRequest && isUnauthorized) {
+      if (!isRefreshRequest && isUnauthorized && !originalRequest._retry) {
         originalRequest._retry = true;
 
         const state = store.getState();
@@ -39,13 +41,9 @@ export const setupAuthInterceptor = () => {
 
         if (!refreshToken) {
           toast.error('Session expired. Please log in again.');
-          console.log('[Interceptor] Logging out due to refresh failure');
+          console.log('[Interceptor] Logging out due to missing refresh token');
           await store.dispatch(logoutThunk());
-          if (typeof navigateTo === 'function') {
-            navigateTo('/login');
-          } else {
-            window.location.href = '/login';
-          }
+          navigateTo?.('/login') ?? (window.location.href = '/login');
           return Promise.reject(error);
         }
 
@@ -63,10 +61,13 @@ export const setupAuthInterceptor = () => {
         isRefreshing = true;
 
         try {
+          delete api.defaults.headers.common.Authorization;
+
           const resultAction = await store.dispatch(refreshThunk());
 
           if (refreshThunk.fulfilled.match(resultAction)) {
             const newAccessToken = resultAction.payload.accessToken;
+
             api.defaults.headers.common.Authorization = `Bearer ${newAccessToken}`;
             processQueue(null, newAccessToken);
 
@@ -74,25 +75,17 @@ export const setupAuthInterceptor = () => {
             return api(originalRequest);
           } else {
             toast.error('Session expired. Please log in again.');
-            console.log('[Interceptor] Logging out due to refresh failure');
+            console.log('[Interceptor] Logging out due to failed refresh');
             await store.dispatch(logoutThunk());
             processQueue(resultAction.error, null);
-            if (typeof navigateTo === 'function') {
-              navigateTo('/login');
-            } else {
-              window.location.href = '/login';
-            }
+            navigateTo?.('/login') ?? (window.location.href = '/login');
             return Promise.reject(error);
           }
         } catch (err) {
           processQueue(err, null);
           toast.error('Session expired. Please log in again.');
           await store.dispatch(logoutThunk());
-          if (typeof navigateTo === 'function') {
-            navigateTo('/login');
-          } else {
-            window.location.href = '/login';
-          }
+          navigateTo?.('/login') ?? (window.location.href = '/login');
           return Promise.reject(err);
         } finally {
           isRefreshing = false;
