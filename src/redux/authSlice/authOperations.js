@@ -1,22 +1,15 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { api } from '../api.js';
-
-const setAuthNav = (token) => {
-  api.defaults.headers.common.Authorization = `Bearer ${token}`;
-};
+import { TokenService } from '../../utils/tokenService';
 
 export const registerThunk = createAsyncThunk('auth/register', async (body, thunkAPI) => {
   try {
     await api.post('/auth/register', body);
-
     const email = body.get('email');
     const password = body.get('password');
-
     const loginResponse = await api.post('/auth/login', { email, password });
-
     const { accessToken } = loginResponse.data.data;
-
-    setAuthNav(accessToken);
+    TokenService.setAuthHeader(accessToken);
     return loginResponse.data.data;
   } catch (error) {
     return thunkAPI.rejectWithValue(handleError(error));
@@ -29,10 +22,8 @@ export const loginThunk = createAsyncThunk('auth/login', async (body, thunkAPI) 
       email: body.email,
       password: body.password,
     });
-
     const { accessToken } = response.data.data;
-
-    setAuthNav(accessToken);
+    TokenService.setAuthHeader(accessToken);
     return response.data.data;
   } catch (error) {
     return thunkAPI.rejectWithValue(handleError(error));
@@ -42,8 +33,9 @@ export const loginThunk = createAsyncThunk('auth/login', async (body, thunkAPI) 
 export const logoutThunk = createAsyncThunk('auth/logout', async (_, thunkAPI) => {
   try {
     await api.post('auth/logout');
-    delete api.defaults.headers.common.Authorization;
+    TokenService.clearAuthHeader();
   } catch (error) {
+    TokenService.clearAuthHeader();
     return thunkAPI.rejectWithValue(handleError(error));
   }
 });
@@ -51,24 +43,19 @@ export const logoutThunk = createAsyncThunk('auth/logout', async (_, thunkAPI) =
 export const refreshThunk = createAsyncThunk('auth/refresh', async (_, thunkAPI) => {
   try {
     const persistedRefreshToken = thunkAPI.getState().auth.refreshToken;
-
     if (!persistedRefreshToken) {
       return thunkAPI.rejectWithValue('No refresh token');
     }
-
     const response = await api.post('/auth/refresh', {
       refreshToken: persistedRefreshToken,
     });
-
     const { accessToken, refreshToken } = response.data.data;
-
-    setAuthNav(accessToken);
-
+    TokenService.setAuthHeader(accessToken);
     const userResponse = await api.get('/users/current');
     const user = userResponse.data.data.user;
-
     return { user, refreshToken, accessToken };
   } catch (error) {
+    TokenService.clearAuthHeader();
     return thunkAPI.rejectWithValue(handleError(error));
   }
 });
