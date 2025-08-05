@@ -11,6 +11,9 @@ import { ToastContainer } from 'react-toastify';
 import { HomePage } from '../../pages/HomePage/HomePage.jsx';
 import { ScrollToTop } from '../ScrollToTop/ScrollToTop.jsx';
 
+import ErrorPage from '../../pages/ErrorPage/ErrorPage';
+import spinner from '../../assets/animations/spinner.webp';
+
 const RegisterPage = lazy(() => import('../../pages/RegisterPage/RegisterPage'));
 const LoginPage = lazy(() => import('../../pages/LoginPage/LoginPage'));
 const UploadPhotoPage = lazy(() => import('../../pages/UploadPhotoPage/UploadPhotoPage'));
@@ -25,11 +28,14 @@ import { refreshThunk } from '../../redux/authSlice/authOperations.js';
 import { selectUser } from '../../redux/authSlice/authSelectors.js';
 import { selectSavedArticles } from '../../redux/usersSlice/usersSelectors.js';
 import { setSavedArticles } from '../../redux/usersSlice/usersSlice.js';
+import { useNavigate } from 'react-router-dom';
+import { setNavigator } from '../../utils/navigateHelper.js';
 
 export const App = () => {
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
   const savedArticles = useSelector(selectSavedArticles);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (user?.savedArticles?.length > 0 && savedArticles.length === 0) {
@@ -40,6 +46,10 @@ export const App = () => {
   useEffect(() => {
     dispatch(refreshThunk());
   }, [dispatch]);
+
+  useEffect(() => {
+    setNavigator(navigate);
+  }, [navigate]);
 
   return (
     <>
@@ -77,8 +87,30 @@ export const App = () => {
               element={<PrivateRoute redirectTo="/register" component={<CreateArticlePage />} />}
             />
 
-            <Route path="*" element={<Navigate to="/" replace />} />
+            {/* <Route path="*" element={<Navigate to="/" replace />} /> */}
           </Route>
+          <Route
+            path="*"
+            element={
+              <ErrorPage
+                code={404}
+                message="Not found page"
+                animation={spinner}
+                showBackButton={true}
+              />
+            }
+          />
+          <Route
+            path="/error"
+            element={
+              <ErrorPage
+                code={500}
+                message="Unexpected error"
+                animation={spinner}
+                showBackButton={true}
+              />
+            }
+          />
         </Routes>
       </Suspense>
       <ToastContainer position="top-right" autoClose={3000} />

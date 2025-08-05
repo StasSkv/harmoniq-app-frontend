@@ -1,6 +1,8 @@
 import { api } from '../api.js';
 import { store } from '../store.js';
-import { refreshThunk } from '../authSlice/authOperations.js';
+import { logoutThunk, refreshThunk } from '../authSlice/authOperations.js';
+import { toast } from 'react-toastify';
+import { navigateTo } from '../../utils/navigateHelper.js';
 
 let isRefreshing = false;
 let failedQueue = [];
@@ -29,6 +31,8 @@ export const setupAuthInterceptor = () => {
         const refreshToken = state.auth.refreshToken;
 
         if (!refreshToken) {
+          toast.error('Session expired. Please log in again.');
+          await store.dispatch(logoutThunk());
           return Promise.reject(error);
         }
 
@@ -56,11 +60,16 @@ export const setupAuthInterceptor = () => {
             originalRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
             return api(originalRequest);
           } else {
+            toast.error('Session expired. Please log in again.');
+            await store.dispatch(logoutThunk());
             processQueue(resultAction.error, null);
             return Promise.reject(error);
           }
         } catch (err) {
           processQueue(err, null);
+          toast.error('Session expired. Please log in again.');
+          await store.dispatch(logoutThunk());
+          navigateTo('/login');
           return Promise.reject(err);
         } finally {
           isRefreshing = false;
