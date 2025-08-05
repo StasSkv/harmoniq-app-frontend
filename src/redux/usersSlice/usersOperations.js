@@ -19,14 +19,17 @@ export const saveArticle = createAsyncThunk('articles/saveArticle', async (artic
   }
 });
 
-export const fetchSavedArticles = createAsyncThunk('articles/fetchSavedArticles', async (thunkAPI) => {
-  try {
-    const response = await api.get(`/users/saved-articles`);
-    return response.data.data;
-  } catch (error) {
-    return thunkAPI.rejectWithValue(error.message || 'Failed to fetch saved articles');
+export const fetchSavedArticles = createAsyncThunk(
+  'articles/fetchSavedArticles',
+  async (thunkAPI) => {
+    try {
+      const response = await api.get(`/users/saved-articles`);
+      return response.data.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message || 'Failed to fetch saved articles');
+    }
   }
-});
+);
 
 export const fetchUserById = createAsyncThunk('users/fetchUserById', async (authorId, thunkAPI) => {
   try {
@@ -49,14 +52,17 @@ export const removeSavedArticle = createAsyncThunk(
   }
 );
 
-export const fetchFollowingByUserId = createAsyncThunk('users/fetchFollowingByUserId', async (userId, thunkAPI) => {
-  try {
-    const response = await api.get(`/users/following/${userId}`);
-    return response.data.data;
-  } catch (error) {
-    return thunkAPI.rejectWithValue(error.message || 'Failed to fetch following');
+export const fetchFollowingByUserId = createAsyncThunk(
+  'users/fetchFollowingByUserId',
+  async (userId, thunkAPI) => {
+    try {
+      const response = await api.get(`/users/following/${userId}`);
+      return response.data.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message || 'Failed to fetch following');
+    }
   }
-});
+);
 
 export const addFollower = createAsyncThunk('users/addFollowing', async (userId, thunkAPI) => {
   try {
@@ -84,6 +90,18 @@ export const deleteUserInfo = createAsyncThunk('users/deleteUserInfo', async (us
     return thunkAPI.rejectWithValue(error.message || 'Failed to update user info');
   }
 });
+
+export const updateUserInfo = createAsyncThunk(
+  'users/updateUserInfo',
+  async (userInfo, thunkAPI) => {
+    try {
+      const response = await api.patch(`/users/info`, userInfo);
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message || 'Failed to update user info');
+    }
+  }
+);
 
 export const fetchUsersWithParams = createAsyncThunk(
   'users/fetchUsersWithParams',

@@ -1,14 +1,19 @@
 import s from './EditProfile.module.css';
+import clsx from 'clsx';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import sprite from '../../assets/icons/sprite.svg';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 //eslint-disable-next-line
 import { motion } from 'framer-motion';
 
+import { updateUserInfo } from '../../redux/usersSlice/usersOperations';
+
 const EditProfile = ({ isOpen, userInfo, onClose }) => {
-  const handleSubmit = async (values) => {
-    console.log(values);
-  };
+  const dispatch = useDispatch();
+  const [avatar, setAvatar] = useState(userInfo.avatar);
+  const [avatarChange, setAvatarChange] = useState(false);
+  const [previewUrl, setPreviewUrl] = useState(userInfo.avatar);
 
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -23,24 +28,51 @@ const EditProfile = ({ isOpen, userInfo, onClose }) => {
   }, [onClose]);
 
   useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
+    if (avatarChange && avatar instanceof File) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPreviewUrl(reader.result);
+      };
+      reader.readAsDataURL(avatar);
+    } else if (!avatarChange) {
+      setPreviewUrl(userInfo.avatar);
     }
-
-    return () => {
-      document.body.style.overflow = '';
-    };
-  }, [isOpen]);
+  }, [avatar, avatarChange, userInfo.avatar]);
 
   const initialValues = {
     name: userInfo.name,
-    avatar: userInfo.avatar,
   };
 
   const handleBackdropClick = (e) => {
     if (e.target === e.currentTarget) {
+      onClose();
+    }
+  };
+
+  const handleAvatarChange = (e) => {
+    const file = e.target.files[0];
+    if (file && file.type.startsWith('image/')) {
+      setAvatarChange(true);
+      setAvatar(file);
+    }
+  };
+
+  const handleSubmit = async (values) => {
+    const updatedFields = {};
+    if (values.name !== userInfo.name) {
+      updatedFields.name = values.name;
+    }
+    if (avatarChange && avatar instanceof File) {
+      updatedFields.avatar = avatar;
+    }
+    if (Object.keys(updatedFields).length > 0) {
+      try {
+        await dispatch(updateUserInfo(updatedFields));
+        onClose();
+      } catch (error) {
+        console.error('Failed to update user info:', error);
+      }
+    } else {
       onClose();
     }
   };
@@ -73,16 +105,33 @@ const EditProfile = ({ isOpen, userInfo, onClose }) => {
 
             <div className={s.photoWrapper}>
               <label htmlFor="photo" className={s.photoLabel}></label>
-              <Field name="photo" type="file" className={s.inputPhoto} />
-              <div className={s.photoPlaceholderWrapper}>
+              <Field
+                name="photo"
+                type="file"
+                className={s.inputPhoto}
+                onChange={handleAvatarChange}
+              />
+              <div
+                className={clsx(s.photoPlaceholderWrapper, {
+                  [s.photoPlaceholderWrapperNewPhoto]: avatarChange,
+                })}
+              >
                 <img
-                  src={userInfo.avatar}
+                  src={previewUrl}
                   alt="avatar"
-                  className={s.photoPlaceholder}
+                  className={clsx(s.photoPlaceholder, {
+                    [s.photoPlaceholderNewPhoto]: avatarChange,
+                  })}
                   width={160}
                   height={160}
                 />
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className={s.photoIcon}>
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  className={clsx(s.photoIcon, { [s.photoIconNewPhoto]: avatarChange })}
+                >
                   <use href={`${sprite}#icon-chenge-photo`} />
                 </svg>
               </div>
