@@ -14,7 +14,17 @@ const initialState = {
 const slice = createSlice({
   name: 'auth',
   initialState,
-  reducers: {},
+  reducers: {
+    logout: (state) => {
+      state.user = null;
+      state.refreshToken = null;
+      state.accessToken = null;
+      state.isLoggedIn = false;
+      state.isRefreshing = false;
+      state.isError = false;
+      state.isPending = false;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(registerThunk.pending, (state) => {
@@ -78,6 +88,10 @@ const slice = createSlice({
       })
       .addCase(refreshThunk.rejected, (state) => {
         state.isRefreshing = false;
+        state.isLoggedIn = false;
+        state.user = null;
+        state.refreshToken = null;
+        state.accessToken = null;
       });
   },
 });

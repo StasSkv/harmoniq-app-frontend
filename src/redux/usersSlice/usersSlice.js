@@ -9,6 +9,7 @@ import {
   addFollower,
   deleteFollower,
   fetchUsersWithParams,
+  updateUserInfo,
 } from './usersOperations.js';
 
 const usersSlice = createSlice({
@@ -151,6 +152,18 @@ const usersSlice = createSlice({
         state.following = action.payload;
       })
       .addCase(deleteFollower.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+      .addCase(updateUserInfo.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(updateUserInfo.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.profileUser = action.payload.data;
+      })
+      .addCase(updateUserInfo.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       });

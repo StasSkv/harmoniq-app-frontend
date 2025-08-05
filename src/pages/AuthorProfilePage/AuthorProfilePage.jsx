@@ -41,7 +41,7 @@ const AuthorProfilePage = () => {
   const savedArticles = useSelector(selectVisibleSavedArticles);
   const following = useSelector(selectFollowing);
   const isLoading = useSelector(selectIsLoading);
-  const ownProfile = profileUser?.id === currentUser?._id;
+  const ownProfile = (profileUser?.id || profileUser?._id) === currentUser?._id;
   const name = profileUser?.name.split(' ');
 
   let articlesInfoText = '';
@@ -152,8 +152,8 @@ const AuthorProfilePage = () => {
               (myArticles.length === 0 ? (
                 <NothingFoundItemsInProfile
                   description={'No articles yet.'}
-                  link={'create'}
-                  linkText={'Create article'}
+                  link={'articles'}
+                  linkText={'Go to articles'}
                 />
               ) : (
                 <ArticlesList articles={myArticles} />
