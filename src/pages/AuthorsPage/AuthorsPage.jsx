@@ -71,9 +71,9 @@ const AuthorsPage = () => {
   };
 
   return (
-    <section id="authorsPage" className={s.authors_page}>
+    <section id="authorsPage" className={s.authorsPage}>
       {isLoading && <LoaderPage />}
-      <Container className={s.authorsPage}>
+      <Container className={s.container}>
         <SectionTitle
           title="Authors"
           filter={filter}
