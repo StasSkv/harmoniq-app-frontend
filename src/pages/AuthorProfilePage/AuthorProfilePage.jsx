@@ -34,14 +34,14 @@ const AuthorProfilePage = () => {
   const [isEditProfileOpen, setIsEditProfileOpen] = useState(false);
   const dispatch = useDispatch();
   const { authorId } = useParams();
-  
+
   const profileUser = useSelector(selectProfileUser);
   const currentUser = useSelector(selectUser);
   const myArticles = useSelector(selectArticlesByOwner);
   const savedArticles = useSelector(selectVisibleSavedArticles);
   const following = useSelector(selectFollowing);
   const isLoading = useSelector(selectIsLoading);
-  const ownProfile = profileUser?.id === currentUser?._id;
+  const ownProfile = (profileUser?.id || profileUser?._id) === currentUser?._id;
   const name = profileUser?.name.split(' ');
 
   let articlesInfoText = '';
