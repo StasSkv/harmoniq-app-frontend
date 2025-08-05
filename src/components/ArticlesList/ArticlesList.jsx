@@ -6,7 +6,7 @@ const ArticlesList = ({ articles }) => {
     <>
       <div className={s.articles_list_wrapper}>
         <ul className={s.articles_list}>
-          {articles.map(({ _id, img, title, article, ownerName }) => {
+          {articles.map(({ _id, img, title, article, ownerName, ownerId }) => {
             return (
               <li key={_id} className={s.articles_list_item}>
                 <ArticleItem
@@ -15,6 +15,7 @@ const ArticlesList = ({ articles }) => {
                   title={title}
                   article={article}
                   ownerName={ownerName}
+                  ownerId={ownerId}
                 />
               </li>
             );

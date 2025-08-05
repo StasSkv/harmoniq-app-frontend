@@ -3,9 +3,15 @@ import s from './Creators.module.css';
 import sprite from '../../assets/icons/sprite.svg';
 import { Container } from '../Container/Container';
 import { LoaderPage } from '../Loader/LoaderPage/LoaderPage.jsx';
+import { useSelector } from 'react-redux';
+import { selectAllUsers } from '../../redux/usersSlice/usersSelectors.js';
 
 export const Creators = ({ authors }) => {
-  if (!authors?.length) return <LoaderPage />;
+  const creatorsFromRedux = useSelector(selectAllUsers);
+  const creatorsRaw = authors || creatorsFromRedux;
+  const creators = Array.isArray(creatorsRaw) ? creatorsRaw : [];
+  if (!creators.length) return <LoaderPage />;
+
   return (
     <section className={s.creators}>
       <Container className={s.container}>

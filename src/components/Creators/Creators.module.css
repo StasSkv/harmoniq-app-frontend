@@ -89,6 +89,17 @@
 }
 
 @media (min-width: 1440px) {
+  .header {
+    margin-bottom: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .link {
+    width: auto;
+  }
+
   .authorsList {
     flex-wrap: row;
   }
