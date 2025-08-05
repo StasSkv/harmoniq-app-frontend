@@ -19,15 +19,11 @@ const processQueue = (error, token = null) => {
 };
 
 export const setupAuthInterceptor = () => {
-  console.log('[Interceptor] Setting up...');
-
   api.interceptors.response.use(
     (response) => {
-      console.log('[Interceptor] Response success:', response);
       return response;
     },
     async (error) => {
-      console.log('[Interceptor] Response error:', error.response?.status, error.config.url);
       const originalRequest = error.config;
 
       const isRefreshRequest = originalRequest.url?.includes('/auth/refresh');
@@ -41,7 +37,6 @@ export const setupAuthInterceptor = () => {
 
         if (!refreshToken) {
           toast.error('Session expired. Please log in again.');
-          console.log('[Interceptor] Logging out due to missing refresh token');
           await store.dispatch(logoutThunk());
           navigateTo?.('/login') ?? (window.location.href = '/login');
           return Promise.reject(error);
@@ -75,7 +70,6 @@ export const setupAuthInterceptor = () => {
             return api(originalRequest);
           } else {
             toast.error('Session expired. Please log in again.');
-            console.log('[Interceptor] Logging out due to failed refresh');
             await store.dispatch(logoutThunk());
             processQueue(resultAction.error, null);
             navigateTo?.('/login') ?? (window.location.href = '/login');
