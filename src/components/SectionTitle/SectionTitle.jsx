@@ -1,12 +1,7 @@
 import Select from 'react-select';
 import s from './SectionTitle.module.css';
 
-const SectionTitle = ({ title, filter, setFilter, total }) => {
-  const options = [
-    { value: 'all', label: 'All' },
-    { value: 'popular', label: 'Popular' },
-  ];
-
+const SectionTitle = ({ title, filter, setFilter, total, options }) => {
   const handleChange = (selected) => {
     setFilter(selected.value);
   };

@@ -83,6 +83,10 @@ const ArticlesPage = () => {
           filter={filter}
           setFilter={handleFilterChange}
           total={paginationData?.totalItems || 0}
+          options={[
+            { value: 'all', label: 'All' },
+            { value: 'popular', label: 'Popular' },
+          ]}
         />
         {isLoading && <LoaderPage />}
         <div>

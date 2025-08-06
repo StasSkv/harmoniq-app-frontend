@@ -67,8 +67,7 @@ const usersSlice = createSlice({
       })
       .addCase(fetchUsersWithParams.fulfilled, (state, action) => {
         const { data, pagination } = action.payload;
-        const page = Number(action.meta.arg.page);
-        state.authorsPageItems = page === 1 ? data : [...state.authorsPageItems, ...data];
+        state.authorsPageItems = data;
         state.pagination = pagination;
         state.authorsPageLoading = false;
       })
