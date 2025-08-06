@@ -42,11 +42,11 @@ export const fetchArticlesByOwnerId = createAsyncThunk(
 
 export const fetchArticlesWithParams = createAsyncThunk(
   'articles/fetchArticlesWithParams',
-  async ({ filter = 'all', page = 1, limit = 12 }, thunkAPI) => {
+  async ({ filter = 'all', page = 1, perPage = 12 }, thunkAPI) => {
     try {
       const params = {
         page,
-        limit,
+        perPage,
         ...(filter !== 'all' && { filter }),
       };
       const response = await api.get('/articles', { params });
