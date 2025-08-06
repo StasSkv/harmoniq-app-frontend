@@ -26,7 +26,6 @@ const ButtonAddToBookmarks = ({
   const loading = useSelector(selectSaveLoading(articleId));
   const user = useSelector(selectUser);
   const isOwner = (user && ownerId === user._id) || ownerId === userId;
-  console.log(isOwner);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
