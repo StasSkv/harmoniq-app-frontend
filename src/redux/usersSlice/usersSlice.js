@@ -84,6 +84,9 @@ const usersSlice = createSlice({
         const articleId = action.meta.arg;
         state.saveLoading[articleId] = false;
         state.savedArticles = action.payload.data;
+        if (action.payload.article) {
+          state.visibleSavedArticles.push(action.payload.article);
+        }
       })
       .addCase(saveArticle.rejected, (state, action) => {
         const articleId = action.meta.arg;
@@ -112,6 +115,9 @@ const usersSlice = createSlice({
         const articleId = action.meta.arg;
         state.saveLoading[articleId] = false;
         state.savedArticles = action.payload.data;
+        state.visibleSavedArticles = state.visibleSavedArticles.filter(
+          (article) => article._id !== articleId
+        );
       })
       .addCase(removeSavedArticle.rejected, (state, action) => {
         const articleId = action.meta.arg;

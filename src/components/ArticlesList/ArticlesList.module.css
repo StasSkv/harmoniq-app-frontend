@@ -2,8 +2,6 @@
   margin-bottom: 24px;
 }
 
-
-
 .articles_list_item:not(:last-child) {
   margin-bottom: 24px;
 }
@@ -21,13 +19,12 @@
   }
 
   .articles_list_item {
-  width: calc((100% - 24px) / 2);
-}
+    width: calc((100% - 24px) / 2);
+  }
 }
 
 @media (min-width: 1440px) {
-
   .articles_list_item {
-  width: calc((100% - 48px) / 3);
-}
+    width: calc((100% - 48px) / 3);
+  }
 }

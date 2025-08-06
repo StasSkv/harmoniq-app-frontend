@@ -56,6 +56,12 @@
   color: var(--black);
 }
 
+@media screen and (max-width: 320px) {
+  .name {
+    font-size: 24px;
+  }
+}
+
 .btnSubscribe {
   font-family: var(--font-primary);
   font-weight: var(--font-weight-bold);
@@ -90,6 +96,13 @@
   font-size: 16px;
   padding: 12px 24px;
   transition: background-color 0.3s ease-in-out;
+}
+
+@media screen and (max-width: 320px) {
+  .btnEdit {
+    padding: 4px 12px;
+    font-size: 14px;
+  }
 }
 
 .btnEdit:hover {
