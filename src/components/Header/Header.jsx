@@ -9,6 +9,7 @@ import UserMenu from '../UserMenu/UserMenu';
 import { motion, useAnimation } from 'framer-motion';
 import s from './Header.module.css';
 import sprite from '../../assets/icons/sprite.svg';
+import { Link } from 'react-router-dom';
 
 export const Header = () => {
   const isLoggedIn = useSelector(selectIsLoggedIn);
@@ -92,11 +93,11 @@ export const Header = () => {
   return (
     <header className={`${s.header} ${showHeader ? s['header-visible'] : s['header-hidden']}`}>
       <Container className={s.container}>
-        <a href="/" className={s.logo}>
+        <Link to="/" className={s.logo}>
           <svg width="165" height="46">
             <use href={`${sprite}#icon-logo`} />
           </svg>
-        </a>
+        </Link>
 
         <div className={s.desktopNav}>
           <Navigation />
