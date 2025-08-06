@@ -7,19 +7,20 @@ import { Loader } from '../Loader/Loader';
 export const Creators = ({ authors }) => {
   return (
     <section className={s.creators}>
-      {!authors?.length ? (
-        <Loader />
-      ) : (
-        <Container className={s.container}>
-          <div className={s.header}>
-            <h2 className={s.title}>Top Authors</h2>
-            <Link to="/authors" className={s.link}>
-              Go to all Authors
-              <svg className={s.icon}>
-                <use href={`${sprite}#icon-arrow-right`} />
-              </svg>
-            </Link>
-          </div>
+      <Container className={s.container}>
+        <div className={s.header}>
+          <h2 className={s.title}>Top Authors</h2>
+          <Link to="/authors" className={s.link}>
+            Go to all Authors
+            <svg className={s.icon}>
+              <use href={`${sprite}#icon-arrow-right`} />
+            </svg>
+          </Link>
+        </div>
+
+        {!authors?.length ? (
+          <Loader className={s.loader} />
+        ) : (
           <ul className={s.authorsList}>
             {authors?.map(({ id, name, avatar }) => (
               <li key={id} className={s.authorsListItem}>
@@ -30,8 +31,8 @@ export const Creators = ({ authors }) => {
               </li>
             ))}
           </ul>
-        </Container>
-      )}
+        )}
+      </Container>
     </section>
   );
 };
