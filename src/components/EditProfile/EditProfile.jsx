@@ -1,19 +1,27 @@
 import s from './EditProfile.module.css';
 import clsx from 'clsx';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
+
 import sprite from '../../assets/icons/sprite.svg';
-import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
 //eslint-disable-next-line
 import { motion } from 'framer-motion';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Loader } from '../Loader/Loader';
+import { toast } from 'react-toastify';
+
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { updateUserInfo } from '../../redux/usersSlice/usersOperations';
+import { selectIsLoading } from '../../redux/usersSlice/usersSelectors';
 
 const EditProfile = ({ isOpen, userInfo, onClose }) => {
   const dispatch = useDispatch();
   const [avatar, setAvatar] = useState(userInfo.avatar);
   const [avatarChange, setAvatarChange] = useState(false);
   const [previewUrl, setPreviewUrl] = useState(userInfo.avatar);
+
+  const isLoading = useSelector(selectIsLoading);
 
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -41,6 +49,7 @@ const EditProfile = ({ isOpen, userInfo, onClose }) => {
 
   const initialValues = {
     name: userInfo.name,
+    avatar: null,
   };
 
   const handleBackdropClick = (e) => {
@@ -49,13 +58,29 @@ const EditProfile = ({ isOpen, userInfo, onClose }) => {
     }
   };
 
-  const handleAvatarChange = (e) => {
-    const file = e.target.files[0];
-    if (file && file.type.startsWith('image/')) {
-      setAvatarChange(true);
-      setAvatar(file);
-    }
-  };
+  // const handleAvatarChange = (e) => {
+  //   const file = e.target.files[0];
+  //   if (file && file.type.startsWith('image/')) {
+  //     setAvatarChange(true);
+  //     setAvatar(file);
+  //   }
+  // };
+
+  const validationSchema = Yup.object().shape({
+    name: Yup.string()
+      .min(2, 'Name must be at least 3 characters long')
+      .max(20, 'Name must be less than 20 characters long'),
+    avatar: Yup.mixed()
+      .nullable()
+      .test('fileSize', 'File is too large (max 1MB)', (value) => {
+        return !value || (value && value.size <= 1024 * 1024);
+      })
+      .test('fileType', 'Unsupported file format', (value) => {
+        return (
+          !value || ['image/jpeg', 'image/png', 'image/gif', 'image/webp'].includes(value.type)
+        );
+      }),
+  });
 
   const handleSubmit = async (values) => {
     const updatedFields = {};
@@ -69,8 +94,9 @@ const EditProfile = ({ isOpen, userInfo, onClose }) => {
       try {
         await dispatch(updateUserInfo(updatedFields));
         onClose();
-      } catch (error) {
-        console.error('Failed to update user info:', error);
+      } catch (err) {
+        toast.error('Failed to update user info, try again later');
+        return err;
       }
     } else {
       onClose();
@@ -93,54 +119,70 @@ const EditProfile = ({ isOpen, userInfo, onClose }) => {
           </svg>
         </button>
         <h2 className={s.title}>Edit profile info</h2>
-        <Formik initialValues={initialValues} onSubmit={handleSubmit}>
-          <Form className={s.form}>
-            <div className={s.nameWrapper}>
-              <label className={s.label} htmlFor="name">
-                Change your name
-              </label>
-              <Field name="name" type="text" placeholder="Enter your name" className={s.input} />
-              <ErrorMessage name="name" component="span" className={s.errorMessage} />
-            </div>
-
-            <div className={s.photoWrapper}>
-              <label htmlFor="photo" className={s.photoLabel}></label>
-              <Field
-                name="photo"
-                type="file"
-                className={s.inputPhoto}
-                onChange={handleAvatarChange}
-              />
-              <div
-                className={clsx(s.photoPlaceholderWrapper, {
-                  [s.photoPlaceholderWrapperNewPhoto]: avatarChange,
-                })}
-              >
-                <img
-                  src={previewUrl}
-                  alt="avatar"
-                  className={clsx(s.photoPlaceholder, {
-                    [s.photoPlaceholderNewPhoto]: avatarChange,
-                  })}
-                  width={160}
-                  height={160}
-                />
-                <svg
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  className={clsx(s.photoIcon, { [s.photoIconNewPhoto]: avatarChange })}
-                >
-                  <use href={`${sprite}#icon-chenge-photo`} />
-                </svg>
+        <Formik
+          initialValues={initialValues}
+          onSubmit={handleSubmit}
+          validationSchema={validationSchema}
+        >
+          {({ setFieldValue }) => (
+            <Form className={s.form}>
+              <div className={s.nameWrapper}>
+                <label className={s.label} htmlFor="name">
+                  Change your name
+                </label>
+                <Field name="name" type="text" placeholder="Enter your name" className={s.input} />
+                <ErrorMessage name="name" component="span" className={s.errorMessage} />
               </div>
-            </div>
 
-            <button type="submit" className={s.btn}>
-              Save
-            </button>
-          </Form>
+              <div className={s.photoWrapper}>
+                <label htmlFor="photo" className={s.photoLabel}></label>
+                <input
+                  id="avatar"
+                  name="avatar"
+                  type="file"
+                  accept="image/*"
+                  className={s.inputPhoto}
+                  onChange={(e) => {
+                    const file = e.currentTarget.files[0];
+                    if (file) {
+                      setAvatarChange(true);
+                      setAvatar(file);
+                      setFieldValue('avatar', file);
+                    }
+                  }}
+                />
+                <ErrorMessage name="avatar" component="span" className={s.errorMessage} />
+                <div
+                  className={clsx(s.photoPlaceholderWrapper, {
+                    [s.photoPlaceholderWrapperNewPhoto]: avatarChange,
+                  })}
+                >
+                  <img
+                    src={previewUrl}
+                    alt="avatar"
+                    className={clsx(s.photoPlaceholder, {
+                      [s.photoPlaceholderNewPhoto]: avatarChange,
+                    })}
+                    width={160}
+                    height={160}
+                  />
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    className={clsx(s.photoIcon, { [s.photoIconNewPhoto]: avatarChange })}
+                  >
+                    <use href={`${sprite}#icon-chenge-photo`} />
+                  </svg>
+                </div>
+              </div>
+
+              <button type="submit" className={s.btn}>
+                {isLoading ? <Loader className={s.loader} size={28} /> : 'Save'}
+              </button>
+            </Form>
+          )}
         </Formik>
       </motion.div>
     </div>
