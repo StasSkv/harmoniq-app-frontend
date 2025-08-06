@@ -21,7 +21,7 @@ const ArticlesPage = () => {
   const dispatch = useDispatch();
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const articlesRef = useRef(null);
+  const sectionRef = useRef(null);
 
   const paginationData = useSelector(selectArticlesPagination);
   const articles = useSelector(selectArticles);
@@ -43,24 +43,29 @@ const ArticlesPage = () => {
 
     dispatch(fetchArticlesWithParams({ page, filter, limit }))
       .unwrap()
-      .then(() => {
-        if (page > 1 && articlesRef.current) {
-          const startIndex = (page - 1) * limit;
-          const articleElements = articlesRef.current.getElementsByClassName('article-item');
-          if (articleElements[startIndex]) {
-            articleElements[startIndex].scrollIntoView({ behavior: 'smooth', block: 'start' });
-          }
-        }
-      })
       .catch((err) => {
         toast.error(`Failed to load articles: ${err.message}`);
       });
-  }, [page, filter, dispatch]);
+  }, [page, filter, dispatch, searchParams, setSearchParams]);
 
   const handlePageChange = (newPage) => {
     const params = new URLSearchParams(searchParams);
     params.set('page', newPage.toString());
     setSearchParams(params);
+
+    setTimeout(() => {
+      if (sectionRef.current) {
+        const header = document.querySelector('header');
+        const headerOffset = header ? header.offsetHeight : 0;
+        const elementPosition = sectionRef.current.getBoundingClientRect().top + window.scrollY;
+        const offsetPosition = elementPosition - headerOffset;
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth',
+        });
+      }
+    }, 100);
   };
 
   const handleFilterChange = (newFilter) => {
@@ -71,7 +76,7 @@ const ArticlesPage = () => {
   };
 
   return (
-    <section id="articlesPage" className={s.articles_page}>
+    <section id="articlesPage" className={s.articles_page} ref={sectionRef}>
       <Container className={s.container_wrapper}>
         <SectionTitle
           title="Articles"
@@ -80,7 +85,7 @@ const ArticlesPage = () => {
           total={paginationData?.totalItems || 0}
         />
         {isLoading && <LoaderPage />}
-        <div ref={articlesRef}>
+        <div>
           <ArticlesList articles={articles} />
         </div>
         <Pagination pagination={paginationData} onPageChange={handlePageChange} />

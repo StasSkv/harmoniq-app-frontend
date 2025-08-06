@@ -98,8 +98,7 @@ const articlesSlice = createSlice({
       })
       .addCase(fetchArticlesWithParams.fulfilled, (state, action) => {
         const { data, pagination } = action.payload;
-        const page = Number(action.meta.arg.page);
-        state.articles = page === 1 ? data : [...state.articles, ...data];
+        state.articles = data;
         state.pagination = pagination;
         state.isLoading = false;
       })

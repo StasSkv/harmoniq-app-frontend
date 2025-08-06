@@ -8,7 +8,7 @@ const ArticlesList = ({ articles }) => {
         <ul className={s.articles_list}>
           {articles.map(({ _id, img, title, article, ownerName, ownerId }) => {
             return (
-              <li key={_id} className={`${s.articles_list_item} article-item`}>
+              <li key={_id} className={s.articles_list_item}>
                 <ArticleItem
                   articleId={_id}
                   img={img}
