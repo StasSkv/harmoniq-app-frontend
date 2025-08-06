@@ -58,14 +58,6 @@ const EditProfile = ({ isOpen, userInfo, onClose }) => {
     }
   };
 
-  // const handleAvatarChange = (e) => {
-  //   const file = e.target.files[0];
-  //   if (file && file.type.startsWith('image/')) {
-  //     setAvatarChange(true);
-  //     setAvatar(file);
-  //   }
-  // };
-
   const validationSchema = Yup.object().shape({
     name: Yup.string()
       .min(2, 'Name must be at least 3 characters long')

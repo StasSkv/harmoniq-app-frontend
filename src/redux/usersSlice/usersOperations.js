@@ -13,7 +13,11 @@ export const fetchAllUsers = createAsyncThunk('users/fetchAll', async (params = 
 export const saveArticle = createAsyncThunk('articles/saveArticle', async (articleId, thunkAPI) => {
   try {
     const response = await api.post(`/users/save/${articleId}`);
-    return response.data;
+    const articleResponse = await api.get(`/articles/${articleId}`);
+    return {
+      data: response.data.data,
+      article: articleResponse.data.data,
+    };
   } catch (error) {
     return thunkAPI.rejectWithValue(error.message || 'Failed to save article');
   }
