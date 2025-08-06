@@ -67,6 +67,9 @@ const AuthorProfilePage = () => {
     }
   };
 
+  console.log(name);
+  
+
   const handleClickEditProfile = () => {
     setIsEditProfileOpen(true);
   };
