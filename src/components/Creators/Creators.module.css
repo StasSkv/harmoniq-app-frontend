@@ -57,6 +57,11 @@
   text-align: center;
 }
 
+.loader {
+  display: flex;
+  justify-content: center;
+}
+
 @media (max-width: 330px) {
   .name {
     font-size: 12px;
