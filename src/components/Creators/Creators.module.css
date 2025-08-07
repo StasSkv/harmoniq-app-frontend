@@ -20,21 +20,20 @@
 }
 
 .link {
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  align-items: center;
+  gap: 12px;
   font-size: 16px;
-  font-weight: 700;
   color: var(--green-darker);
-  text-decoration: none;
 }
 
 .icon {
-  width: 16px;
-  height: 16px;
+  width: 24px;
+  height: 24px;
   stroke: var(--green-darker);
   transform: rotate(-45deg);
-}
-
-.link {
-  width: 100%;
 }
 
 .image {
