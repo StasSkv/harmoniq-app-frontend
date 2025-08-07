@@ -1,17 +1,14 @@
 .paginationWrapper {
   display: flex;
   justify-content: center;
-  margin: 32px 0;
+  /* margin: 24px 0; */
 }
 
 .pagination {
+  width: 348px;
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 4px;
-  list-style: none;
-  padding: 0;
-  margin: 0;
+  justify-content: space-between;
   flex-wrap: wrap;
 }
 
@@ -66,7 +63,7 @@
   justify-content: center;
   min-width: 32px;
   height: 32px;
-  border-radius: 16px;
+  border-radius: 50%;
   padding: 0 8px;
   background-color: transparent;
   color: var(--black);
