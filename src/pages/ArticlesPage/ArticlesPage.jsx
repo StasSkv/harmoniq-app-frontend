@@ -90,7 +90,7 @@ const ArticlesPage = () => {
         />
         {isLoading && <LoaderPage />}
         <div>
-          <ArticlesList articles={articles} />
+          <ArticlesList articles={articles} page={page} filter={filter} />
         </div>
         <Pagination pagination={paginationData} onPageChange={handlePageChange} />
       </Container>

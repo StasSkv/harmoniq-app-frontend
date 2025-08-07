@@ -1,6 +1,6 @@
 import s from './ArticlePage.module.css';
 import { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchArticleById } from '../../redux/articlesSlice/articlesOperation';
 import { LoaderPage } from '../../components/Loader/LoaderPage/LoaderPage';
@@ -23,6 +23,10 @@ const ArticlePage = () => {
   const currentArticle = useSelector(selectCurrentArticle);
   const isLoading = useSelector(selectIsLoading);
   const error = useSelector(selectError);
+
+  const [searchParams] = useSearchParams();
+  const page = searchParams.get('page') || '1';
+  const filter = searchParams.get('filter') || 'all';
 
   const isHTML = (str) => /<\/?[a-z][\s\S]*>/i.test(str);
   const article = currentArticle?.data || currentArticle;
@@ -55,9 +59,12 @@ const ArticlePage = () => {
               article.article.split('\n').map((paragraph, idx) => <p key={idx}>{paragraph}</p>)
             )}
           </div>
+
           <RecommendedArticles
             currentArticle={currentArticle}
             recommended={recommended}
+            page={page}
+            filter={filter}
           />
         </div>
       </Container>

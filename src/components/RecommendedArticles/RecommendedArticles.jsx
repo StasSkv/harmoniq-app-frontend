@@ -5,7 +5,7 @@ import ButtonAddToBookmarks from '../ButtonAddToBookmarks/ButtonAddToBookmarks';
 import { useSelector } from 'react-redux';
 import { selectUser } from '../../redux/authSlice/authSelectors';
 
-export const RecommendedArticles = ({ currentArticle, recommended = [] }) => {
+export const RecommendedArticles = ({ currentArticle, recommended = [], page, filter }) => {
   const user = useSelector(selectUser);
 
   return (
@@ -44,6 +44,12 @@ export const RecommendedArticles = ({ currentArticle, recommended = [] }) => {
         ownerId={currentArticle?.ownerId}
         userId={user?._id}
       />
+      <Link to={`/articles?page=${page}&filter=${filter}`} className={s.backBtn}>
+        <svg className={s.iconBack} width="20" height="20">
+          <use href={`${sprite}#icon-arrow-left`} />
+        </svg>
+        Back to articles
+      </Link>
     </div>
   );
 };
