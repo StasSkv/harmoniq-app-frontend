@@ -11,22 +11,20 @@ export const ArticleItem = ({ img, title, article, ownerName, articleId, ownerId
       <Link to={`/articles/${articleId}`}>
         <img src={img} alt="Article" className={s.image} />
       </Link>
-      <div className={s.articleInfoWrapper}>
-        <div className={s.articleInfo}>
-          <span className={s.authorName}>{ownerName}</span>
-          <h3 className={s.title}>{title}</h3>
+      <div className={s.articleInfo}>
+        <span className={s.authorName}>{ownerName}</span>
+        <h3 className={s.title}>{title}</h3>
 
-          {isHTML(article) ? (
-            <div
-              className={s.articlePreview}
-              dangerouslySetInnerHTML={{
-                __html: DOMPurify.sanitize(article),
-              }}
-            />
-          ) : (
-            <p className={s.articlePreview}>{article}</p>
-          )}
-        </div>
+        {isHTML(article) ? (
+          <div
+            className={s.articlePreview}
+            dangerouslySetInnerHTML={{
+              __html: DOMPurify.sanitize(article),
+            }}
+          />
+        ) : (
+          <p className={s.articlePreview}>{article}</p>
+        )}
       </div>
       <div className={s.buttons}>
         <Link className={s.learnLink} to={`/articles/${articleId}`}>
