@@ -1,8 +1,8 @@
 import s from './ArticlePage.module.css';
 import { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchArticleById } from '../../redux/articlesSlice/articlesOperation';
+import { fetchArticleById, fetchAllArticles } from '../../redux/articlesSlice/articlesOperation';
 import { LoaderPage } from '../../components/Loader/LoaderPage/LoaderPage';
 import { Container } from '../../components/Container/Container';
 import DOMPurify from 'dompurify';
@@ -12,17 +12,20 @@ import {
   selectIsLoading,
   selectArticles,
 } from '../../redux/articlesSlice/articlesSelectors';
-import { fetchAllArticles } from '../../redux/articlesSlice/articlesOperation';
 import { RecommendedArticles } from '../../components/RecommendedArticles/RecommendedArticles';
 
 const ArticlePage = () => {
   const { articleId } = useParams();
   const dispatch = useDispatch();
-  const recommended = useSelector(selectArticles);
+
+  const location = useLocation();
 
   const currentArticle = useSelector(selectCurrentArticle);
   const isLoading = useSelector(selectIsLoading);
   const error = useSelector(selectError);
+  const recommended = useSelector(selectArticles);
+
+  const from = typeof location.state?.from === 'string' ? location.state.from : '/articles';
 
   const isHTML = (str) => /<\/?[a-z][\s\S]*>/i.test(str);
   const article = currentArticle?.data || currentArticle;
@@ -55,9 +58,11 @@ const ArticlePage = () => {
               article.article.split('\n').map((paragraph, idx) => <p key={idx}>{paragraph}</p>)
             )}
           </div>
+
           <RecommendedArticles
             currentArticle={currentArticle}
             recommended={recommended}
+            from={from}
           />
         </div>
       </Container>

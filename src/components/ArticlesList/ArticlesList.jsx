@@ -1,7 +1,7 @@
 import { ArticleItem } from '../ArticleItem/ArticleItem';
 import s from './ArticlesList.module.css';
 
-const ArticlesList = ({ articles }) => {
+const ArticlesList = ({ articles, page, filter }) => {
   return (
     <>
       <div className={s.articles_list_wrapper}>
@@ -16,6 +16,8 @@ const ArticlesList = ({ articles }) => {
                   article={article}
                   ownerName={ownerName}
                   ownerId={ownerId}
+                  page={page}
+                  filter={filter}
                 />
               </li>
             );

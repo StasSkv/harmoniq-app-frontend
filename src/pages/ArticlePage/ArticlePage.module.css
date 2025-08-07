@@ -115,13 +115,13 @@
     max-height: 700px;
   }
 
-  .articleText  {
+  .articleText {
     max-width: 808px;
   }
 
   .content {
     display: flex;
-justify-content: space-between;
+    justify-content: space-between;
   }
 
   .future {
